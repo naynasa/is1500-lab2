@@ -21,8 +21,8 @@ text1: 	  .asciiz "This is a string."
 text2:	  .asciiz "Yet another thing."
 
 .align 2
-list1: 	.space 80
-list2: 	.space 80
+list1: 	.space 80 #reserverar 80 bytes
+list2: 	.space 80 #reserverar 80 bytes
 count:	.word  0
 
 .text

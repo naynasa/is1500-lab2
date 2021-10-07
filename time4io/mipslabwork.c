@@ -30,7 +30,7 @@ void labinit( void )
   //p -> 0xbf886100
   //*p[0:7] = 1;
   volatile char* p = 0xbf886100; //TRISE
-  *p = 0xff; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
+  *p = 0x00; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
 
   return;
 }

@@ -1,7 +1,9 @@
 {
   "files.associations": {
     "stdlib.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "mipslab.h": "c",
+    "stdint.h": "c"
   },
   "C_Cpp_Runner.warnings": [
     "-Wall",

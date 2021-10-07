@@ -15,7 +15,7 @@
 #include "mipslab.h"  /* Declatations for these labs */
 
 int mytime = 0x5957;
-
+int num_ticks = 0;
 char textstring[] = "text, more text, and even more text!";
 
 /* Interrupt Service Routine */
@@ -27,6 +27,11 @@ void user_isr( void )
 /* Lab-specific initialization goes here */
 void labinit( void )
 {
+  //p -> 0xbf886100
+  //*p[0:7] = 1;
+  volatile char* p = 0xbf886100; //TRISE
+  *p = 0xff; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
+
   return;
 }
 
@@ -38,5 +43,8 @@ void labwork( void )
   display_string( 3, textstring );
   display_update();
   tick( &mytime );
+  num_ticks++; //increment ticks
+  volatile char* p = 0xbf886110; //PORTE
+  *p = num_ticks; //5 <=> 00000101 <=> 0x05
   display_image(96, icon);
 }

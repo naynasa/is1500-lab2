@@ -1,4 +1,4 @@
- # timetemplate.asm
+# timetemplate.asm
   # Written 2015 by F Lundevall
   # Copyright abandonded - this file is in the public domain.
 
@@ -75,7 +75,7 @@ tiend:	sw	$t0,0($a0)	# save updated result
   # you can write your code for subroutine "hexasc" below this line
   #returns in the format 0000.0[ZZZZZZZZ]
  hexasc:
-	andi	$a0,$a0,15#XXXX...X[YYYY] AND 0000..0[1111] = 0000.0[YYYY]
+	andi	$a0,$a0,0x0000000f #XXXX...X[YYYY] AND 0000..0[1111] = 0000.0[YYYY], 0x0000000f =15
 	li	$t0,9
 	ble    	$a0,$t0,hexasc_if#$a0<10
 	j	hexasc_else #else
@@ -173,15 +173,36 @@ time2string:
 	sb	$v0,3($s0)#write v0 to memory #v0 contains the correct byte of 3rd nibble of a1
 	
 	#second * 1
-	#andi	$a0,$s1,0x0000000f #a0 = 1st nibble of a1
-	srl	$a0,$s1,0 #does nothing but 1st nibble is already 4 LSB in a0
-	jal	hexasc #v0 -  8 LSB ascii representation of $a0
-	nop #branch delay slot
-	sb	$v0,4($s0)#write v0 to memory #v0 contains the correct byte of 3rd nibble of a1
+	andi	$a0,$s1,0x0000000f #a0 = 1st nibble of a1, sista 4 bitarna 
 	
-	#s2 NULLBYTE
-	li	$v0,0
-	sb	$v0,5($s0)#write v0 to memory #v0 contains the correct byte of the colon
+	li	$t0,8 
+	ble    	$a0,$t0, second_if # $a0 <= 8
+	j	second_else #else
+	nop #branch delay slot
+	second_if:
+
+		jal	hexasc #v0 -  8 LSbits ascii representation of $a0
+		nop #branch delay slot
+		sb	$v0,4($s0) #lägger in värdet i index 4 (= 5te elementet)
+		
+		li	$v0,0
+		sb	$v0,5($s0)#write v0 to memory #v0 contains the correct byte of the colon
+		
+		j 	second_continue
+		
+		nop
+
+	second_else:
+ 
+		li $a0, 0x454e494e #NINE    
+		sw $a0, 4($s0) #lägger in värdet i s0, offset 4, börja lägga in på slutet
+		
+		li	$v0,0x0000
+		sb	$v0,8($s0)# 8($s0), där den 8onde biten slutar. 0 byten signalerar att det är slut på text strängen 
+		
+		
+	second_continue:	
+		
 	
 	
 	POP	$ra

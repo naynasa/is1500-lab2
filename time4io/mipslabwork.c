@@ -29,9 +29,14 @@ void labinit( void )
 {
   //p -> 0xbf886100
   //*p[0:7] = 1;
-  volatile char* p = 0xbf886100; //TRISE
-  *p = 0x00; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
+  volatile char* port_e_pointer = 0xbf886100; //TRISE
+  *port_e_pointer = 0b00000000; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
 
+  volatile uint16_t* port_d_pointer = TRISD; //TRISD
+  uint16_t mask = 0b1111100000001111; //<=> 0xf80f
+  *port_d_pointer = *port_d_pointer | 0b1111100000001111 // 0bXXXXX0000000XXXX <=> ta bort de bitarna vi vill ändra
+  *port_d_pointer += 0b0000011111110000 //add 1 to where we want 1:s
+  
   return;
 }
 

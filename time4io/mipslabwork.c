@@ -13,7 +13,7 @@
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
-
+#include <stdbool.h>
 int mytime = 0x5957;
 int num_ticks = 0;
 char textstring[] = "text, more text, and even more text!";
@@ -37,8 +37,8 @@ void labinit( void )
 
   volatile uint16_t* port_d_pointer = TRISD; //TRISD
   uint16_t mask = 0b1111100000001111; //<=> 0xf80f
-  *port_d_pointer = *port_d_pointer | 0b1111100000001111 // 0bXXXXX0000000XXXX <=> ta bort de bitarna vi vill ändra
-  *port_d_pointer += 0b0000011111110000 //add 1 to where we want 1:s - set input
+  *port_d_pointer = *port_d_pointer | 0b1111100000001111; // 0bXXXXX0000000XXXX <=> ta bort de bitarna vi vill ändra
+  *port_d_pointer += 0b0000011111110000; //add 1 to where we want 1:s - set input
   
   return;
 }

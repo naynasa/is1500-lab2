@@ -17,7 +17,7 @@ void u32init(void);
 int gv; /* Global variable. */
 int in = 3; /* Global variable, initialized to 4711. */
 
-void fun(int param)
+void fun(int param) //kallar med param=m
 {
   param++;
   saveword( "AF1: param", &param );

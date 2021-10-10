@@ -40,6 +40,7 @@ hexasc:
 	li	$v0,0
 	add	$v0,$a0,$v0
 	jr	$ra
+	nop
 
 
 	

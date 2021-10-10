@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
+int num_prints_since_last_newline = 0;
 #define COLUMNS 6
 /**
  * Returns 1 if n is prime else 0.
@@ -30,6 +30,11 @@ int is_prime(int n){
 }
 void print_number(int number_to_print){
   printf("%8d ", number_to_print);
+  num_prints_since_last_newline +=1;
+    if(num_prints_since_last_newline >= COLUMNS){
+      printf("\n");
+      num_prints_since_last_newline = 0;
+    }
 }
 
 
@@ -38,16 +43,11 @@ void print_primes(int n){
   // with the following formatting. Note that
   // the number of columns is stated in the define
   // COLUMNS
-  int num_prints_since_last_newline = 0;
+  
   for(int i = 2; i < n; i++){
     if(is_prime(i)){
-      print_number(i);
-      num_prints_since_last_newline +=1;
-    }
-    if(num_prints_since_last_newline >= COLUMNS){
-      printf("\n");
-      num_prints_since_last_newline = 0;
-    }
+      print_number(i); 
+  }
   }
 
   

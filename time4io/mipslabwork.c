@@ -54,7 +54,7 @@ void labwork( void )
 
     int switch_status = getsw();
     if(btn_4_status != 0){
-      int maskning = mytime & 0b000000000000000000000000111111111111;
+      int maskning = mytime & 0b00000000000000000000111111111111; //0x0fff
       mytime = maskning + (switch_status << 12);
 
       //switch_status 0000...0XYZW e.g. 0000.00100
@@ -67,13 +67,13 @@ void labwork( void )
     }
 
     if(btn_3_status != 0){
-      int maskning = mytime & 0b000000000000000000001111000011111111;
+      int maskning = mytime & 0b00000000000000001111000011111111;
       mytime = maskning + (switch_status << 8);
   
 
     }
     if(btn_2_status != 0){
-      int maskning = mytime & 0b000000000000000000001111111100001111;
+      int maskning = mytime & 0b00000000000000001111111100001111;
       mytime = maskning + (switch_status << 4);
 
     }
@@ -85,7 +85,7 @@ void labwork( void )
   time2string( textstring, mytime ); //pass by reference
   display_string( 3, textstring );
   display_update();
-  tick( &mytime );
+  //tick( &mytime );
   num_ticks++; //increment ticks
   volatile char* p = 0xbf886110; //PORTE
   *p = num_ticks; //5 <=> 00000101 <=> 0x05

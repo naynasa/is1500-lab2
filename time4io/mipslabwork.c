@@ -107,7 +107,7 @@ void labwork( void )
     
   }
   
-  if(TMR2 == PR2){
+  if(TMR2 == PR2 -1){
     time2string( textstring, mytime ); //pass by reference
     display_string( 3, textstring );
     display_update();

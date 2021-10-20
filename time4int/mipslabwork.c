@@ -35,7 +35,7 @@ void user_isr( void )
   tick( &mytime );
   }
   //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
-  IFS(0) = IFS(0) ^ 0b0000000100000000 //set bit 8 to 0
+  IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
 }
 
 /* Lab-specific initialization goes here */

@@ -41,7 +41,7 @@ void user_isr( void )
 /* Lab-specific initialization goes here */
 //setting TRISn, where n is the port letter e.g. A,B,C etc. to:  
 //1 marks input
-//0 mars output
+//0 mars output 
 void labinit( void )
 {
   //init Timer 2 - 16 bit timer

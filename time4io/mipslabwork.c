@@ -107,7 +107,7 @@ void labwork( void )
   }
 
 
-  if(TMR2 == PR2){ //check if our timer is "full" / has ended
+  if(TMR2 == PR2-1){ //check if our timer is "full" / has ended
     count++;
     if(count % 10 == 0){
       

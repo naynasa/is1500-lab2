@@ -14,6 +14,7 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
 #include <stdbool.h>
+#include <signal.h> 
 #define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
 #define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
 
@@ -26,6 +27,7 @@ uint32_t count = 0;
 /* Interrupt Service Routine */
 void user_isr( void )
 {
+  flag = true;
 
 
 }
@@ -105,9 +107,11 @@ void labwork( void )
     
     
   }
+  if(flag)
+  ...
 
   if(TMR2 == PR2){ //check if our timer is "full" / has ended
-    TMR2  = 0; //no need to actually set it to 0 since its unsigned so implicitly turns to 0 after overflowing
+    //TMR2  = 0; //no need to actually set it to 0 since its unsigned so implicitly turns to 0 after overflowing
     //once every 100ms
     count++;
     time2string( textstring, mytime ); //pass by reference

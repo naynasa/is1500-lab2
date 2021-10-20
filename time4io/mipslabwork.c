@@ -106,22 +106,22 @@ void labwork( void )
     
   }
 
-
-  if(TMR2 == PR2-1){ //check if our timer is "full" / has ended
+  
+  if(TMR2 == PR2){ //check if our timer is "full" / has ended
     count++;
+    time2string( textstring, mytime ); //pass by reference
+      display_string( 3, textstring );
+      display_update();
+
     if(count % 10 == 0){
-      
       tick( &mytime );
       num_ticks++; //increment ticks
+      volatile char* p = 0xbf886110; //PORTE
+      *p = num_ticks; //5 <=> 00000101 <=> 0x05
 
     }
+    display_image(96, icon);
   }
-  time2string( textstring, mytime ); //pass by reference
-  display_string( 3, textstring );
-  display_update();
-  volatile char* p = 0xbf886110; //PORTE
-  *p = num_ticks; //5 <=> 00000101 <=> 0x05
-  display_image(96, icon);
   //delay( 1000 );
   
 }

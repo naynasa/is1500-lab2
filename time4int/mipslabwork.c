@@ -16,8 +16,11 @@
 #include <stdbool.h>
 int mytime = 0x5957;
 int num_ticks = 0;
-int counter = 0; /*number of times timer 2 has been completed*/
+uint32_t counter = 0; /*number of times timer 2 has been completed*/
 char textstring[] = "text, more text, and even more text!";
+#define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
+#define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
+
 
 int prime = 1234567;
 /* T2IF (bit)- holds our interupt flag (bit 8 of IFS0 - its is 1 if timer is done else 0) */

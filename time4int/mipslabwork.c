@@ -40,13 +40,7 @@ void user_isr( void )
   //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
   IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
 }
-
-/* Lab-specific initialization goes here */
-//setting TRISn, where n is the port letter e.g. A,B,C etc. to:  
-//1 marks input
-//0 mars output 
-void labinit( void )
-{
+void init_timer(){
   //init Timer 2 - 16 bit timer
   T2CONCLR = T2CON_ENABLE_BIT;
   uint32_t target_frequency = 10; //10 Hz / our timer timesout 10 times each second
@@ -56,13 +50,22 @@ void labinit( void )
   T2CON = T2CON_PRESCALER_BITS; //sets prescaler to 256 (see global definition)
   TMR2 = 0; //set the current number of ticks in our timer to 0
   PR2 = period; //set the max number of ticks equal to our period
+}
+/* Lab-specific initialization goes here */
+//setting TRISn, where n is the port letter e.g. A,B,C etc. to:  
+//1 marks input
+//0 mars output 
+void labinit( void )
+{
 
   IEC(0) = IEC(0) | 0b0000000100000000;//set T2IE to 1
-  IPC(2) = IPC(2) | 0b00000000000111000000000000000000;//set T2IP to ones
-
+  IPC(2) = IPC(2) | 0b11100;//set T2IP to ones
+  0x800
   enable_interrupt();
 
+  init_timer();
   T2CONSET = T2CON_ENABLE_BIT; //start the timer
+
   
   //p -> 0xbf886100
   //*p[0:7] = 1;

@@ -14,7 +14,6 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
 #include <stdbool.h>
-#include <time.h>
 #define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
 #define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
 
@@ -22,7 +21,7 @@ int mytime = 0x5957;
 int num_ticks = 0;
 char textstring[] = "text, more text, and even more text!";
 bool flag = false;
-int count = 0;
+uint32_t count = 0;
 
 /* Interrupt Service Routine */
 void user_isr( void )
@@ -106,17 +105,20 @@ void labwork( void )
     
     
   }
+
   
-  if(TMR2 == PR2 -1){
-    time2string( textstring, mytime ); //pass by reference
-    display_string( 3, textstring );
-    display_update();
-    tick( &mytime );
-    num_ticks++; //increment ticks
-    volatile char* p = 0xbf886110; //PORTE
-    *p = num_ticks; //5 <=> 00000101 <=> 0x05
-    display_image(96, icon);
-    flag = false;
+  if(TMR2 == PR2){
+    count++;
+    if(count % 10 == 0){
+      time2string( textstring, mytime ); //pass by reference
+      display_string( 3, textstring );
+      display_update();
+      tick( &mytime );
+      num_ticks++; //increment ticks
+      volatile char* p = 0xbf886110; //PORTE
+      *p = num_ticks; //5 <=> 00000101 <=> 0x05
+      display_image(96, icon);
+    }
   }
   //delay( 1000 );
   

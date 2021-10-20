@@ -11,9 +11,9 @@ int getsw(){
     //port_d[8],port_d[9],port_d[10],port_d[11]
     uint16_t* d_pointer = PORTD; 
     uint16_t d_bits = *d_pointer;//0bXXXXXABCDXXXXXX   = d_bits
-    uint16_t masked_d_value = d_bits & 0b0000011110000000;  //0b00000ABCD0000000  = masked_d_value
+    uint16_t masked_d_value = d_bits & 0b0000111100000000;  //0b00000ABCD0000000  = masked_d_value
     int value = 0; 
-    return value + (masked_d_value >> 7); //0b000000000000ABCD = (masked_d_value >> 7)    
+    return value + (masked_d_value >> 8); //0b000000000000ABCD = (masked_d_value >> 8)    
 }
 
 
@@ -24,7 +24,7 @@ int getsw(){
 int getbtns(void){
     uint16_t* d_pointer = PORTD;
     uint16_t d_bits = *d_pointer;//0bXXXXXXXXABCXXXX   = d_bits
-    uint16_t masked_d_value = d_bits & 0b0000000001110000;  //0b00000ABCD0000000  = masked_d_value
+    uint16_t masked_d_value = d_bits & 0b0000000011100000;  //0b00000ABCD00000  = masked_d_value
     int value = 0; 
     return value + (masked_d_value >> 5); //0b0000000000000ABC = (masked_d_value >> 5)
 }

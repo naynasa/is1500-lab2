@@ -101,9 +101,6 @@ void labinit( void )
 /* This function is called repetitively from the main program */
 void labwork( void )
 {
-  volatile char* port_e_pointer = 0xbf886100; //TRISE
-  *port_e_pointer = 0b00000000; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
-
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );
   display_update();

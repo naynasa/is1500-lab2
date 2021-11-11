@@ -22,8 +22,6 @@ char textstring[] = "text, more text, and even more text!";
 #define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
 #define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
 
-volatile char* p = 0xbf886110; //PORTE
-
 
 int prime = 1234567;
 /* T2IF (bit)- holds our interupt flag (bit 8 of IFS0 - its is 1 if timer is done else 0) */
@@ -35,7 +33,7 @@ void user_isr( void )
 {
   int timer_triggered_isr = (IFS(0) &   0b100000000); //IFS0<8> 8:e biten har sanningsvärdet för flaggan
   int switch_triggered_isr = (IFS(0) & 0b000000001000000000000000);  //IFS0<15> 15:e biten har sanningsvärdet för flaggan
-  *p = 13;
+
   if(timer_triggered_isr){
     counter++;
     if(counter % 10 == 0){

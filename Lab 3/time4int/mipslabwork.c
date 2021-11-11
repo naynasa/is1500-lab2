@@ -17,6 +17,7 @@
 int mytime = 0x5957;
 int num_ticks = 0;
 uint32_t counter = 0; /*number of times timer 2 has been completed*/
+uint32_t switch_counter = 0;
 char textstring[] = "text, more text, and even more text!";
 #define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
 #define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
@@ -30,15 +31,27 @@ int prime = 1234567;
 /* Interrupt Service Routine */
 void user_isr( void ) 
 {
-  counter++;
-  if(counter % 10 == 0){
-    time2string( textstring, mytime );
-    display_string( 3, textstring );
+  bool timer_triggered_isr = (IFS(0) &   0b100000000) >> 8; //IFS0<8> 8:e biten har sanningsvärdet för flaggan
+  bool switch_triggered_isr = (IFS(0) & 0b010000000) >> 7;  //IFS0<7> 7:e biten har sanningsvärdet för flaggan
+  if(timer_triggered_isr){
+    counter++;
+    if(counter % 10 == 0){
+      time2string( textstring, mytime );
+      display_string( 3, textstring );
+      display_update();
+      tick( &mytime );
+    }
+    //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
+    IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
+  }else if(switch_triggered_isr){
+    switch_counter++;
+    display_string( 0, itoaconv( switch_counter ) );
     display_update();
-    tick( &mytime );
+    
+    //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
+    IFS(0) = IFS(0) ^ 0b010000000; //set bit 7 to 0
   }
-  //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
-  IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
+
 }
 void init_timer(){
   //init Timer 2 - 16 bit timer
@@ -59,7 +72,12 @@ void labinit( void )
 {
 
   IEC(0) = IEC(0) | 0b0000000100000000;//set T2IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
-  IPC(2) = IPC(2) | 0b11100;//set T2IP to ones (Interrupt Priority Control bits)
+  IPC(2) = IPC(2) | 0b00000000000000000000000000011100;//set T2IP to ones (Interrupt Priority Control bits)
+
+  //bonus assignment - enable INT1 aka external input interrupt 1
+  IEC(0) = IEC(0) | 0b0000000010000000;//set INT1IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
+  IPC(1) = IPC(1) | 0b00011100000000000000000000000000;//set INT1IP (INT1 Interupt Priority) to ones (Interrupt Priority Control bits)
+
   
   enable_interrupt();
 
@@ -86,7 +104,7 @@ void labwork( void )
   int switch_status = getsw();
   bool switch_4_status = switch_status & 0b0000000000000001;
   if(switch_4_status){
-    IFS(0) = IFS(0) | 0b0000000100000000; //set bit 8 to 1 (mimics a timeout by the timer)
+    IEC(0) = IEC(0) | 0b0000000010000000; //set bit 7 to 1 (aka enable the timeout see TABLE 7-1)
   }
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );

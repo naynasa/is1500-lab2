@@ -49,7 +49,7 @@ void user_isr( void )
     PORTE += 1;
     
    
-    IFS(0) = IFS(0) ^ 0b000000001000000000000000; //reset flag
+    IFS(0) = IFS(0) ^ 0b000000001000000000000000; //reset flag on bit 15
   }
 
 }
@@ -75,7 +75,7 @@ void labinit( void )
   IPC(2) = IPC(2) | 0b00000000000000000000000000011100;//set T2IP to ones (Interrupt Priority Control bits)
 
   //bonus assignment - enable INT3 aka external input interrupt 1
-  IEC(0) = IEC(0) | 0b0000000010000000;//set INT1IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
+  IEC(0) = IEC(0) | 0b000000001000000000000000;//set INT1IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
   IPC(3) = IPC(3) | 0b00011100000000000000000000000000;//set INT1IP (INT1 Interupt Priority) to ones (Interrupt Priority Control bits)
 
   

@@ -32,10 +32,10 @@ void user_isr( void )
 {
   counter++;
   if(counter % 10 == 0){
-  time2string( textstring, mytime );
-  display_string( 3, textstring );
-  display_update();
-  tick( &mytime );
+    time2string( textstring, mytime );
+    display_string( 3, textstring );
+    display_update();
+    tick( &mytime );
   }
   //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
   IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
@@ -58,9 +58,9 @@ void init_timer(){
 void labinit( void )
 {
 
-  IEC(0) = IEC(0) | 0b0000000100000000;//set T2IE to 1
-  IPC(2) = IPC(2) | 0b11100;//set T2IP to ones
-  0x800
+  IEC(0) = IEC(0) | 0b0000000100000000;//set T2IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
+  IPC(2) = IPC(2) | 0b11100;//set T2IP to ones (Interrupt Priority Control bits)
+  
   enable_interrupt();
 
   init_timer();
@@ -83,6 +83,11 @@ void labinit( void )
 /* This function is called repetitively from the main program */
 void labwork( void )
 {
+  int switch_status = getsw();
+  bool switch_4_status = switch_status & 0b0000000000000001;
+  if(switch_4_status){
+    
+  }
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );
   display_update();

@@ -4,8 +4,8 @@
 
 	.text
 main:
-	li	$a0,17		# change this to test different values
-	jal	hexasc		# call hexasc
+	li	$a0,0x11		# change this to test different values
+	jal	hexasc		# call hexasc - same as hexasc(a0)
 	nop			# delay slot filler (just in case)	
 
 	move	$a0,$v0		# copy return value to argument register
@@ -27,8 +27,9 @@ stop:	j	stop		# stop after one run
 	.text
 hexasc:
 	andi	$a0,$a0,15#XXXX...X[YYYY] AND 0000..0[1111] = 0000.0[YYYY]
-	li	$t0,9
+	li	$t0,9 # store 9 for the comparison in ble in an arbitrary register
 	ble    	$a0,$t0,hexasc_if#$a0<10
+	nop
 	j	hexasc_else #else
 	hexasc_if:
 		#we know that $a0<10
@@ -41,9 +42,3 @@ hexasc:
 	add	$v0,$a0,$v0
 	jr	$ra
 	nop
-
-
-	
-#for(int i=0; i<3;i++{
-#bytes #4 sista bitarna
-#heasc(bytes)

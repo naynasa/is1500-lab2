@@ -16,20 +16,20 @@
 #include <stdbool.h>
 #include <signal.h> 
 #define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
-#define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
+#define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> (bits 4,5,6) - we only look at 3 bits (here 111) and 111 <=> prescaler of 256
+
+//T2 CON is the control register for timer 2 (settings etc.)
+//TCKPS 3 bits that control the prescaler
 
 int mytime = 0x5957;
 int num_ticks = 0;
 char textstring[] = "text, more text, and even more text!";
-bool flag = false;
-uint32_t count = 0;
-
+uint32_t count = 0; //unsigned in order to make it go back to 0 after reaching max value - max value is reached after 429496729.5 sec or around 13.6 years - howerver overflows are not a problem since its unsigned
+// if you for some reason really wanted to count every occurence you could make it uint64_t then it could store values for ca 29 billion years before overflow
 /* Interrupt Service Routine */
 void user_isr( void )
 {
-  flag = true;
-
-
+  
 }
 
 /* Lab-specific initialization goes here */
@@ -40,10 +40,10 @@ void user_isr( void )
 void labinit( void )
 {
   //init Timer 2 - 16 bit timer
-  T2CONCLR = T2CON_ENABLE_BIT;
+  T2CONCLR = T2CON_ENABLE_BIT; //T2CONCLR clears selected bits in T2CON
   uint32_t target_frequency = 10; //10 Hz / our timer timesout 10 times each second
   uint32_t prescaler = 256; //256 is needed since we need a low frequency 
-  uint32_t pb_clock_frequency = 80E6;
+  uint32_t pb_clock_frequency = 80E6; //clock speed of the chipkit
   uint16_t period = pb_clock_frequency / (prescaler * target_frequency); //set our max value of the timer = 31250
   T2CON = T2CON_PRESCALER_BITS; //sets prescaler to 256 (see global definition)
   TMR2 = 0; //set the current number of ticks in our timer to 0
@@ -107,8 +107,7 @@ void labwork( void )
     
     
   }
-  if(flag)
-  ...
+
 
   if(TMR2 == PR2){ //check if our timer is "full" / has ended
     //TMR2  = 0; //no need to actually set it to 0 since its unsigned so implicitly turns to 0 after overflowing
@@ -131,16 +130,9 @@ void labwork( void )
   //delay( 1000 );
   
 }
-// TRISECLR sätter man en bit i den till 1 sätts motsvarande bit till 0 i TRISE (sätter man en bit till 0 händer inget)
-// TRISESET 1 sätter värdet i TRISET 0 gör inget
-
-//getbtns och getsw hamnar i register $v0? pga det är ett returvärde från en funktion och vi har bara ett
-
-
-//1)gå till https://ww1.microchip.com/downloads/en/devicedoc/chipkit%20basic%20io%20shield_rm.pdf sid 8
-// och hitta knappen/switchen vi vill ha
-//2)kolla pin number under uno32
-//3)https://electrathonoftampabay.org/www/Documents/uno32/chipKIT%20Uno32_rm.pdf sid 12 - kolla pic32 signal för pinnen vi hittade i 2)
-//4)tolka resultatet t.ex. RD7 <=> bit 7 av port D
-//(5) om vi inte vet var port D ligger kollar vi i https://github.com/sergev/pic32sim/blob/master/pic32mx.h så hittar vi minnesadressen för port D
-
+//QUESTIONS
+//1)N/A
+//2)N/A
+//3)T2CONCLR, T2CON, TMR2, PR2, T2CONSET in init
+//4) yes it changes quickly since we make a call to display (update) the string every 100ms - this is achieved
+// by moving the code out of the nested if statement

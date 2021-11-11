@@ -33,8 +33,8 @@ void user_isr( void )
 {
   int timer_triggered_isr = (IFS(0) &   0b100000000); //IFS0<8> 8:e biten har sanningsvärdet för flaggan
   int switch_triggered_isr = (IFS(0) & 0b000000001000000000000000);  //IFS0<15> 15:e biten har sanningsvärdet för flaggan
+  PORTE = 13;
   if(timer_triggered_isr){
-    PORTE += 1;
     counter++;
     if(counter % 10 == 0){
       time2string( textstring, mytime );

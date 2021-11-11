@@ -102,7 +102,7 @@ void labinit( void )
 void labwork( void )
 {
   int switch_status = getsw();
-  bool switch_4_status = switch_status & 0b0000000000000001;
+  bool switch_4_status = switch_status & 0b0000000000000100; //get B aka 3rd switch
   if(switch_4_status){
     IEC(0) = IEC(0) | 0b0000000010000000; //set bit 7 to 1 (aka enable the timeout see TABLE 7-1)
   }

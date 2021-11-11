@@ -86,7 +86,7 @@ void labwork( void )
   int switch_status = getsw();
   bool switch_4_status = switch_status & 0b0000000000000001;
   if(switch_4_status){
-    
+    IFS(0) = IFS(0) | 0b0000000100000000; //set bit 8 to 1 (mimics a timeout by the timer)
   }
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );

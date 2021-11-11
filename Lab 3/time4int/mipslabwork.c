@@ -49,7 +49,7 @@ void user_isr( void )
     PORTE += 1;
     
    
-    IFS(0) = IFS(0) & 0b000000001000000000000000; //reset flag
+    IFS(0) = IFS(0) ^ 0b000000001000000000000000; //reset flag
   }
 
 }
@@ -103,7 +103,7 @@ void labwork( void )
 {
   volatile char* port_e_pointer = 0xbf886100; //TRISE
   *port_e_pointer = 0b00000000; //<=> 11111111 i bas 2 - sets 8 LSB of port E to output
-  
+
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );
   display_update();

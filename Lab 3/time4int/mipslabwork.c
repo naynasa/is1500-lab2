@@ -31,8 +31,8 @@ int prime = 1234567;
 /* Interrupt Service Routine */
 void user_isr( void ) 
 {
-  bool timer_triggered_isr = (IFS(0) &   0b100000000) >> 8; //IFS0<8> 8:e biten har sanningsvärdet för flaggan
-  bool switch_triggered_isr = (IFS(0) & 0b000000001000000000000000) >> 15;  //IFS0<15> 15:e biten har sanningsvärdet för flaggan
+  int timer_triggered_isr = (IFS(0) &   0b100000000); //IFS0<8> 8:e biten har sanningsvärdet för flaggan
+  int switch_triggered_isr = (IFS(0) & 0b000000001000000000000000);  //IFS0<15> 15:e biten har sanningsvärdet för flaggan
   if(timer_triggered_isr){
     counter++;
     if(counter % 10 == 0){

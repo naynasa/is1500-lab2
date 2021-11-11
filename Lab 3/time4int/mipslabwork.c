@@ -32,7 +32,7 @@ int prime = 1234567;
 void user_isr( void ) 
 {
   bool timer_triggered_isr = (IFS(0) &   0b100000000) >> 8; //IFS0<8> 8:e biten har sanningsvärdet för flaggan
-  bool switch_triggered_isr = (IFS(0) & 0b010000000) >> 7;  //IFS0<7> 7:e biten har sanningsvärdet för flaggan
+  bool switch_triggered_isr = (IFS(0) & 0b000000001000000000000000) >> 15;  //IFS0<15> 15:e biten har sanningsvärdet för flaggan
   if(timer_triggered_isr){
     counter++;
     if(counter % 10 == 0){
@@ -48,8 +48,8 @@ void user_isr( void )
     display_string( 0, itoaconv( switch_counter ) );
     display_update();
     
-    //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
-    IFS(0) = IFS(0) ^ 0b010000000; //set bit 7 to 0
+   
+    IFS(0) = IFS(0) & 0b000000001000000000000000; //reset flag
   }
 
 }
@@ -74,9 +74,9 @@ void labinit( void )
   IEC(0) = IEC(0) | 0b0000000100000000;//set T2IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
   IPC(2) = IPC(2) | 0b00000000000000000000000000011100;//set T2IP to ones (Interrupt Priority Control bits)
 
-  //bonus assignment - enable INT1 aka external input interrupt 1
+  //bonus assignment - enable INT3 aka external input interrupt 1
   IEC(0) = IEC(0) | 0b0000000010000000;//set INT1IE to 1 (Interrupt Enable Control bit in IEC0 interrupt register)
-  IPC(1) = IPC(1) | 0b00011100000000000000000000000000;//set INT1IP (INT1 Interupt Priority) to ones (Interrupt Priority Control bits)
+  IPC(3) = IPC(3) | 0b00011100000000000000000000000000;//set INT1IP (INT1 Interupt Priority) to ones (Interrupt Priority Control bits)
 
   
   enable_interrupt();
@@ -104,7 +104,7 @@ void labwork( void )
   int switch_status = getsw();
   bool switch_4_status = switch_status & 0b0000000000000100; //get B aka 3rd switch
   if(switch_4_status){
-    IEC(0) = IEC(0) | 0b0000000010000000; //set bit 7 to 1 (aka enable the timeout see TABLE 7-1)
+    IEC(0) = IEC(0) | 0b000000001000000000000000; //set bit 15 to 1 (aka enable the timeout see TABLE 7-1)
   }
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );

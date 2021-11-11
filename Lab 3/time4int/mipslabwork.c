@@ -43,10 +43,9 @@ void user_isr( void )
     }
     //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
-  }else{
-    switch_counter++;
-    display_string( 0, itoaconv( switch_counter ) );
-    display_update();
+  }
+  if(switch_triggered_isr){
+    PORTE += 1;
     
    
     IFS(0) = IFS(0) & 0b000000001000000000000000; //reset flag
@@ -101,12 +100,6 @@ void labinit( void )
 /* This function is called repetitively from the main program */
 void labwork( void )
 {
-  int switch_status = getsw();
-  bool switch_4_status = switch_status & 0b0000000000000100; //get B aka 3rd switch
-  if(switch_4_status){
-    IFS(0) = IFS(0) | 0b000000001000000000000000; //set bit 15 to 1 (aka enable the timeout see TABLE 7-1)
-    //test with IFS instead
-  }
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );
   display_update();

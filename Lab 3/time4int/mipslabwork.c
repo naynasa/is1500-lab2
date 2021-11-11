@@ -104,7 +104,8 @@ void labwork( void )
   int switch_status = getsw();
   bool switch_4_status = switch_status & 0b0000000000000100; //get B aka 3rd switch
   if(switch_4_status){
-    IEC(0) = IEC(0) | 0b000000001000000000000000; //set bit 15 to 1 (aka enable the timeout see TABLE 7-1)
+    IFS(0) = IFS(0) | 0b000000001000000000000000; //set bit 15 to 1 (aka enable the timeout see TABLE 7-1)
+    //test with IFS instead
   }
   prime = nextprime( prime );
   display_string( 0, itoaconv( prime ) );

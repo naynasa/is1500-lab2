@@ -43,7 +43,7 @@ void user_isr( void )
     }
     //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
-  }else if(switch_triggered_isr){
+  }else{
     switch_counter++;
     display_string( 0, itoaconv( switch_counter ) );
     display_update();

@@ -99,8 +99,14 @@ void game_init( void )
 void game_main( void )
 {
   
+  const uint8_t const entire_screen[4096] = {0}; //set to all 0s
+  for (size_t i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
+  {
+    entire_screen[i] = 255; //make all pixels white
+  }
   
   //display_update();
-  display_image(96,icon);
+  display_image(0,entire_screen);
+
 }
 

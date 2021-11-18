@@ -22,3 +22,8 @@ probably, in order to coordinate when we should write to the screen
 1) make a square that moves smoothly across the screen
 
 `display_image(x,img)` displays an image (uint8_t array) at the x value specified - can img be any length?
+
+## useful info
+Organic LED Graphic Display 
+This is a 128x32 pixel monochrome OLED graphic display panel is accessed using the SPI interface.
+https://digilent.com/reference/_media/chipkit_shield_basic_io_shield:chipkit_basic_io_shield_rm.pdf page 4

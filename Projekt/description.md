@@ -13,7 +13,7 @@ Display game on built-in OLED graphical display.
 
 ## questions / planning / ideas
 >how do we structure the code? what paradigms to use?
-A: "simple imperative" we have a bunch of 
+A: "simple imperative" we have a bunch of functions and our data somewhat structured which calls these functions
 
 > do we need a timer in the project?
 probably, in order to coordinate when we should write to the screen

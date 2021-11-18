@@ -61,7 +61,7 @@ int main(void) {
 	display_string(3, "Welcome!");
 	display_update();
 	
-	display_image(96, icon);
+	//display_image(96, icon);
 	
 	game_init(); /* Do any lab-specific initialization */
 

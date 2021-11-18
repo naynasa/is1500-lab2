@@ -109,13 +109,13 @@ void game_main( void )
   //}
   uint8_t white_square[128] = {0}; //set to all 0s
   int i;
-  for (i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
+  for (i = 0; i < sizeof(white_square)/sizeof(white_square[0]); i++)
   {
-    entire_screen[i] = 255; //make all pixels white
+    white_square[i] = 255; //make all pixels white
   }
-  
+
   //display_update();
-  display_image(0,entire_screen);
+  display_image(0,white_square);
 
 }
 

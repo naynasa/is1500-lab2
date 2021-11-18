@@ -99,7 +99,7 @@ void game_init( void )
 void game_main( void )
 {
   
-  display_string( 0, itoaconv( prime ) );
+  
   display_update();
   
   const uint8_t const image[] = {

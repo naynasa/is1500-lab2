@@ -32,6 +32,7 @@ char textstring[] = "text, more text, and even more text!";
 
 /* Interrupt Service Routine - called when */
 void user_isr( void ) {
+    /*
     counter++;
     if(counter % 10 == 0){
       time2string( textstring, mytime );
@@ -39,6 +40,7 @@ void user_isr( void ) {
       display_update();
       tick( &mytime );
     }
+    */
     //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
 
@@ -99,7 +101,13 @@ void game_init( void )
 void game_main( void )
 {
   
-  uint8_t entire_screen[4096] = {0}; //set to all 0s
+  //uint8_t entire_screen[4096] = {0}; //set to all 0s
+  //int i;
+  //for (i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
+  //{
+  //  entire_screen[i] = 255; //make all pixels white
+  //}
+  uint8_t white_square[128] = {0}; //set to all 0s
   int i;
   for (i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
   {

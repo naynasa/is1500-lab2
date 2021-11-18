@@ -100,7 +100,8 @@ void game_main( void )
 {
   
   uint8_t entire_screen[4096] = {0}; //set to all 0s
-  for (int i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
+  int i;
+  for (i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
   {
     entire_screen[i] = 255; //make all pixels white
   }

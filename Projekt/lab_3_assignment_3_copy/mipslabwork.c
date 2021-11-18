@@ -115,7 +115,7 @@ void game_main( void )
   }
 
   //display_update();
-  display_image(0,white_square);
+  display_image(96,white_square);
 
 }
 

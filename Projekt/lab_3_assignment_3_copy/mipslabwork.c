@@ -114,8 +114,9 @@ void game_main( void )
     white_square[i] = 255; //make all pixels white
   }
 
-  //display_update();
+  
   //display_image(96,white_square);
   display_image(96, icon);
+  display_update();
 }
 

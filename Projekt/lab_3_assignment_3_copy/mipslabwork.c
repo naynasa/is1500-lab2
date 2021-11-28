@@ -14,6 +14,8 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
 #include <stdbool.h>
+#include <thirdpartylibraries_io_shield/IOShieldOled/IOShieldOled.h>
+
 int mytime = 0x5957;
 uint32_t counter = 0; /*number of times timer 2 has been completed*/
 
@@ -87,36 +89,95 @@ void init_buttons_switches(){
 
 void game_init( void )
 {
-  enable_interrupt(); //allows our program to use interrupts
-  
-  init_timer();
-  start_timer();
-  
-  init_LEDs();
-  init_buttons_switches();
-  return;
+  IOShieldOled.begin();
 }
 
 /* This function is called repetitively from the main program */
 void game_main( void )
 {
   
-  //uint8_t entire_screen[4096] = {0}; //set to all 0s
-  //int i;
-  //for (i = 0; i < sizeof(entire_screen)/sizeof(entire_screen[0]); i++)
-  //{
-  //  entire_screen[i] = 255; //make all pixels white
-  //}
-  uint8_t white_square[128] = {0}; //set to all 0s
-  int i;
-  for (i = 0; i < sizeof(white_square)/sizeof(white_square[0]); i++)
-  {
-    white_square[i] = 255; //make all pixels white
-  }
+  int irow;
+  int ib;
 
+  //Clear the virtual buffer
+  IOShieldOled.clearBuffer();
   
-  //display_image(96,white_square);
-  display_image(96, icon);
-  display_update();
+  //Chosing Fill pattern 0
+  IOShieldOled.setFillPattern(IOShieldOled.getStdPattern(0));
+  //Turn automatic updating off
+  IOShieldOled.setCharUpdate(0);
+  
+  //Draw a rectangle over wrting then slide the rectagle
+  //down slowly displaying all writing
+  for (irow = 0; irow < IOShieldOled.rowMax; irow++)
+  {
+    IOShieldOled.clearBuffer();
+    IOShieldOled.setCursor(0, 0);
+    IOShieldOled.putString("chipKIT");
+    IOShieldOled.setCursor(0, 1);
+    IOShieldOled.putString("Basic I/O Shield");
+    IOShieldOled.setCursor(0, 2);
+    IOShieldOled.putString("by Digilent");
+    
+    IOShieldOled.moveTo(0, irow);
+    IOShieldOled.drawFillRect(127,31);
+    IOShieldOled.moveTo(0, irow);
+    IOShieldOled.drawLine(127,irow);
+    IOShieldOled.updateDisplay();
+    delay(100);
+  }
+  
+  delay(1000);
+  
+  // Blink the display a bit.
+  IOShieldOled.displayOff();
+  delay(500);
+  IOShieldOled.displayOn();
+  delay(500);
+  
+  IOShieldOled.displayOff();
+  delay(500);
+  IOShieldOled.displayOn();
+  delay(500);
+
+  IOShieldOled.displayOff();
+  delay(500);
+  IOShieldOled.displayOn();
+  delay(500);
+
+  delay(2000);
+  
+  // Now erase the characters from the display
+  for (irow = IOShieldOled.rowMax-1; irow >= 0; irow--) {
+    IOShieldOled.setDrawColor(1);
+    IOShieldOled.setDrawMode(IOShieldOled.modeSet);
+    IOShieldOled.moveTo(0,irow);
+    IOShieldOled.drawLine(127,irow);
+    IOShieldOled.updateDisplay();
+    delay(25);
+    IOShieldOled.setDrawMode(IOShieldOled.modeXor);
+    IOShieldOled.moveTo(0, irow);
+    IOShieldOled.drawLine(127, irow);
+    IOShieldOled.updateDisplay();
+  }
+  
+  delay(1000);  
+
+  // Draw a rectangle in center of screen
+  // Display the 8 different patterns availible
+  IOShieldOled.setDrawMode(IOShieldOled.modeSet);
+
+  for(ib = 1; ib < 8; ib++)
+  {
+    IOShieldOled.clearBuffer();
+    
+    IOShieldOled.setFillPattern(IOShieldOled.getStdPattern(ib));
+    IOShieldOled.moveTo(55, 1);
+    IOShieldOled.drawFillRect(75, 27);
+    IOShieldOled.drawRect(75, 27);
+    IOShieldOled.updateDisplay();
+    
+    delay(1000);
+  }
 }
 

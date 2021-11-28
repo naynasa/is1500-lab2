@@ -27,3 +27,7 @@ probably, in order to coordinate when we should write to the screen
 Organic LED Graphic Display 
 This is a 128x32 pixel monochrome OLED graphic display panel is accessed using the SPI interface.
 https://digilent.com/reference/_media/chipkit_shield_basic_io_shield:chipkit_basic_io_shield_rm.pdf page 4
+
+the display is monochrome - each pixel is either 0 or 1
+
+our chipkit talks to the OLED display on the  basic i/o shield via SPI (SERIAL PERIPHERAL INTERFACE) 

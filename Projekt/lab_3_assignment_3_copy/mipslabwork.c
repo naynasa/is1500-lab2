@@ -14,7 +14,7 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "mipslab.h"  /* Declatations for these labs */
 #include <stdbool.h>
-#include <thirdpartylibraries_io_shield/IOShieldOled/IOShieldOled.h>
+#include <../thirdpartylibraries_io_shield/IOShieldOled/IOShieldOled.h>
 
 int mytime = 0x5957;
 uint32_t counter = 0; /*number of times timer 2 has been completed*/

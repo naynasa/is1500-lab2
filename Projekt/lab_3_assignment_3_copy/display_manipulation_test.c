@@ -22,7 +22,7 @@
 /* Symbols describing the geometry of the display. */ 
  
 
-#define cbOledDispMax  512   //max number of uint_8_ts in display buffer 
+#define cbOledDispMax  512   //max number of uint8_ts in display buffer 
  
 
 #define ccolOledMax  128  //number of display columns 
@@ -37,7 +37,7 @@
 ** copied to the display. 
 
 */ 
-uint_8_t rgbOledBmp[cbOledDispMax];
+uint8_t rgbOledBmp[cbOledDispMax];
 
 
 /* ------------------------------------------------------------ */ 
@@ -132,7 +132,7 @@ OledDspInit()
  
  /* Display off command 
  */ 
- Spi2Putuint_8_t(0xAE); 
+ Spi2Putuint8_t(0xAE); 
  
 
  /* Bring Reset low and then high 
@@ -144,11 +144,11 @@ OledDspInit()
 
  /* Send the Set Charge Pump and Set Pre-Charge Period commands 
  */ 
- Spi2Putuint_8_t(0x8D); 
- Spi2Putuint_8_t(0x14); 
+ Spi2Putuint8_t(0x8D); 
+ Spi2Putuint8_t(0x14); 
  
- Spi2Putuint_8_t(0xD9); 
- Spi2Putuint_8_t(0xF1); 
+ Spi2Putuint8_t(0xD9); 
+ Spi2Putuint8_t(0xF1); 
  
  /* Turn on VCC and wait 100ms 
  */ 
@@ -159,18 +159,18 @@ OledDspInit()
  /* Send the commands to invert the display. This puts the display origin 
  ** in the upper left corner. 
  */ 
- Spi2Putuint_8_t(0xA1);    //remap columns 
- Spi2Putuint_8_t(0xC8);    //remap the rows 
+ Spi2Putuint8_t(0xA1);    //remap columns 
+ Spi2Putuint8_t(0xC8);    //remap the rows 
  
  /* Send the commands to select sequential COM configuration. This makes the 
  ** display memory non-interleaved. 
  */ 
- Spi2Putuint_8_t(0xDA);    //set COM configuration command 
- Spi2Putuint_8_t(0x20);    //sequential COM, left/right remap enabled 
+ Spi2Putuint8_t(0xDA);    //set COM configuration command 
+ Spi2Putuint8_t(0x20);    //sequential COM, left/right remap enabled 
  
  /* Send Display On command 
  */ 
- Spi2Putuint_8_t(0xAF); 
+ Spi2Putuint8_t(0xAF); 
  
 } 
 
@@ -199,7 +199,7 @@ OledUpdate()
  { 
  int   ipag; 
  int   icol; 
- uint_8_t * pb; 
+ uint8_t * pb; 
  
  pb = rgbOledBmp; 
  
@@ -210,14 +210,14 @@ OledUpdate()
 
   /* Set the page address 
   */ 
-  Spi2Putuint_8_t(0x22);   //Set page command 
-  Spi2Putuint_8_t(ipag);   //page number 
+  Spi2Putuint8_t(0x22);   //Set page command 
+  Spi2Putuint8_t(ipag);   //page number 
  
 
   /* Start at the left column 
   */ 
-  Spi2Putuint_8_t(0x00);   //set low nybble of column 
-  Spi2Putuint_8_t(0x10);   //set high nybble of column 
+  Spi2Putuint8_t(0x00);   //set low nybble of column 
+  Spi2Putuint8_t(0x10);   //set high nybble of column 
  
 
   PORTSetBits(prtDataCmd, bitDataCmd); 
@@ -239,7 +239,7 @@ OledUpdate()
 /*** OledPutBuffer 
 ** 
 ** Parameters: 
-**  cb  - number of uint_8_ts to send/receive 
+**  cb  - number of uint8_ts to send/receive 
 **  rgbTx - pointer to the buffer to send 
 ** 
 
@@ -252,16 +252,16 @@ OledUpdate()
 ** 
 
 ** Description: 
-**  Send the uint_8_ts specified in rgbTx to the slave. 
+**  Send the uint8_ts specified in rgbTx to the slave. 
  
 
 */
  
 void 
-OledPutBuffer(int cb, uint_8_t * rgbTx) 
+OledPutBuffer(int cb, uint8_t * rgbTx) 
  { 
  int   ib; 
- uint_8_t bTmp; 
+ uint8_t bTmp; 
  
  /* Write/Read the data 
  */ 
@@ -270,11 +270,11 @@ OledPutBuffer(int cb, uint_8_t * rgbTx)
   */ 
   while (SPI2STATbits.SPITBE == 0); 
  
-  /* Write the next transmit uint_8_t. 
+  /* Write the next transmit uint8_t. 
   */ 
   SPI2BUF = *rgbTx++; 
  
-  /* Wait for receive uint_8_t. 
+  /* Wait for receive uint8_t. 
   */ 
   while (SPI2STATbits.SPIRBF == 0); 
   bTmp = SPI2BUF; 
@@ -286,46 +286,46 @@ OledPutBuffer(int cb, uint_8_t * rgbTx)
  
 /* ------------------------------------------------------------ */ 
 
-/*** Spi2Putuint_8_t 
+/*** Spi2Putuint8_t 
 
 ** 
 ** Parameters: 
-**  bVal  - uint_8_t value to write 
+**  bVal  - uint8_t value to write 
 ** 
 
 ** Return Value: 
-**  Returns uint_8_t read 
+**  Returns uint8_t read 
 ** 
 
 ** Errors: 
 **  none 
 ** 
 ** Description: 
-**  Write/Read a uint_8_t on SPI port 2 
+**  Write/Read a uint8_t on SPI port 2 
 */ 
 
  
-uint_8_t 
-Spi2Putuint_8_t(uint_8_t bVal) 
+uint8_t 
+Spi2Putuint8_t(uint8_t bVal) 
 
  { 
- uint_8_t bRx; 
+ uint8_t bRx; 
  
 
  /* Wait for transmitter to be ready 
  */ 
  while (SPI2STATbits.SPITBE == 0); 
  
- /* Write the next transmit uint_8_t. 
+ /* Write the next transmit uint8_t. 
  */ 
  SPI2BUF = bVal; 
  
- /* Wait for receive uint_8_t. 
+ /* Wait for receive uint8_t. 
  */ 
  while (SPI2STATbits.SPIRBF == 0); 
  
 
- /* Put the received uint_8_t in the buffer. 
+ /* Put the received uint8_t in the buffer. 
  */ 
  bRx = SPI2BUF; 
   

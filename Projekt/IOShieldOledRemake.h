@@ -50,7 +50,7 @@ void		setCharUpdate(int f);
 int			getCharUpdate(void);
 void		putChar(char ch);
 void		putString(char * sz);
-void    putString(const char *);
+/*void    putString(const char *);*/
 
 /* Graphic output functions.
 */
@@ -71,7 +71,7 @@ void		getBmp(int dxco, int dyco, uint8_t * pbBmp);
 void		putBmp(int dxcp, int dyco, uint8_t * pbBmp);
 void		drawChar(char ch);
 void		drawString(char *sz);
-void		drawString(const char *sz);
+/*void		drawString(const char *sz);*/
 
 /* ------------------------------------------------------------ */
 

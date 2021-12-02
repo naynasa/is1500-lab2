@@ -3,11 +3,11 @@
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>
 
-#include "utility/OledChar.h"
-#include "utility/OledDriver.h"
-#include "utility/OledGrph.h"
+#include "OledChar.h"
+#include "OledDriver.h"
+#include "OledGrph.h"
 
-
+#include "IOShieldOledRemake.h"
 
 /* ------------------------------------------------------------ */
 /***	void IOShieldOledClass::begin(void)

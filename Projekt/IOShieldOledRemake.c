@@ -279,9 +279,11 @@ void putChar(char ch){
 void putString(char * sz){
     OledPutString(sz);
 }
+/*
 void putString(const char *){
     OledPutString((char *)sz);
 }
+*/
 
 /* ------------------------------------------------------------ */
 /***	void IOShieldOledClass::setDrawColor(uint8_t clr)
@@ -614,8 +616,9 @@ void drawString(char *sz){
     OledDrawString(sz);
 
 }
+/*
 void drawString(const char *sz){
     
     OledDrawString((char *)sz);
 
-}
+}*/

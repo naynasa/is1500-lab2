@@ -3,9 +3,9 @@
 #include <stdint.h>   /* Declarations of uint_32 and the like */
 #include <pic32mx.h>
 
-#include "utility/OledChar.h"
-#include "utility/OledDriver.h"
-#include "utility/OledGrph.h"
+#include "./utility/OledChar.h"
+#include "./utility/OledDriver.h"
+#include "./utility/OledGrph.h"
 
 
 /* ------------------------------------------------------------ */

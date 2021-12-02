@@ -44,9 +44,7 @@
 /*				Include File Definitions						*/
 /* ------------------------------------------------------------ */
 
-#include <WProgram.h>
-#include <p32xxxx.h>
-#include <Arduino.h>
+
 
 #include "OledDriver.h"
 #include "OledChar.h"
@@ -61,6 +59,35 @@
 #define	cmdOledSegRemap		0xA1	//map column 127 to SEG0
 #define	cmdOledComDir		0xC8	//scan from COM[N-1] to COM0
 #define	cmdOledComConfig	0xDA	//set COM hardware configuration
+#define BYTE				char
+
+/*
+#define prtDataCmd 0x1
+#define bitDataCmd 0x1
+#define prtVddCtrl 0x1
+#define bitVddCtrl 0x1
+#define prtReset 0x1
+#define bitReset 0x1
+#define prtVbatCtrl 0x1
+#define bitVbatCtrl 0x1
+*/
+
+#define prtVddCtrl PORTF
+#define prtVbatCtrl PORTF
+#define prtDataCmd PORTF
+#define prtReset PORTF
+#define bitVddCtrl BIT_6
+#define bitVbatCtrl BIT_5
+#define bitDataCmd BIT_4
+#define bitReset BIT_9
+
+ 
+
+/* ------------------------------------------------------------ */
+
+/* Symbols describing the geometry of the display. */
+
+ 
 
 /* ------------------------------------------------------------ */
 /*				Global Variables								*/
@@ -227,7 +254,7 @@ void OledHostInit()
 		PORTSetPinsDigitalOut(prtSck, bitSck);
 		PORTSetPinsDigitalOut(prtMosi, bitMosi);
 	#else
-		#error "No Supported Board Defined"	
+		printf("No Supported Board Defined");	
 	#endif
 
 	PORTSetBits(prtDataCmd, bitDataCmd);
@@ -359,6 +386,7 @@ void OledDvrInit()
 **		Initialize the OLED display controller and turn the display on.
 */
 
+
 void OledDevInit()
 {
 
@@ -377,6 +405,8 @@ void OledDevInit()
 
 	/* Bring Reset low and then high
 	*/
+
+
 	PORTClearBits(prtReset, bitReset);
 	delay(1);
 	PORTSetBits(prtReset, bitReset);

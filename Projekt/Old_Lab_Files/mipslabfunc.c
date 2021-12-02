@@ -140,18 +140,23 @@ void display_string(int line, char *s) {
 		} else
 			textbuffer[line][i] = ' ';
 }
+//the display is 128x32 pixels each pixel is either 0 or 1
 
+//example: 96,const uint8_t [128]
+
+//we use a 512 byte buffer (the screen is 512 bytes = 512*8 = 128*32 = 4096 pixels / bits)
+//displayen har 4 sidor med 128 bytes var
 void display_image(int x, const uint8_t *data) {
 	int i, j;
 	
 	for(i = 0; i < 4; i++) {
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
 
-		spi_send_recv(0x22);
-		spi_send_recv(i);
-		
-		spi_send_recv(x & 0xF);
-		spi_send_recv(0x10 | ((x >> 4) & 0xF));
+		spi_send_recv(0x22); //set page command
+		spi_send_recv(i);//0,1,2,3 <=> page number
+
+		spi_send_recv(x & 0xF); //4 MS bitarna av x
+		spi_send_recv(0x10 | ((x >> 4) & 0xF)); //0b10000 OR 000000..x[7,6,5,4] = 000..01ABCD A<=>x[7], B<=>x[6]
 		
 		DISPLAY_CHANGE_TO_DATA_MODE;
 		
@@ -159,19 +164,21 @@ void display_image(int x, const uint8_t *data) {
 			spi_send_recv(~data[i*32 + j]);
 	}
 }
-
+//iterates through each page (4st)
+// in each page iterate through each byte of the page (16st)
+//in total 4 pages with 16 bytes = 4*16*8 
 void display_update(void) {
 	int i, j, k;
 	int c;
 	for(i = 0; i < 4; i++) {
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
-		spi_send_recv(0x22);
-		spi_send_recv(i);
+		spi_send_recv(0x22); //set page command
+		spi_send_recv(i); //0,1,2,3 <=> page number
 		
-		spi_send_recv(0x0);
-		spi_send_recv(0x10);
+		spi_send_recv(0x0); //set low nibble of column
+		spi_send_recv(0x10); // set hight nibble of column
 		
-		DISPLAY_CHANGE_TO_DATA_MODE;
+		DISPLAY_CHANGE_TO_DATA_MODE; //"PORTSetBits(prtDataCmd, bitDataCmd);"
 		
 		for(j = 0; j < 16; j++) {
 			c = textbuffer[i][j];

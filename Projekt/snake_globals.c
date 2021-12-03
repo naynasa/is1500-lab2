@@ -17,7 +17,7 @@ char textstring[] = "text, more text, and even more text!";
 
 bool frame_buffer[4][128][8]; //[4][16] from start, 4*128 = 512
 bool prev_buffer[4][128][8]; //buffer of the previous frame 
-
+/*
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
@@ -149,6 +149,7 @@ const uint8_t const font[] = {
 	0, 120, 68, 66, 68, 120, 0, 0,
 };
 
+
 const uint8_t const icon[] = {
 	255, 255, 255, 255, 255, 255, 127, 187,
 	68, 95, 170, 93, 163, 215, 175, 95,
@@ -167,3 +168,4 @@ const uint8_t const icon[] = {
 	132, 59, 192, 27, 164, 74, 177, 70,
 	184, 69, 186, 69, 254, 80, 175, 217,
 };
+*/

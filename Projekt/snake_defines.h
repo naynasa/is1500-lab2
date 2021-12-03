@@ -42,7 +42,6 @@ void display_debug( volatile int * const addr );
 //extern const uint8_t const icon[128];
 /* Declare frame buffer for display output */
 extern bool frame_buffer[4][128][8];
-extern bool prev_buffer[4][128][8];
 
 /* Declare functions written by students.
    Note: Since we declare these functions here,

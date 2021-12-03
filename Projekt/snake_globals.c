@@ -16,7 +16,6 @@ char textstring[] = "text, more text, and even more text!";
 // TRISESET 1 sätter värdet i TRISET 0 gör inget
 
 bool frame_buffer[4][128][8]; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
-bool prev_buffer[4][128][8]; //buffer of the previous frame 
 /*
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,

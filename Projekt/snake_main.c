@@ -106,7 +106,7 @@ void game_main( void ){
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
-        if(k == 1){
+        if(k == i){
           frame_buffer[i][j][k] = 1;
         }
       }

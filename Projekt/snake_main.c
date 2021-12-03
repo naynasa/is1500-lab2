@@ -98,7 +98,7 @@ void add_square(int x, int y, int size){
 we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
-  quicksleep(8e5);
+  //quicksleep(8e5);
   
   
   set_all_pixels_black();  

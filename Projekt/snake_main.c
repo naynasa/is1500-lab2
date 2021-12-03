@@ -83,8 +83,8 @@ void add_square(int x, int y, int size){
 
   //set all pixels with x values between x and x+size-1 and y values between y and y+size-1
   int i,j;
-  for(i = x; i < x + size -1; i++){
-    for(j = y; j < y + size -1; j++){
+  for(i = x; i <= x + size -1; i++){
+    for(j = y; j <= y + size +1; j++){
       bool *pixel_pointer = pixel_to_frame_buffer_position(i,j);
       *pixel_pointer = true;
 
@@ -98,7 +98,7 @@ void add_square(int x, int y, int size){
 we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
-  
+  quicksleep(8e5);
   set_all_pixels_black();  
   
   add_square(0,11,11);

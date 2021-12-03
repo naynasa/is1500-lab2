@@ -52,6 +52,5 @@ extern bool prev_buffer[4][128][8];
 void delay(int);
 void time2string( char *, int );
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
-int (void);
 int getsw(void);
 void enable_interrupt(void);

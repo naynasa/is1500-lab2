@@ -89,7 +89,8 @@ void tick( unsigned int * timep )
    Note: When you use this function, you should comment out any
    repeated calls to display_image; display_image overwrites
    about half of the digits shown by display_debug.
-*/   
+*/
+/* 
 void display_debug( volatile int * const addr )
 {
   display_string( 1, "Addr" );
@@ -122,6 +123,7 @@ void display_string(int line, char *s) {
 		} else
 			textbuffer[line][i] = ' ';
 }
+*/
 //the display is 128x32 pixels each pixel is either 0 or 1
 
 //example: 96,const uint8_t [128]

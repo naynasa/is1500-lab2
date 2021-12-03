@@ -16,6 +16,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <errno.h>        /* errno */
+#include <stdlib.h>       /* malloc, free, exit */
 
 int main(void) {
   /*initializations*/ 

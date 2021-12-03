@@ -99,11 +99,11 @@ we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
   
-  set_all_pixels_black();  
+  //set_all_pixels_black();  
   
-  add_square(square_x_value,16,11);
-  square_x_value += 1;
-  square_x_value = square_x_value % 128;
+  add_square(100,16,11);
+  //square_x_value += 1;
+  //square_x_value = square_x_value % 128;
   display_buffer();
 
 //wait_x_ms()

@@ -6,7 +6,7 @@
 //int mytime = 0x5957;
 uint32_t counter = 0; /*number of times timer 2 has been completed*/
 
-//char textstring[] = "text, more text, and even more text!";
+char textstring[] = "text, more text, and even more text!";
 
 
 /* T2IF (bit)- holds our interupt flag (bit 8 of IFS0 - its is 1 if timer is done else 0) */

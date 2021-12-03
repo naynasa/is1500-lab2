@@ -145,7 +145,7 @@ void display_buffer(int x) {
 //in each byte iterate through each bit (8 of them)
 //in total 4 pages with 128 bytes = 4*16 = 512 bytes 
 void display_buffer(void) {
-	int i,j,k;
+	int i,j,k,m,p;
 
 	for(i = 0; i < 4; i++) {//loops pages
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
@@ -153,36 +153,44 @@ void display_buffer(void) {
 		spi_send_recv(i); //0,1,2,3 <=> page number
 		
 		spi_send_recv(0x0); //set low nibble of column
-		
+		spi_send_recv(0x10); // set hight nibble of column
 		
 		DISPLAY_CHANGE_TO_DATA_MODE; //"PORTSetBits(prtDataCmd, bitDataCmd);"
 		
 		/*write each pixel that has changed*/
-        for(j = 0; j<64; j++){
-            for(k = 0; k<8; k++){
-                bool pixel = frame_buffer[i][j][k];
-                bool old_pixel = prev_buffer[i][j][k];
+        for(j = 0; j<128; j++){
+            bool* pixel_bool_byte = frame_buffer[i][j];
+            bool* old_pixel_bool_byte = frame_buffer[i][j];
             
-                spi_send_recv(pixel);
+            //convert it to uint8 to be able to write
+            uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
+            uint8_t old_pixel_byte = bit_array_to_uint8(old_pixel_bool_byte);
+            
+            spi_send_recv(pixel_byte);
+            
+            /*
+            if(pixel_byte != old_pixel_byte){
+                //if theyre different write it
+                spi_send_recv(pixel_byte);
             }
+            */
+            
+            
+
 
         }
-        DISPLAY_CHANGE_TO_COMMAND_MODE;
-        spi_send_recv(0x10); // set hight nibble of column
-        DISPLAY_CHANGE_TO_DATA_MODE;
-        /*write each pixel that has changed*/
-        for(j = 64; j<128; j++){
-            for(k = 0; k<8; k++){
-                bool pixel = frame_buffer[i][j][k];
-                bool old_pixel = prev_buffer[i][j][k];
-            
-                spi_send_recv(pixel);
-            }
 
-        }
 	}
 }
-
+uint8_t bit_array_to_uint8(bool arr[])
+{
+    int ret = 0;
+    for (int i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {
+        uint8_t tmp = (uint8_t) arr[i];
+        ret = ret | tmp << (count - i - 1);
+    }
+    return ret;
+}
 /* Helper function, local to this file.
    Converts a number to hexadecimal ASCII digits. */
 static void num32asc( char * s, int n ) 

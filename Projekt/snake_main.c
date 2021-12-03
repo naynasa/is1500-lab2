@@ -97,7 +97,7 @@ for(i = 0; i < 4; i++){
   }
 }
 
-add_square(60,16,40);
+add_square(60,16,8);
 display_buffer();
 //wait_x_ms()
 //calculate_frame();

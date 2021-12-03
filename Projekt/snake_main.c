@@ -75,7 +75,7 @@ bool* pixel_to_frame_buffer_position(int x, int y){
 void add_square(int x, int y, int size){
   if(size > 32){ //our max y value (x max is 128 so no need to check)
     fprintf(stderr, "can't add square size too big, max size: 32, given: %d",size);
-    exit(EXIT_FAILURE); /* indicate failure.*/
+    exit(); /* indicate failure.*/
 
   }
 

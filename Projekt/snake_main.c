@@ -63,8 +63,9 @@ void reset_isr(){
 void user_isr( void ) {
   set_all_pixels_black();  
   
-  add_square(square_x_value,16,50);
+  add_square(square_x_value,16,10);
   square_x_value += 1;
+  square_x_value = square_x_value % 32;
   display_buffer();
 
   reset_isr();

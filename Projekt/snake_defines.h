@@ -66,3 +66,6 @@ void enable_interrupt(void);
 
 #define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
 #define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
+
+#define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
+#define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 

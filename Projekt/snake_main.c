@@ -15,10 +15,8 @@
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
 #include <stdio.h>
-#include <errno.h>        /* errno */
-#include <stdlib.h>       /* malloc, free, exit */
-#include <string.h>
 
+#define STATIC_ASSERT(COND,MSG) typedef char static_assertion_##MSG[(COND)?1:-1] //copied from stack overflow just to have simple assertions
 int main(void) {
   /*initializations*/ 
 	init_controller();

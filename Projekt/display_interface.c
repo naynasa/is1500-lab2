@@ -158,7 +158,7 @@ void display_buffer(void) {
 		DISPLAY_CHANGE_TO_DATA_MODE; //"PORTSetBits(prtDataCmd, bitDataCmd);"
 		
 		/*write each pixel that has changed*/
-        for(j = 0; j<128; j++){
+        for(j = 0; j<64; j++){
             for(k = 0; k<8; k++){
                 bool pixel = frame_buffer[i][j][k];
                 bool old_pixel = prev_buffer[i][j][k];
@@ -169,8 +169,9 @@ void display_buffer(void) {
         }
         DISPLAY_CHANGE_TO_COMMAND_MODE;
         spi_send_recv(0x10); // set hight nibble of column
+        DISPLAY_CHANGE_TO_DATA_MODE;
         /*write each pixel that has changed*/
-        for(j = 0; j<128; j++){
+        for(j = 64; j<128; j++){
             for(k = 0; k<8; k++){
                 bool pixel = frame_buffer[i][j][k];
                 bool old_pixel = prev_buffer[i][j][k];

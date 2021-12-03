@@ -75,7 +75,7 @@ void add_square(int x, int y, int size){
   int i,j;
   for(i = x; i < x + size -1; i++){
     for(j = y; j < y + size -1; j++){
-      bool *pixel_pointer = pixel_to_frame_buffer_position(x,y);
+      bool *pixel_pointer = pixel_to_frame_buffer_position(i,j);
       *pixel_pointer = true;
 
     }

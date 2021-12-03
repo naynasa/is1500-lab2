@@ -147,8 +147,7 @@ uint8_t bit_array_to_uint8(bool arr[]){
     int count = 8;//always 8 bits in a byte - sizeof(arr)/sizeof(arr[0]);
     int i;
     for (i = 0; i < count; i++) {
-        uint8_t tmp = (uint8_t) arr[i]; //1, 0, 1,0,0
-        ret = ret | (tmp << i);
+        ret = ret | ( arr[i] << i);
     }
 
     return ret;

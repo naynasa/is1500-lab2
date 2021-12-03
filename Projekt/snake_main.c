@@ -17,6 +17,20 @@
 #include <stdio.h>
 
 int square_x_value = 0;
+//starts timer 2 by setting the enable bits to high
+void start_timer(){
+  T2CONSET = T2CON_ENABLE_BIT;
+}
+
+void set_all_pixels_black(){
+  int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer[i][j][k] = 0;
+      }
+  }
+}
 
 int main(void) {
   /*initializations*/ 
@@ -39,20 +53,6 @@ int main(void) {
 }
 
 
-//starts timer 2 by setting the enable bits to high
-void start_timer(){
-  T2CONSET = T2CON_ENABLE_BIT;
-}
-
-void set_all_pixels_black(){
-  int i,j,k;
-  for(i = 0; i < 4; i++){
-    for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 0;
-      }
-  }
-}
 
 void reset_isr(){
   IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0

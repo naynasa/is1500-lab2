@@ -144,7 +144,7 @@ void display_buffer(int x) {
 /*Helper function unique to this file - converts an array of bools to a uint8_t*/
 uint8_t bit_array_to_uint8(bool arr[]){
     int ret = 0;
-    int count = sizeof(arr)/sizeof(arr[0]);
+    int count = 8;//sizeof(arr)/sizeof(arr[0]);
     int i;
     for (i = 0; i < count; i++) {
         uint8_t tmp = (uint8_t) arr[i];

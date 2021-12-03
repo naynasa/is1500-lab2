@@ -67,23 +67,39 @@ int i,j,k;
 for(i = 0; i < 4; i++){
   for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 1;
+        frame_buffer[i][j][k] = 0;
       }
   }
 }
+
+add_square(60,16,8);
 display_buffer();
 //wait_x_ms()
 //calculate_frame();
 
-  
 
 }
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){
+  //set all pixels with x values between x and x+size-1 and y values between y and y+size-1
+  int i,j;
+  for(i = x; i < x -1; i++){
+    for(j = y; j < y -1; j++){
+      int* pixel_pointer = pixel_to_frame_buffer_position(x,y);
+      *pixel_pointer = true;
 
+    }
+  }
 }
 
-void pixel_to_frame_buffer_position(int x, int y){
+//each block is 32*128/4 = 4096/4 = 1024 bits
+//we 0 index the blocks: block 0,1,2,3
+int* pixel_to_frame_buffer_position(int x, int y){
+  int page = y / 8; // since we have 4 blocks of 8 height each
+  int byte_index = x;
+  int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
+  int* frame_buffer_element = frame_buffer[page][byte_index][bit_index];
+  return frame_buffer_element;
 }
 

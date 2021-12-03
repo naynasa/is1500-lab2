@@ -101,7 +101,7 @@ void game_main( void ){
   
   //set_all_pixels_black();  
   
-  add_square(100,16,11);
+  add_square(100,5,11);
   //square_x_value += 1;
   //square_x_value = square_x_value % 128;
   display_buffer();

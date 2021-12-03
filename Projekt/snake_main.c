@@ -103,7 +103,7 @@ void game_main( void ){
   
   add_square(square_x_value,16,10);
   square_x_value += 1;
-  square_x_value = square_x_value % 32;
+  square_x_value = square_x_value % 128;
   display_buffer();
 
 //wait_x_ms()

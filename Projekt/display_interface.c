@@ -143,13 +143,14 @@ void display_buffer(int x) {
 */
 /*Helper function unique to this file - converts an array of bools to a uint8_t*/
 uint8_t bit_array_to_uint8(bool arr[]){
-    int ret = 0;
+    uint8_t ret = 0;
     int count = 8;//always 8 bits in a byte - sizeof(arr)/sizeof(arr[0]);
     int i;
     for (i = 0; i < count; i++) {
-        uint8_t tmp = (uint8_t) arr[i];
-        ret = ret | tmp << (count - i - 1);
+        uint8_t tmp = (uint8_t) arr[i]; //1, 0, 1,0,0
+        ret = ret | (tmp << i);
     }
+
     return ret;
 }
 //iterates through each page (4 of them)

@@ -59,7 +59,16 @@ void user_isr( void ) {
 
 }
 
+//each block is 32*128/4 = 4096/4 = 1024 bits
+//we 0 index the blocks: block 0,1,2,3
+bool *pixel_to_frame_buffer_position(int x, int y){
+  int page = y / 8; // since we have 4 blocks of 8 height each
+  int byte_index = x;
+  int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
+  bool *frame_buffer_element = frame_buffer[page][byte_index][bit_index];
+  return frame_buffer_element;
+}
 
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){
@@ -74,16 +83,7 @@ void add_square(int x, int y, int size){
   }
 }
 
-//each block is 32*128/4 = 4096/4 = 1024 bits
-//we 0 index the blocks: block 0,1,2,3
-bool *pixel_to_frame_buffer_position(int x, int y){
-  int page = y / 8; // since we have 4 blocks of 8 height each
-  int byte_index = x;
-  int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
-  bool *frame_buffer_element = frame_buffer[page][byte_index][bit_index];
-  return frame_buffer_element;
-}
 
 /* Our game loop - This function is called repetitively from the main program 
 we imagine each pixel has an x,y value with 0,0 being in the bottom left corner

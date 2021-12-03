@@ -67,11 +67,7 @@ int i,j,k;
 for(i = 0; i < 4; i++){
   for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
-        if(i == 0){
-          frame_buffer[i][j][k] = 1;
-        }else{
-          frame_buffer[i][j][k] = 0;
-        }
+        frame_buffer[i][j][k] = 1;
       }
   }
 }

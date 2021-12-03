@@ -139,7 +139,18 @@ void display_buffer(int x) {
 			spi_send_recv(~screen_buffer[i*32 + j]);
 	}
 }
+
 */
+/*Helper function unique to this file - converts an array of bools to a uint8_t*/
+uint8_t bit_array_to_uint8(bool arr[]){
+    int ret = 0;
+    int count = sizeof(arr)/sizeof(arr[0]);
+    for (int i = 0; i < count; i++) {
+        uint8_t tmp = (uint8_t) arr[i];
+        ret = ret | tmp << (count - i - 1);
+    }
+    return ret;
+}
 //iterates through each page (4 of them)
 // in each page iterate through each byte of the page (128 of them)
 //in each byte iterate through each bit (8 of them)
@@ -182,15 +193,7 @@ void display_buffer(void) {
 
 	}
 }
-uint8_t bit_array_to_uint8(bool arr[])
-{
-    int ret = 0;
-    for (int i = 0; i < sizeof(arr)/sizeof(arr[0]); i++) {
-        uint8_t tmp = (uint8_t) arr[i];
-        ret = ret | tmp << (count - i - 1);
-    }
-    return ret;
-}
+
 /* Helper function, local to this file.
    Converts a number to hexadecimal ASCII digits. */
 static void num32asc( char * s, int n ) 

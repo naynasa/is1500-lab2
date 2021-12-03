@@ -43,6 +43,7 @@ int main(void) {
 void start_timer(){
   T2CONSET = T2CON_ENABLE_BIT;
 }
+
 void set_all_pixels_black(){
   int i,j,k;
   for(i = 0; i < 4; i++){
@@ -101,7 +102,6 @@ we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
   continue;
-}
 
 
 //wait_x_ms()

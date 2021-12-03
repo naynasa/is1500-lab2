@@ -16,6 +16,8 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+int square_x_value = 0;
+
 int main(void) {
   /*initializations*/ 
 	init_controller();
@@ -24,8 +26,10 @@ int main(void) {
   init_LEDs();
   init_buttons_switches();
 
-	
+	start_timer();
 	//display_image(96, icon);
+
+  set_all_pixels_black();
 
 	while( 1 )
 	{
@@ -39,23 +43,29 @@ int main(void) {
 void start_timer(){
   T2CONSET = T2CON_ENABLE_BIT;
 }
+void set_all_pixels_black(){
+  int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer[i][j][k] = 0;
+      }
+  }
+}
 
-
-
-/* Interrupt Service Routine - called when */
+void reset_isr(){
+  IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
+}
+/* Interrupt Service Routine - called when timer ticks over*/
+/*Render a new frame*/
 void user_isr( void ) {
-    /*
-    counter++;
-    if(counter % 10 == 0){
-      time2string( textstring, mytime );
-      display_string( 3, textstring );
-      display_update();
-      tick( &mytime );
-    }
-    */
-    //https://ww1.microchip.com/downloads/en/devicedoc/61143h.pdf page 53 table 4-4 IFS0 tells us its bit 8
-    IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
+  set_all_pixels_black();  
+  
+  add_square(square_x_value,16,50);
+  square_x_value += 1;
+  display_buffer();
 
+  reset_isr();
 
 }
 
@@ -71,9 +81,7 @@ bool* pixel_to_frame_buffer_position(int x, int y){
 
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){
-  //our max y value (x max is 128 so no need to check)
-  assert(size<=32);//make sure our size is not too big
-
+  //max size is 32 (our max y value)
 
   //set all pixels with x values between x and x+size-1 and y values between y and y+size-1
   int i,j;
@@ -92,17 +100,10 @@ void add_square(int x, int y, int size){
 we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
-int i,j,k;
-for(i = 0; i < 4; i++){
-  for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 0;
-      }
-  }
+
 }
 
-add_square(60,16,50);
-display_buffer();
+
 //wait_x_ms()
 //calculate_frame();
 

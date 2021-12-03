@@ -30,4 +30,15 @@ https://digilent.com/reference/_media/chipkit_shield_basic_io_shield:chipkit_bas
 
 the display is monochrome - each pixel is either 0 or 1
 
-our chipkit talks to the OLED display on the  basic i/o shield via SPI (SERIAL PERIPHERAL INTERFACE) 
+our chipkit talks to the OLED display on the  basic i/o shield via SPI (SERIAL PERIPHERAL INTERFACE)
+
+
+## data flow organization (ideas along the way)
+snake_main is responsible for changing the frame_buffer in such a way that it represents the game being played - e.g. placing apples, growing the snake etc. (the game logic)
+-the screen is divided into a grid of x,y values with 0,0 being at the bottom left
+
+snake_init is responsible for initializing everything we need to play the game (timers, ports, buttons etc.) as well as what we need to talk to the display
+
+display_interface is responsible for writing the frame_buffer to the screen
+
+each frame all the pixels are redrawn

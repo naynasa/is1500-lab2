@@ -145,7 +145,8 @@ void display_buffer(int x) {
 uint8_t bit_array_to_uint8(bool arr[]){
     int ret = 0;
     int count = sizeof(arr)/sizeof(arr[0]);
-    for (int i = 0; i < count; i++) {
+    int i;
+    for (i = 0; i < count; i++) {
         uint8_t tmp = (uint8_t) arr[i];
         ret = ret | tmp << (count - i - 1);
     }

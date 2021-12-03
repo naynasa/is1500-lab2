@@ -56,7 +56,8 @@ void init_controller(){
 	/* SPI2CON bit ON = 1; */
 	SPI2CONSET = 0x8000;
 }
-/*Given to us in the lab*/void display_init(void) {
+/*Given to us in the lab*/
+void display_init(void) {
         DISPLAY_CHANGE_TO_COMMAND_MODE;
 	quicksleep(10);
 	DISPLAY_ACTIVATE_VDD;

@@ -1,27 +1,27 @@
-/* mipslabdata.c
-   This file compiled 2015 by F Lundevall
-   from original code written by Axel Isaksson
-
-   For copyright and licensing, see file COPYING */
-
-#include <stdint.h>   /* Declarations of uint_32 and the like */
-#include <pic32mx.h>  /* Declarations of system-specific addresses etc */
-#include "snake_defines.h"  /* Declatations for these labs */
-
-
-
-
 /* mipslabfunc.c
    This file written 2015 by F Lundevall
    Some parts are original code written by Axel Isaksson
 
    For copyright and licensing, see file COPYING */
 
+#include <stdint.h>   /* Declarations of uint_32 and the like */
+#include <pic32mx.h>  /* Declarations of system-specific addresses etc */
+#include "mipslab.h"  /* Declatations for these labs */
 
 /* Declare a helper function which is local to this file */
 static void num32asc( char * s, int ); 
 
+#define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
+#define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)
 
+#define DISPLAY_ACTIVATE_RESET (PORTGCLR = 0x200)
+#define DISPLAY_DO_NOT_RESET (PORTGSET = 0x200)
+
+#define DISPLAY_ACTIVATE_VDD (PORTFCLR = 0x40)
+#define DISPLAY_ACTIVATE_VBAT (PORTFCLR = 0x20)
+
+#define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
+#define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)
 
 /* quicksleep:
    A simple function to create a small delay.
@@ -79,8 +79,7 @@ void tick( unsigned int * timep )
    Note: When you use this function, you should comment out any
    repeated calls to display_image; display_image overwrites
    about half of the digits shown by display_debug.
-*/
-/* 
+*/   
 void display_debug( volatile int * const addr )
 {
   display_string( 1, "Addr" );
@@ -97,7 +96,35 @@ uint8_t spi_send_recv(uint8_t data) {
 	return SPI2BUF;
 }
 
-
+void display_init(void) {
+        DISPLAY_CHANGE_TO_COMMAND_MODE;
+	quicksleep(10);
+	DISPLAY_ACTIVATE_VDD;
+	quicksleep(1000000);
+	
+	spi_send_recv(0xAE);
+	DISPLAY_ACTIVATE_RESET;
+	quicksleep(10);
+	DISPLAY_DO_NOT_RESET;
+	quicksleep(10);
+	
+	spi_send_recv(0x8D);
+	spi_send_recv(0x14);
+	
+	spi_send_recv(0xD9);
+	spi_send_recv(0xF1);
+	
+	DISPLAY_ACTIVATE_VBAT;
+	quicksleep(10000000);
+	
+	spi_send_recv(0xA1);
+	spi_send_recv(0xC8);
+	
+	spi_send_recv(0xDA);
+	spi_send_recv(0x20);
+	
+	spi_send_recv(0xAF);
+}
 
 void display_string(int line, char *s) {
 	int i;
@@ -113,17 +140,15 @@ void display_string(int line, char *s) {
 		} else
 			textbuffer[line][i] = ' ';
 }
-*/
 //the display is 128x32 pixels each pixel is either 0 or 1
 
 //example: 96,const uint8_t [128]
 
 //we use a 512 byte buffer (the screen is 512 bytes = 512*8 = 128*32 = 4096 pixels / bits)
 //displayen har 4 sidor med 128 bytes var
-/*
-void display_buffer(int x) {
+void display_image(int x, const uint8_t *data) {
 	int i, j;
-	//TODO calculate byte difference
+	
 	for(i = 0; i < 4; i++) {
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
 
@@ -136,18 +161,16 @@ void display_buffer(int x) {
 		DISPLAY_CHANGE_TO_DATA_MODE;
 		
 		for(j = 0; j < 32; j++)
-			spi_send_recv(~screen_buffer[i*32 + j]);
+			spi_send_recv(~data[i*32 + j]);
 	}
 }
-*/
-//iterates through each page (4 of them)
-// in each page iterate through each byte of the page (128 of them)
-//in each byte iterate through each bit (8 of them)
-//in total 4 pages with 128 bytes = 4*16 = 512 bytes 
-void display_buffer(void) {
-	int i,j,k;
-
-	for(i = 0; i < 4; i++) {//loops pages
+//iterates through each page (4st)
+// in each page iterate through each byte of the page (16st)
+//in total 4 pages with 16 bytes = 4*16*8 
+void display_update(void) {
+	int i, j, k;
+	int c;
+	for(i = 0; i < 4; i++) {
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
 		spi_send_recv(0x22); //set page command
 		spi_send_recv(i); //0,1,2,3 <=> page number
@@ -157,19 +180,14 @@ void display_buffer(void) {
 		
 		DISPLAY_CHANGE_TO_DATA_MODE; //"PORTSetBits(prtDataCmd, bitDataCmd);"
 		
-		/*write each pixel that has changed*/
-        for(j = 0; j<128; j++){
-            for(k = 0; k<8; k++){
-                char pixel = frame_buffer[i][j][k];
-                char old_pixel = prev_buffer[i][j][k];
-            
-                if(pixel != old_pixel){
-                    //update it
-                    spi_send_recv(pixel);
-                }
-            }
-
-        }
+		for(j = 0; j < 16; j++) {
+			c = textbuffer[i][j];
+			if(c & 0x80)
+				continue;
+			
+			for(k = 0; k < 8; k++)
+				spi_send_recv(font[c*8 + k]);
+		}
 	}
 }
 

@@ -74,13 +74,9 @@ bool* pixel_to_frame_buffer_position(int x, int y){
 
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){
-  if(size > 32){ //our max y value (x max is 128 so no need to check)
-    //fprintf(stderr, "can't add square size too big, max size: 32, given: %d",size);
-      fprintf(stderr, "Value of errno: %d\n", 2);
-      perror("Error printed by perror");
-      fprintf(stderr, "Error opening file: %s\n", strerror( 2 ));
+  //our max y value (x max is 128 so no need to check)
+  STATIC_ASSERT(1,size<=32);//make sure our size is not too big
 
-  }
 
   //set all pixels with x values between x and x+size-1 and y values between y and y+size-1
   int i,j;

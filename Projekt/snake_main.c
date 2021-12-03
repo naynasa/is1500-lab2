@@ -81,7 +81,7 @@ bool* pixel_to_frame_buffer_position(int x, int y){
 void add_square(int x, int y, int size){
   //max size is 32 (our max y value)
 
-  //set all pixels with x values between x and x+size-1 and y values between y and y+size-1
+  //set all pixels with x values between x and x+size-1 and y values between y and y+size+1 to 1
   int i,j;
   for(i = x; i <= x + size -1; i++){
     for(j = y; j <= y + size +1; j++){
@@ -99,12 +99,23 @@ we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
   quicksleep(8e5);
-  set_all_pixels_black();  
   
-  add_square(0,11,11);
+  
+  set_all_pixels_black();  
+    int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        if(j == 0){
+          frame_buffer[i][j][k] = 1;
+        }
+      }
+    }
+  }
+  //add_square(0,11,11);
   //square_x_value += 1;
   //square_x_value = square_x_value % 128;
-  display_buffer();
+  //display_buffer();
 
 //wait_x_ms()
 //calculate_frame();

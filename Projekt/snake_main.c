@@ -61,13 +61,12 @@ void user_isr( void ) {
 
 //each block is 32*128/4 = 4096/4 = 1024 bits
 //we 0 index the blocks: block 0,1,2,3
-bool *pixel_to_frame_buffer_position(int x, int y){
+bool* pixel_to_frame_buffer_position(int x, int y){
   int page = y / 8; // since we have 4 blocks of 8 height each
   int byte_index = x;
   int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
-  bool (*element_pointer) = &frame_buffer[page][byte_index][bit_index];
-  return element_pointer;
+  return &frame_buffer[page][byte_index][bit_index];
 }
 
 /*x,y mark starting points of the square (lower left hand corner)*/

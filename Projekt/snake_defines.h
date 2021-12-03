@@ -39,8 +39,9 @@ void display_debug( volatile int * const addr );
 extern const uint8_t const font[128*8];
 /* Declare bitmap array containing icon */
 extern const uint8_t const icon[128];
-/* Declare text buffer for display output */
-extern char textbuffer[4][16];
+/* Declare frame buffer for display output */
+extern bool frame_buffer[4][128[8];
+extern bool prev_buffer[4][128][8];
 
 /* Declare functions written by students.
    Note: Since we declare these functions here,
@@ -50,6 +51,6 @@ extern char textbuffer[4][16];
 void delay(int);
 void time2string( char *, int );
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
-int getbtns(void);
+int (void);
 int getsw(void);
 void enable_interrupt(void);

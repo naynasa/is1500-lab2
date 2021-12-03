@@ -60,26 +60,7 @@ void user_isr( void ) {
 }
 
 
-/* Our game loop - This function is called repetitively from the main program 
-we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
-*/
-void game_main( void ){
-int i,j,k;
-for(i = 0; i < 4; i++){
-  for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 0;
-      }
-  }
-}
 
-add_square(60,16,8);
-display_buffer();
-//wait_x_ms()
-//calculate_frame();
-
-
-}
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){
   //set all pixels with x values between x and x+size-1 and y values between y and y+size-1
@@ -104,3 +85,23 @@ bool *pixel_to_frame_buffer_position(int x, int y){
   return frame_buffer_element;
 }
 
+/* Our game loop - This function is called repetitively from the main program 
+we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
+*/
+void game_main( void ){
+int i,j,k;
+for(i = 0; i < 4; i++){
+  for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer[i][j][k] = 0;
+      }
+  }
+}
+
+add_square(60,16,8);
+display_buffer();
+//wait_x_ms()
+//calculate_frame();
+
+
+}

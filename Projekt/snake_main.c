@@ -16,7 +16,6 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-#define STATIC_ASSERT(COND,MSG) typedef char static_assertion_##MSG[(COND)?1:-1] //copied from stack overflow just to have simple assertions
 int main(void) {
   /*initializations*/ 
 	init_controller();
@@ -73,7 +72,7 @@ bool* pixel_to_frame_buffer_position(int x, int y){
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){
   //our max y value (x max is 128 so no need to check)
-  STATIC_ASSERT(size<=32,"Size of the square can't be larger than 32");//make sure our size is not too big
+  _Static_assert(size<=32,"Size of the square can't be larger than 32");//make sure our size is not too big
 
 
   //set all pixels with x values between x and x+size-1 and y values between y and y+size-1

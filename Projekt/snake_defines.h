@@ -6,8 +6,9 @@
    Latest update 2015-08-28 by F Lundevall
 
    For copyright and licensing, see file COPYING */
-
+#include <stdbool.h>
 /* Declare display-related functions from mipslabfunc.c */
+
 void display_image(int x, const uint8_t *data);
 void display_init(void);
 void display_string(int line, char *s);

@@ -102,16 +102,7 @@ void game_main( void ){
   
   
   set_all_pixels_black();  
-    int i,j,k;
-  for(i = 0; i < 4; i++){
-    for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        if(k == i){
-          frame_buffer[i][j][k] = 1;
-        }
-      }
-    }
-  }
+
   //add_square(0,11,11);
   //square_x_value += 1;
   //square_x_value = square_x_value % 128;

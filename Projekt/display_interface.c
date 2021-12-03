@@ -160,8 +160,8 @@ void display_buffer(void) {
 		/*write each pixel that has changed*/
         for(j = 0; j<128; j++){
             for(k = 0; k<8; k++){
-                char pixel = frame_buffer[i][j][k];
-                char old_pixel = prev_buffer[i][j][k];
+                bool pixel = frame_buffer[i][j][k];
+                bool old_pixel = prev_buffer[i][j][k];
             
                 if(pixel != old_pixel){
                     //update it

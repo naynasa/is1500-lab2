@@ -89,7 +89,7 @@ void display_debug( volatile int * const addr )
   num32asc( &textbuffer[2][6], *addr );
   display_update();
 }
-
+*/
 uint8_t spi_send_recv(uint8_t data) {
 	while(!(SPI2STAT & 0x08));
 	SPI2BUF = data;
@@ -97,7 +97,7 @@ uint8_t spi_send_recv(uint8_t data) {
 	return SPI2BUF;
 }
 
-
+/*
 
 void display_string(int line, char *s) {
 	int i;

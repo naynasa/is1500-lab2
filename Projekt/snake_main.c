@@ -78,7 +78,7 @@ void add_square(int x, int y, int size){
     //fprintf(stderr, "can't add square size too big, max size: 32, given: %d",size);
       fprintf(stderr, "Value of errno: %d\n", 2);
       perror("Error printed by perror");
-      fprintf(stderr, "Error opening file: %s\n", strerror( errnum ));
+      fprintf(stderr, "Error opening file: %s\n", strerror( 2 ));
 
   }
 

@@ -41,7 +41,7 @@ extern const uint8_t const font[128*8];
 /* Declare bitmap array containing icon */
 extern const uint8_t const icon[128];
 /* Declare frame buffer for display output */
-extern bool frame_buffer[4][128[8];
+extern bool frame_buffer[4][128][8];
 extern bool prev_buffer[4][128][8];
 
 /* Declare functions written by students.

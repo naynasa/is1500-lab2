@@ -54,3 +54,15 @@ void time2string( char *, int );
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
 int getsw(void);
 void enable_interrupt(void);
+
+#define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
+#define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)
+
+#define DISPLAY_ACTIVATE_RESET (PORTGCLR = 0x200)
+#define DISPLAY_DO_NOT_RESET (PORTGSET = 0x200)
+
+#define DISPLAY_ACTIVATE_VDD (PORTFCLR = 0x40)
+#define DISPLAY_ACTIVATE_VBAT (PORTFCLR = 0x20)
+
+#define DISPLAY_TURN_OFF_VDD (PORTFSET = 0x40)
+#define DISPLAY_TURN_OFF_VBAT (PORTFSET = 0x20)

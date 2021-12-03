@@ -14,6 +14,7 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
+#include <stdio.h>
 
 int main(void) {
   /*initializations*/ 
@@ -85,7 +86,7 @@ void add_square(int x, int y, int size){
   int i,j;
   for(i = x; i < x -1; i++){
     for(j = y; j < y -1; j++){
-      bool* pixel_pointer = pixel_to_frame_buffer_position(x,y);
+      bool *pixel_pointer = pixel_to_frame_buffer_position(x,y);
       *pixel_pointer = true;
 
     }
@@ -94,12 +95,12 @@ void add_square(int x, int y, int size){
 
 //each block is 32*128/4 = 4096/4 = 1024 bits
 //we 0 index the blocks: block 0,1,2,3
-bool* pixel_to_frame_buffer_position(int x, int y){
+bool *pixel_to_frame_buffer_position(int x, int y){
   int page = y / 8; // since we have 4 blocks of 8 height each
   int byte_index = x;
   int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
-  bool* frame_buffer_element = frame_buffer[page][byte_index][bit_index];
+  bool *frame_buffer_element = frame_buffer[page][byte_index][bit_index];
   return frame_buffer_element;
 }
 

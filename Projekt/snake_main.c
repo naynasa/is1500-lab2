@@ -66,8 +66,8 @@ bool *pixel_to_frame_buffer_position(int x, int y){
   int byte_index = x;
   int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
-  bool *frame_buffer_element = frame_buffer[page][byte_index][bit_index];
-  return frame_buffer_element;
+  bool (*element_pointer) = &frame_buffer[page][byte_index][bit_index];
+  return element_pointer;
 }
 
 /*x,y mark starting points of the square (lower left hand corner)*/

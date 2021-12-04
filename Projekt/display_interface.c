@@ -158,7 +158,7 @@ uint8_t bit_array_to_uint8(bool arr[]){
 //in total 4 pages with 128 bytes = 4*16 = 512 bytes 
 void display_buffer(bool frame_buffer_q[]) {
 	int i,j,k,m,p;
-    uint8_t* index_pointer = &frame_buffer_q;
+    uint8_t* index_pointer = (unint8_t*) &frame_buffer_q;
 	for(i = 0; i < 4; i++) {//loops pages
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
 		spi_send_recv(0x22); //set page command

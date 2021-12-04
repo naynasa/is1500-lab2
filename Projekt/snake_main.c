@@ -29,7 +29,7 @@ void set_all_pixels_black(){
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
-        frame_buffer_q[i][j][k] = 1;
+        frame_buffer[i][j][k] = 1;
       }
     }
   }

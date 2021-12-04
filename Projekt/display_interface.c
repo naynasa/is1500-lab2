@@ -158,7 +158,7 @@ uint8_t bit_array_to_uint8(bool arr[]){
 //in total 4 pages with 128 bytes = 4*16 = 512 bytes 
 void display_buffer(bool frame_buffer_q[]) {
 	int i,j,k,m,p;
-
+    uint8_t* index_pointer = frame_buffer_q;
 	for(i = 0; i < 4; i++) {//loops pages
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
 		spi_send_recv(0x22); //set page command
@@ -171,14 +171,15 @@ void display_buffer(bool frame_buffer_q[]) {
 		
 		/*write each byte*/
         for(j = 0; j<128; j++){
-            uint8_t* pixel_bool_byte = frame_buffer_q[i][j];
+            
+            //uint8_t* pixel_bool_byte = frame_buffer_q[i][j];
            
             
             //convert it to uint8 to be able to write
             //uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
             
             
-            spi_send_recv(*pixel_bool_byte);//0xFF -> alla vita -alltså rå byte värde här funkar
+            spi_send_recv(*index_pointer);//0xFF -> alla vita -alltså rå byte värde här funkar
             
             /*
             if(pixel_byte != old_pixel_byte){
@@ -188,7 +189,7 @@ void display_buffer(bool frame_buffer_q[]) {
             */
             
             
-
+        index_pointer++;
 
         }
 

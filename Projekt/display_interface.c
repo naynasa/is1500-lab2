@@ -156,7 +156,7 @@ uint8_t bit_array_to_uint8(bool arr[]){
 // in each page iterate through each byte of the page (128 of them)
 //in each byte iterate through each bit (8 of them)
 //in total 4 pages with 128 bytes = 4*16 = 512 bytes 
-void display_buffer(bool[] frame_buffer_q) {
+void display_buffer(bool frame_buffer_q[]) {
 	int i,j,k,m,p;
 
 	for(i = 0; i < 4; i++) {//loops pages

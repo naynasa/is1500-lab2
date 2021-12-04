@@ -24,15 +24,17 @@ void start_timer(){
   T2CONSET = T2CON_ENABLE_BIT;
 }
 
-void set_all_pixels_white(){
+/*sets all values in frame_buffer to 0 and updates the screen*/
+void set_all_pixels_black(){
   int i,j,k;
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 1;
+        frame_buffer[i][j][k] = 0;
       }
     }
   }
+    display_buffer();
 }
 
 int main(void) {
@@ -48,7 +50,6 @@ int main(void) {
 	//display_image(96, icon);
 
   set_all_pixels_white();
-  display_buffer();
 
 	while( 1 )
 	{
@@ -102,15 +103,14 @@ void add_square(int x, int y, int size){
 we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
-  //quicksleep(8e5);
   
-  
-  //set_all_pixels_black();  
+  set_all_pixels_black();  
 
-  //add_square(0,11,11);
-  //square_x_value += 1;
-  //square_x_value = square_x_value % 128;
-  //display_buffer();
+
+  add_square(square_x_value,11,11);
+  square_x_value += 1;
+  square_x_value = square_x_value % 128;
+  display_buffer();
 
 //wait_x_ms()
 //calculate_frame();

@@ -103,7 +103,7 @@ void game_main( void ){
   //quicksleep(8e5);
   
   
-  set_all_pixels_black();  
+  //set_all_pixels_black();  
 
   //add_square(0,11,11);
   //square_x_value += 1;

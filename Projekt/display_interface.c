@@ -171,14 +171,14 @@ void display_buffer(void) {
 		
 		/*write each byte*/
         for(j = 0; j<128; j++){
-            bool* pixel_bool_byte = frame_buffer[i][j];
+            uint8_t* pixel_bool_byte = frame_buffer[i][j];
            
             
             //convert it to uint8 to be able to write
-            uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
+            //uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
             
             
-            spi_send_recv(pixel_byte);//0xFF -> alla vita
+            spi_send_recv(pixel_bool_byte);//0xFF -> alla vita -alltså rå byte värde här funkar
             
             /*
             if(pixel_byte != old_pixel_byte){

@@ -178,7 +178,7 @@ void display_buffer(void) {
             uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
             
             
-            spi_send_recv(pixel_byte);
+            spi_send_recv(0);
             
             /*
             if(pixel_byte != old_pixel_byte){

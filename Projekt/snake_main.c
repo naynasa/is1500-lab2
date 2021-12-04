@@ -49,7 +49,7 @@ int main(void) {
 	start_timer();
 	//display_image(96, icon);
 
-  set_all_pixels_white();
+  set_all_pixels_black();
 
 	while( 1 )
 	{

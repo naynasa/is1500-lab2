@@ -66,7 +66,16 @@ void reset_isr(){
 /* Interrupt Service Routine - called when timer ticks over*/
 /*Render a new frame*/
 void user_isr( void ) {
+    if(square_x_value > 128){
+    square_x_value = 4;
+  }
+  set_all_pixels_black();  
 
+
+  add_square(square_x_value,11,5);
+  square_x_value += 1;
+  
+  display_buffer();
 
   reset_isr();
 
@@ -103,16 +112,7 @@ void add_square(int x, int y, int size){
 we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
-  if(square_x_value > 128){
-    square_x_value = 4;
-  }
-  set_all_pixels_black();  
 
-
-  add_square(square_x_value,11,5);
-  square_x_value += 1;
-  
-  display_buffer();
 
 //wait_x_ms()
 //calculate_frame();

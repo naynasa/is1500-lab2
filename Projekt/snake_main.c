@@ -67,7 +67,7 @@ void reset_isr(){
 /* Interrupt Service Routine - called when timer ticks over*/
 /*Render a new frame*/
 void user_isr( void ) {
-    if(square_x_value > 120){
+    if(square_x_value + 11 > (128)){
     square_x_value = 4;
   }
   set_all_pixels_black();  

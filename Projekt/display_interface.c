@@ -160,7 +160,6 @@ uint8_t bit_array_to_uint8(bool *ptr){
 void display_buffer() {
 	int i,j,k,m,p;
     bool frame_buffer_q[4][128][8] = {0};
-      int i,j,k;
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
@@ -187,7 +186,7 @@ void display_buffer() {
            
             
             //convert our 8 bits in memory to an uint8 to be able to write
-            uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
+            uint8_t pixel_byte = bit_array_to_uint8(first_pixel_pointer);
             
             
             spi_send_recv(pixel_byte);//0xFF -> alla vita -alltså rå byte värde här funkar
@@ -199,8 +198,6 @@ void display_buffer() {
             }
             */
             
-            
-        index_pointer++;
 
         }
 

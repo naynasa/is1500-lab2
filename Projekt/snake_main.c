@@ -68,7 +68,7 @@ void reset_isr(){
 /*Render a new frame*/
 void user_isr( void ) {
     if(square_x_value + 11 > (128)){
-    square_x_value = 4;
+    square_x_value = 0;
   }
   set_all_pixels_black();  
 

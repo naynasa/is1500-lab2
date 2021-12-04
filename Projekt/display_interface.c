@@ -142,12 +142,13 @@ void display_buffer(int x) {
 
 */
 /*Helper function unique to this file - converts an array of bools to a uint8_t*/
-uint8_t bit_array_to_uint8(bool arr[]){
+uint8_t bit_array_to_uint8(bool *ptr){
     uint8_t ret = 0;
     int count = 8;//always 8 bits in a byte - sizeof(arr)/sizeof(arr[0]);
     int i;
     for (i = 0; i < count; i++) {
-        ret = ret | ( arr[i] << i);
+        ret = ret | ( *ptr << i);
+        ptr += 1;
     }
 
     return ret;
@@ -156,9 +157,19 @@ uint8_t bit_array_to_uint8(bool arr[]){
 // in each page iterate through each byte of the page (128 of them)
 //in each byte iterate through each bit (8 of them)
 //in total 4 pages with 128 bytes = 4*16 = 512 bytes 
-void display_buffer(bool frame_buffer_q[]) {
+void display_buffer() {
 	int i,j,k,m,p;
-    uint8_t* index_pointer = (unint8_t*) &frame_buffer_q;
+    bool frame_buffer_q[4][128][8] = {0};
+      int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer_q[i][j][k] = 1;
+      }
+    }
+  }
+
+    //uint8_t (*byte_pointer)[8] = frame_buffer_q; //*byte_pointer är en adress **byte_pointer ger bit 0 av byten i fråga
 	for(i = 0; i < 4; i++) {//loops pages
 		DISPLAY_CHANGE_TO_COMMAND_MODE;
 		spi_send_recv(0x22); //set page command
@@ -172,14 +183,14 @@ void display_buffer(bool frame_buffer_q[]) {
 		/*write each byte*/
         for(j = 0; j<128; j++){
             
-            //uint8_t* pixel_bool_byte = frame_buffer_q[i][j];
+            bool *first_pixel_pointer = frame_buffer_q[i][j];
            
             
-            //convert it to uint8 to be able to write
-            //uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
+            //convert our 8 bits in memory to an uint8 to be able to write
+            uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
             
             
-            spi_send_recv(*index_pointer);//0xFF -> alla vita -alltså rå byte värde här funkar
+            spi_send_recv(pixel_byte);//0xFF -> alla vita -alltså rå byte värde här funkar
             
             /*
             if(pixel_byte != old_pixel_byte){

@@ -15,7 +15,7 @@
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
 #include <stdio.h>
-bool frame_buffer[4][128][8] = {0}; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
+bool frame_buffer_q[4][128][8] = {0}; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
 
 
 int square_x_value = 0;
@@ -29,7 +29,7 @@ void set_all_pixels_black(){
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 1;
+        frame_buffer_q[i][j][k] = 1;
       }
     }
   }

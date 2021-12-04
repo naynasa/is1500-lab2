@@ -169,7 +169,7 @@ void display_buffer(void) {
 		
 		DISPLAY_CHANGE_TO_DATA_MODE; //"PORTSetBits(prtDataCmd, bitDataCmd);"
 		
-		/*write each pixel*/
+		/*write each byte*/
         for(j = 0; j<128; j++){
             bool* pixel_bool_byte = frame_buffer[i][j];
            
@@ -178,7 +178,7 @@ void display_buffer(void) {
             uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
             
             
-            spi_send_recv(0);
+            spi_send_recv(0x11);
             
             /*
             if(pixel_byte != old_pixel_byte){

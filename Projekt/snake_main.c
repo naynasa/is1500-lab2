@@ -43,6 +43,7 @@ int main(void) {
   init_LEDs();
   init_buttons_switches();
 
+  quicksleep(8e5);
 	start_timer();
 	//display_image(96, icon);
 

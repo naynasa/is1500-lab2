@@ -15,6 +15,8 @@
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
 #include <stdio.h>
+bool frame_buffer[4][128][8] = {0}; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
+
 
 int square_x_value = 0;
 //starts timer 2 by setting the enable bits to high

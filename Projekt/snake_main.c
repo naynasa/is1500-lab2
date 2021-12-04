@@ -15,10 +15,11 @@
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
 #include <stdio.h>
-bool frame_buffer[4][128][8]; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
-
-
+/*the array that stores all our pixel data - the way we communicate with the screen*/
+bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 int square_x_value = 0;
+
+
 //starts timer 2 by setting the enable bits to high
 void start_timer(){
   T2CONSET = T2CON_ENABLE_BIT;
@@ -60,14 +61,15 @@ int main(void) {
 
 
 
-void reset_isr(){
-  IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
-}
+
 
 /* Interrupt Service Routine - called when timer ticks over*/
 /*Render a new frame*/
 void user_isr( void ) {
-    if(square_x_value + 11 > (128)){
+  void reset_isr(){
+    IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
+  }
+    if(square_x_value + 11 >= (128)){
     square_x_value = 0;
   }
   set_all_pixels_black();  

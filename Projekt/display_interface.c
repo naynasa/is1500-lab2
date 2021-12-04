@@ -159,7 +159,7 @@ uint8_t bit_array_to_uint8(bool *ptr){
 //in total 4 pages with 128 bytes = 4*16 = 512 bytes 
 void display_buffer() {
 	int i,j,k,m,p;
-    bool frame_buffer_q[4][128][8] = {0};
+    bool frame_buffer_q[4][128][8];
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
       for(k = 0; k<8; k++ ){

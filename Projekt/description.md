@@ -42,3 +42,23 @@ snake_init is responsible for initializing everything we need to play the game (
 display_interface is responsible for writing the frame_buffer to the screen
 
 each frame all the pixels are redrawn
+
+## data we need
+snake - thickness, start and end / blocks ,
+apple - position,
+number_of_apples_eaten 
+### advanced
+obsticle
+difficulty
+snake_speed
+ai_snake
+## game functions we need
+eat_apple
+check_collide - kollar om han kolliderat med väggen eller sin svans
+move_snake
+game_over
+display_highscore
+### advanced
+ai_plays
+increase_snake_speed
+place_obsticle

@@ -90,7 +90,7 @@ void display_init(void) {
 
 /*
 Initializes timer 2 with timeout of 100ms 
-when it times out it sets an interrupt bit to 1 and calls user_isr
+when it times out it sets an interrupt bit to 1 and calls render_frame
 */
 void init_timer(){
   //timer 2 interrupt enable and interrupt priority bits

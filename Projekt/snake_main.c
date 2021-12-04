@@ -20,25 +20,13 @@ bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 int square_x_value = 0;
 
 
-//starts timer 2 by setting the enable bits to high
-void start_timer(){
-  T2CONSET = T2CON_ENABLE_BIT;
-}
-
-/*sets all values in frame_buffer to 0 and updates the screen*/
-void set_all_pixels_black(){
-  int i,j,k;
-  for(i = 0; i < 4; i++){
-    for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 0;
-      }
-    }
-  }
-    display_buffer();
-}
 
 int main(void) {
+  /*helper that starts timer 2 by setting the enable bits to high*/
+  void start_timer(){
+    T2CONSET = T2CON_ENABLE_BIT;
+  }
+
   /*initializations*/ 
 	init_controller();
 	display_init();
@@ -50,7 +38,6 @@ int main(void) {
 	start_timer();
 	//display_image(96, icon);
 
-  set_all_pixels_black();
 
 	while( 1 )
 	{
@@ -63,13 +50,14 @@ int main(void) {
 
 
 
-/* Interrupt Service Routine - called when timer ticks over*/
-/*Render a new frame*/
-void user_isr( void ) {
+/*Render a new frame - called when timer ticks over*/
+void render_frame() {
+  /*helper function to reset the isr via bit manipulation*/
   void reset_isr(){
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
   }
-    if(square_x_value + 11 >= (128)){
+    
+  if(square_x_value + 11 >= (128)){
     square_x_value = 0;
   }
   set_all_pixels_black();  
@@ -109,6 +97,18 @@ void add_square(int x, int y, int size){
   }
 }
 
+/*sets all values in frame_buffer to 0 and updates the screen*/
+void set_all_pixels_black(){
+  int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer[i][j][k] = 0;
+      }
+    }
+  }
+    display_buffer();
+}
 
 
 /* Our game loop - This function is called repetitively from the main program 

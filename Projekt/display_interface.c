@@ -90,7 +90,7 @@ void display_debug( volatile int * const addr )
   display_update();
 }
 */
-uint8_t spi_send_recv(uint8_t data) {
+uint8_t spi_send_recv(uint8_t bytetowrite) {
     uint8_t bytetoread;
     /*Wait for transmitter to be ready*/
     while (!(SPI2STAT & 0x08));

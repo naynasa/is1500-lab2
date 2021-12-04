@@ -91,10 +91,17 @@ void display_debug( volatile int * const addr )
 }
 */
 uint8_t spi_send_recv(uint8_t data) {
-	while(!(SPI2STAT & 0x08));
-	SPI2BUF = data;
-	while(!(SPI2STAT & 1));
-	return SPI2BUF;
+    uint8_t bytetoread;
+    /*Wait for transmitter to be ready*/
+    while (!(SPI2STAT & 0x08));
+    /*Write byte to buffer*/
+    SPI2BUF = bytetowrite;
+
+    /*Wait for receive byte*/
+    while (!(SPI2STAT & 1));
+    /*Read byte and return it - unnecessery for display which is readonly??*/
+    bytetoread = SPI2BUF;
+    return bytetoread;
 }
 
 /*
@@ -178,7 +185,7 @@ void display_buffer(void) {
             uint8_t pixel_byte = bit_array_to_uint8(pixel_bool_byte);
             
             
-            spi_send_recv(0x11);
+            spi_send_recv(0);
             
             /*
             if(pixel_byte != old_pixel_byte){

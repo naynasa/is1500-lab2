@@ -106,6 +106,8 @@ void init_timer(){
   T2CON = T2CON_PRESCALER_BITS; //sets prescaler to 256 (see global definition)
   TMR2 = 0; //set the current number of ticks in our timer to 0
   PR2 = period; //set the max number of ticks equal to our period
+  
+  enable_interrupt();
 }
 //sets the LEDs on port E to output - 0 marks output
 void init_LEDs(){

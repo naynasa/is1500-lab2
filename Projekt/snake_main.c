@@ -63,10 +63,11 @@ int main(void) {
 void reset_isr(){
   IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
 }
+
 /* Interrupt Service Routine - called when timer ticks over*/
 /*Render a new frame*/
 void user_isr( void ) {
-    if(square_x_value > 128){
+    if(square_x_value > 120){
     square_x_value = 4;
   }
   set_all_pixels_black();  

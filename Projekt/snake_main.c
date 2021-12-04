@@ -15,7 +15,7 @@
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
 #include <stdio.h>
-bool frame_buffer[4][128][8] = {0}; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
+bool frame_buffer[4][128][8]; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
 
 
 int square_x_value = 0;
@@ -24,7 +24,7 @@ void start_timer(){
   T2CONSET = T2CON_ENABLE_BIT;
 }
 
-void set_all_pixels_black(){
+void set_all_pixels_white(){
   int i,j,k;
   for(i = 0; i < 4; i++){
     for(j = 0 ; j<128 ;j++){
@@ -47,7 +47,7 @@ int main(void) {
 	start_timer();
 	//display_image(96, icon);
 
-  //set_all_pixels_black();
+  set_all_pixels_white();
   display_buffer();
 
 	while( 1 )

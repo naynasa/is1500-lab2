@@ -15,7 +15,7 @@ char textstring[] = "text, more text, and even more text!";
 // TRISECLR sätter man en bit i den till 1 sätts motsvarande bit till 0 i TRISE (sätter man en bit till 0 händer inget)
 // TRISESET 1 sätter värdet i TRISET 0 gör inget
 
-bool frame_buffer[4][128][8]; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
+bool frame_buffer[4][128][8] = {0}; //[4][16] from start, 4*128 = 512 bytes (8 bit each)
 /*
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,

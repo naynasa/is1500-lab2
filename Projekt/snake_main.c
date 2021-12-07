@@ -66,8 +66,8 @@ int main(void) {
   snake.blocks_pointer = blocks;
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  Block b1 = {100,10};
-  apple.block = b1;
+  //Block b1 = {100,10};
+  apple.block = {.block = {100,10}};
 
   
 	start_timer();

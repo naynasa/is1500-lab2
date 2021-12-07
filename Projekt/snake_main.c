@@ -149,11 +149,23 @@ void render_frame() {
     
   set_all_pixels_black();  
   int i;
+  char user_move_dir = user_move_direction();
+  int y_add = 0;
+  int x_add = 0;
+  if(user_move_dir == 'U'){
+    y_add = 4;
+  }else if(user_move_dir == 'D'){
+    y_add = -4;
+  }else if(user_move_dir == 'L'){
+    x_add = -4;
+  }else if(user_move_dir == 'R'){
+    x_add = 4;
+  }
   
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_pointer[i];
-    add_square(pointed_block.x0,pointed_block.y0,BLOCK_SIZE);
+    add_square(pointed_block.x0+x_add,pointed_block.y0+y_add,BLOCK_SIZE);
   }
 
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple

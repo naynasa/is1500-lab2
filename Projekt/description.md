@@ -62,3 +62,8 @@ display_highscore
 ai_plays
 increase_snake_speed
 place_obsticle
+
+we use positive y direction downwards and positive x direction to the right (see drawing)
+
+
+we need all 4 buttons and button 1 is on pin 4 (not close to the others)

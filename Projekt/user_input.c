@@ -41,6 +41,7 @@ char user_move_direction(){
         
         return 'R';
     }
+    }
 }
 
 //3 LS bits of return value is:
@@ -54,7 +55,7 @@ int getbtns(void){
     uint16_t masked_d_value = d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
     
     //get BTN1
-    uint16_t btn1 = *((int*) PORTF) & 0b1; //0b0000...0D
+    uint16_t btn1 = *((uint16_t*) PORTF) & 0b1; //0b0000...0D
     int value = 0; 
     return value + (masked_d_value >> 4) + btn1; //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
 }

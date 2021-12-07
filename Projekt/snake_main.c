@@ -19,7 +19,31 @@
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 int square_x_value = 0;
 
+#define BLOCK_SIZE 8 //varies size of all squares in the game (snake,apples,obstacles)
 
+
+
+/**/
+typedef struct Block{
+  uint8_t x0; /*value range: 0-128, lower left hand corner x coordinate*/
+  uint8_t y0; /*value range: 0-32, lower left hand corner y coordinate*/
+  //uint8_t size; /*value range: 1-32 max for uint8_t is 255, the size of the square*/
+
+}Block;
+
+/**/
+typedef struct Snake{
+  Block blocks[]; /*the larger squares that make up the snake - last block is the head*/
+  int num_apples_eaten = 0; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
+}Snake;
+
+/*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
+typedef struct Apple{
+  Block block; /*the square that symbolizes the apple*/
+}Apple;
+
+Snake snake;
+Apple apple;
 
 int main(void) {
   /*helper that starts timer 2 by setting the enable bits to high*/
@@ -34,6 +58,12 @@ int main(void) {
   init_LEDs();
   init_buttons_switches();
 
+  /*todo make random - so you don't start at the same place each time*/
+
+  Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
+  snake.blocks = blocks;
+  apple.block = {100,10};
+
   
 	start_timer();
 	//display_image(96, icon);
@@ -46,9 +76,13 @@ int main(void) {
 	return 0;
 }
 
-
-
-
+/*
+eat_apple
+check_collide - kollar om han kolliderat med väggen eller sin svans
+move_snake
+game_over
+display_highscore
+*/
 
 /*Render a new frame - called when timer ticks over*/
 void render_frame() {
@@ -57,14 +91,14 @@ void render_frame() {
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
   }
     
-  if(square_x_value + 11 >= (128)){
-    square_x_value = 0;
-  }
   set_all_pixels_black();  
 
+  for(int i; i<sizeof(snake.blocks)/sizeof(snake.blocks[0])){
+    //iterates over each block in the snake
+    add_square(snake.blocks[i].x0,snake.blocks[i].y0,BLOCK_SIZE);
+  }
 
-  add_square(square_x_value,11,5);
-  square_x_value += 1;
+  add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
   
   display_buffer();
 

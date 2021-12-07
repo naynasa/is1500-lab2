@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"ioshieldoled.h": "c",
+			"mipslab.h": "c",
+			"oledchar.h": "c",
+			"ioshieldoledremake.h": "c",
+			"inttypes.h": "c",
+			"stdint.h": "c",
+			"stdlib.h": "c"
+		}
+	}
+}

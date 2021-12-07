@@ -35,7 +35,7 @@ typedef struct {
 typedef struct {
   uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
-  Block blocks[]; /*the larger squares that make up the snake - last block is the head*/
+  Block* blocks[]; /*the larger squares that make up the snake - last block is the head*/
 }Snake;
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/

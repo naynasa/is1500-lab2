@@ -19,7 +19,7 @@
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 int square_x_value = 0;
 
-#define BLOCK_SIZE 8 //varies size of all squares in the game (snake,apples,obstacles)
+#define BLOCK_SIZE 5 //varies size of all squares in the game (snake,apples,obstacles)
 
 
 

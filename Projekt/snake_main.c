@@ -149,7 +149,7 @@ void render_frame() {
     
   set_all_pixels_black();  
   int i;
-  
+  /*
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_pointer[i];
@@ -157,13 +157,13 @@ void render_frame() {
   }
 
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
-  
- /*
+  */
+ 
  //{{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}}
   add_square(10,15,BLOCK_SIZE);
   add_square(10,15-BLOCK_SIZE,BLOCK_SIZE);
   add_square(10,15-2*BLOCK_SIZE,BLOCK_SIZE);
-  */
+  
   display_buffer();
 
   reset_isr();

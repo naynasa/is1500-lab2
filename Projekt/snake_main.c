@@ -150,24 +150,25 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  //char user_move_dir = user_move_direction();
+  char user_move_dir = 'U'
+  user_move_direction();
   int y_add = 0;
-  int x_add = 10;
-  /*
+  int x_add = 0;
+  
   if(user_move_dir == 'U'){
-    y_add = 4;
+    y_add = 10;
   }
   if(user_move_dir == 'D'){
-    y_add = -4;
+    y_add = -10;
   }
   if(user_move_dir == 'L'){
-    x_add = -4;
+    x_add = -10;
   }
   if(user_move_dir == 'R'){
-    x_add = 4;
+    x_add = 10;
   }
   //N <=> 0
-  */
+  
   
   
   for(i = 0; i<snake.num_blocks; i++){

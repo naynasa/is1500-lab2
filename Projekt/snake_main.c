@@ -66,7 +66,8 @@ int main(void) {
   snake.blocks_pointer = blocks;
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  apple.block = {.x0 = 100, .y0 = 10};
+  Block b1 = {100,10};
+  apple.block = b1;
 
   
 	start_timer();
@@ -149,7 +150,7 @@ void render_frame() {
     
   set_all_pixels_black();  
   int i;
-  for(i = 0; i<snake.num_blocks){
+  for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     add_square(snake.blocks_pointer[i].x0,snake.blocks_pointer[i].y0,BLOCK_SIZE);
   }

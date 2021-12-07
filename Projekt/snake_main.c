@@ -151,8 +151,8 @@ void render_frame() {
   int i;
   
   //char user_move_dir = user_move_direction();
-  int y_add = 10;
-  int x_add = 0;
+  int y_add = 0;
+  int x_add = 10;
   /*
   if(user_move_dir == 'U'){
     y_add = 4;

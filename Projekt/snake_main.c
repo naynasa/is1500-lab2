@@ -150,7 +150,7 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  char user_move_dir = user_move_direction();
+  char user_move_dir = 'U';//user_move_direction();
   int y_add = 0;
   int x_add = 0;
   

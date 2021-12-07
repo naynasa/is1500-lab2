@@ -35,7 +35,7 @@ typedef struct {
 typedef struct {
   uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
-  Block* blocks[]; /*the larger squares that make up the snake - last block is the head*/
+  Block* blocks_pointer; /*the larger squares that make up the snake - last block is the head*/
 }Snake;
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
@@ -63,7 +63,7 @@ int main(void) {
   /*todo make random - so you don't start at the same place each time*/
 
   Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
-  snake.blocks = blocks;
+  snake.blocks_pointer = blocks;
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = {100,10};
@@ -99,7 +99,7 @@ void render_frame() {
 
   for(int i; i<snake.num_blocks){
     //iterates over each block in the snake
-    add_square(snake.blocks[i].x0,snake.blocks[i].y0,BLOCK_SIZE);
+    add_square(snake.blocks_pointer[i].x0,snake.blocks_pointer[i].y0,BLOCK_SIZE);
   }
 
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple

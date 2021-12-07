@@ -24,7 +24,7 @@ int square_x_value = 0;
 
 
 /**/
-typedef struct Block{
+typedef struct {
   uint8_t x0; /*value range: 0-128, lower left hand corner x coordinate*/
   uint8_t y0; /*value range: 0-32, lower left hand corner y coordinate*/
   //uint8_t size; /*value range: 1-32 max for uint8_t is 255, the size of the square*/
@@ -32,16 +32,18 @@ typedef struct Block{
 }Block;
 
 /**/
-typedef struct Snake{
-  Block blocks[]; /*the larger squares that make up the snake - last block is the head*/
-  int num_apples_eaten = 0; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
+typedef struct {
+  Block* blocks[]; /*the larger squares that make up the snake - last block is the head*/
+  uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
+  int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
 }Snake;
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
-typedef struct Apple{
+typedef struct {
   Block block; /*the square that symbolizes the apple*/
 }Apple;
 
+/*declare global data variables*/
 Snake snake;
 Apple apple;
 
@@ -62,6 +64,8 @@ int main(void) {
 
   Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
   snake.blocks = blocks;
+  snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
+  snake.num_apples_eaten = 0;
   apple.block = {100,10};
 
   
@@ -93,7 +97,7 @@ void render_frame() {
     
   set_all_pixels_black();  
 
-  for(int i; i<sizeof(snake.blocks)/sizeof(snake.blocks[0])){
+  for(int i; i<snake.num_blocks){
     //iterates over each block in the snake
     add_square(snake.blocks[i].x0,snake.blocks[i].y0,BLOCK_SIZE);
   }

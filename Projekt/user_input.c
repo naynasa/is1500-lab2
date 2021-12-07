@@ -17,7 +17,10 @@ char user_move_direction(){
     bool btn_2_status =  (button_status -(btn_4_status << 3)- (btn_3_status << 2)) >>1; ///000.0CD >> 1 = 000C
     bool btn_1_status =  button_status -(btn_4_status << 3)- (btn_3_status << 2)-(btn_2_status << 1); ///000.000D
     
-    
+    if((btn_1_status + btn_2_status + btn_3_status + btn_4_status) > 1){
+        //dont move
+        return 'N';
+    }
     
     if(btn_4_status == true){
 
@@ -52,13 +55,13 @@ int getbtns(void){
     uint16_t d_bits = *d_pointer;//0bXXXXXXXABCXXXXX
     uint16_t masked_d_value = d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
 
-    uint16_t* f_pointer = PORTF;
-    uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD
-    uint16_t btn1 = f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
-
+    //uint16_t* f_pointer = PORTF;
+    //uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD
+    //uint16_t btn1 = f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
+    int btn1 = (PORTF >> 1) & 1;
     //sum them
     int value = 0; 
-    return (int) (value + (masked_d_value >> 4) + btn1); //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
+    return (value + (masked_d_value >> 4) + btn1); //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
 }
 
 

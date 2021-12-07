@@ -66,7 +66,7 @@ int main(void) {
   snake.blocks_pointer = blocks;
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  apple.block = {100,10};
+  apple.block = {.x0 = 100, .y0 = 10};
 
   
 	start_timer();
@@ -88,27 +88,7 @@ game_over
 display_highscore
 */
 
-/*Render a new frame - called when timer ticks over*/
-void render_frame() {
-  /*helper function to reset the isr via bit manipulation*/
-  void reset_isr(){
-    IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
-  }
-    
-  set_all_pixels_black();  
 
-  for(int i; i<snake.num_blocks){
-    //iterates over each block in the snake
-    add_square(snake.blocks_pointer[i].x0,snake.blocks_pointer[i].y0,BLOCK_SIZE);
-  }
-
-  add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
-  
-  display_buffer();
-
-  reset_isr();
-
-}
 
 //each block is 32*128/4 = 4096/4 = 1024 bits
 //we 0 index the blocks: block 0,1,2,3
@@ -158,5 +138,26 @@ void game_main( void ){
 //wait_x_ms()
 //calculate_frame();
 
+
+}
+/*Render a new frame - called when timer ticks over*/
+void render_frame() {
+  /*helper function to reset the isr via bit manipulation*/
+  void reset_isr(){
+    IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
+  }
+    
+  set_all_pixels_black();  
+  int i;
+  for(i = 0; i<snake.num_blocks){
+    //iterates over each block in the snake
+    add_square(snake.blocks_pointer[i].x0,snake.blocks_pointer[i].y0,BLOCK_SIZE);
+  }
+
+  add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
+  
+  display_buffer();
+
+  reset_isr();
 
 }

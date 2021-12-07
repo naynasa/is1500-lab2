@@ -17,7 +17,7 @@ char user_move_direction(){
     bool btn_2_status =  (button_status -(btn_4_status << 3)- (btn_3_status << 2)) >>1; ///000.0CD >> 1 = 000C
     bool btn_1_status =  button_status -(btn_4_status << 3)- (btn_3_status << 2)-(btn_2_status << 1); ///000.000D
     
-    if(btn_1_status + btn_2_status + btn_3_status + btn_4_status > 1){
+    if((btn_1_status + btn_2_status + btn_3_status + btn_4_status) > 1){
         //dont move
         return 'N';
     }

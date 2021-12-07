@@ -107,7 +107,7 @@ void add_square(int x, int y, int size){
   //set all pixels with x values between x and x+size-1 and y values between y and y+size+1 to 1
   int i,j;
   for(i = x; i <= x + size -1; i++){
-    for(j = y; j <= y + size +1; j++){
+    for(j = y; j <= y - size +1; j++){
       bool *pixel_pointer = pixel_to_frame_buffer_position(i,j);
       *pixel_pointer = true;
 

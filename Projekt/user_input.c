@@ -17,10 +17,7 @@ char user_move_direction(){
     bool btn_2_status =  (button_status -(btn_4_status << 3)- (btn_3_status << 2)) >>1; ///000.0CD >> 1 = 000C
     bool btn_1_status =  button_status -(btn_4_status << 3)- (btn_3_status << 2)-(btn_2_status << 1); ///000.000D
     
-    if((btn_1_status + btn_2_status + btn_3_status + btn_4_status) > 1){
-        //dont move
-        return 'N';
-    }
+    
     
     if(btn_4_status == true){
 
@@ -61,7 +58,7 @@ int getbtns(void){
 
     //sum them
     int value = 0; 
-    return value + (masked_d_value >> 4) + btn1; //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
+    return (int) (value + (masked_d_value >> 4) + btn1); //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
 }
 
 

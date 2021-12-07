@@ -61,7 +61,7 @@ int getbtns(void){
     int btn1 = (PORTF >> 1) & 1;
     //sum them
     int value = 0; 
-    return ((PORTD >> 4) & 0xE) | btn1; //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
+    return (value + (masked_d_value >> 4) + btn1); //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
 }
 
 

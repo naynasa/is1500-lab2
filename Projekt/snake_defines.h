@@ -51,10 +51,10 @@ extern bool frame_buffer[4][128][8];
 void delay(int);
 void time2string( char *, int );
 /* Written as part of i/o lab: getbtns, getsw, enable_interrupt */
-int getbtns(void);
+
 int getsw(void);
 void enable_interrupt(void);
-char user_move_direction(void);
+
 
 #define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
 #define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)

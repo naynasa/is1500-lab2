@@ -41,7 +41,7 @@ char user_move_direction(){
         
         return 'R';
     }
-    }
+  }
 }
 
 //3 LS bits of return value is:

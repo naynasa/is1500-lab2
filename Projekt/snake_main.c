@@ -150,10 +150,10 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  //char user_move_dir = user_move_direction();
+  char user_move_dir = user_move_direction();
   int y_add = 0;
   int x_add = 0;
-  /*
+  
   if(user_move_dir == 'U'){
     y_add = 4;
   }else if(user_move_dir == 'D'){
@@ -163,7 +163,7 @@ void render_frame() {
   }else if(user_move_dir == 'R'){
     x_add = 4;
   }
-  */
+  
   
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake

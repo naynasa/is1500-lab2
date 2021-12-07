@@ -42,6 +42,7 @@ char user_move_direction(){
         return 'R';
     }
   }
+  return 'N';
 }
 
 //3 LS bits of return value is:

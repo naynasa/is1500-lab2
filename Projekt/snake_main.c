@@ -221,7 +221,7 @@ void render_frame() {
     y_add = 5;
   }
   if(user_move_dir == 'L'){
-    x_add = -5;
+    x_add = -10;
   }
   if(user_move_dir == 'R'){
     x_add = 5;

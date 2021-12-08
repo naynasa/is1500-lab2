@@ -171,10 +171,11 @@ void move_snake(){
     //update the block coordinates
     for(i = 0; i<snake.num_blocks; i++){
       //iterates over each block in the snake
-      Block pointed_block = snake.blocks_pointer[i];
-      pointed_block.x0 += x_add;
-      pointed_block.y0 += y_add;
-      add_square(pointed_block.x0+x_add, pointed_block.y0+y_add, BLOCK_SIZE);
+      snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
+      snake.blocks_pointer[i].y0 += y_add;
+      //pointed_block.x0 += x_add;
+      //pointed_block.y0 += y_add;
+      add_square(snake.blocks_pointer[i].x0, snake.blocks_pointer[i].y0, BLOCK_SIZE);
 
     }
 

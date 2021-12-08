@@ -20,7 +20,7 @@ bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 int square_x_value = 0;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
-
+#define BASE_SPEED 3 //amount of pixels the snake moves from the start
 
 
 /**/
@@ -35,6 +35,7 @@ typedef struct {
 typedef struct {
   uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
+  Direction facing_direction; /*the direction the snake is currently facing/moving in (if no user command is given it keeps going in that direction)*/
   Block* blocks_pointer; /*the larger squares that make up the snake - last block is the head*/
 }Snake;
 
@@ -64,6 +65,7 @@ int main(void) {
 
   Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
   snake.blocks_pointer = blocks;
+  snake.facing_direction = 'U'; //set the snake to always start going up
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {100,10};
@@ -134,13 +136,64 @@ we imagine each pixel has an x,y value with 0,0 being in the bottom left corner
 */
 void game_main( void ){
 
-
 //wait_x_ms()
 //calculate_frame();
 
 }
+//moves the snake forward if no command is given or in another direction if the user presses one of the buttons
+//called each frame
+//updates position of the snakes blocks and snake.facing_direction
+void move_snake(){
+  /*helper that calculates how much x should be updated depending on the direction*/
+  int x_offset_from_dir(Direction dir){
+    if(dir == 'L' || dir == 'R'){
+      return (dir == 'L') ? -BASE_SPEED : BASE_SPEED; // L = - and R = +
+    }else{
+      return 0;
+    }
+  }
+  /*helper that calculates how much y should be updated depending on the direction*/
+  int y_offset_from_dir(Direction dir){
+    if(dir == 'U' || dir == 'D'){
+      return (dir == 'U') ? -BASE_SPEED : BASE_SPEED; // U = - and D = +
+    }else{
+      return 0;
+    }
+  }
+  
+  Direction user_move_dir = user_move_direction();
+  int i;
+  if(user_move_dir == 'N'){
+    /*no command - just move the snake forward*/
+    int y_add = x_offset_from_dir(snake.facing_direction);
+    int x_add = y_offset_from_dir(snake.facing_direction);
+    
+    //update the block coordinates
+    for(i = 0; i<snake.num_blocks; i++){
+      //iterates over each block in the snake
+      Block pointed_block = snake.blocks_pointer[i];
+      pointed_block.x0 += x_add;
+      pointed_block.y0 += y_add;
+    }
 
+  }else{
+    /*command is sent - move the snake in that direction*/
+    int x_add = x_offset_from_dir(user_move_dir);
+    int y_add = y_offset_from_dir(user_move_dir);
+    
+    //update the block coordinates
+    for(i = 0; i<snake.num_blocks; i++){
+      //iterates over each block in the snake
+      Block pointed_block = snake.blocks_pointer[i];
+      pointed_block.x0 += x_add;
+      pointed_block.y0 += y_add;
+    }
+    //update the direction the snake is facing
+    snake.facing_direction = user_move_dir;
+  }
+  
 
+}
 
 /*Render a new frame - called when timer ticks over*/
 void render_frame() {
@@ -152,32 +205,18 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  char user_move_dir = user_move_direction();
-  int y_add = 0;
-  int x_add = 0;
-  
-  if(user_move_dir == 'U'){
-    y_add = -5;
-  }
-  if(user_move_dir == 'D'){
-    y_add = 5;
-  }
-  if(user_move_dir == 'L'){
-    x_add = -10;
-  }
-  if(user_move_dir == 'R'){
-    x_add = 5;
-  }
-  //N <=> 0
+
+  move_snake();
   
   
-  
+  //send the snake to the buffer
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_pointer[i];
-    add_square(pointed_block.x0+x_add, pointed_block.y0+y_add, BLOCK_SIZE);
+    add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
   }
 
+  //send the apple to the buffer
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
   
  /*

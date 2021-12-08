@@ -70,3 +70,8 @@ void enable_interrupt(void);
 
 #define T2CON_ENABLE_BIT 0x8000 //0b1000000000000000
 #define T2CON_PRESCALER_BITS 0x0070//0b0000000001110000 TCKPS<2:0> - we only look at 3 bits (here 111) and 111 <=> 
+
+/*A wrapper for char, the direction the user wants to go in or the snake is travelling in
+possible values: 'U'(up),'D'(down),'L'(left),'R'(right) or 'N' for none
+*/
+typedef char Direction;

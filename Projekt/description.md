@@ -66,4 +66,4 @@ place_obsticle
 we use positive y direction downwards and positive x direction to the right (see drawing)
 
 
-we need all 4 buttons and button 1 is on pin 4 (not close to the others)
+we need all 4 buttons and button 1 is on pin 4 (not close to the others) - we first look in here https://digilent.com/reference/_media/chipkit_shield_basic_io_shield:chipkit_basic_io_shield_rm.pdf 2.2 page 5 and see that button 1 is pin 4 - we then check https://digilent.com/reference/chipkit_uno32/refmanual pinout table and look in the "chipkit pin #" column - there we find that pin 4 is bit 1 of port F

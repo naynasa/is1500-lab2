@@ -140,9 +140,7 @@ void game_main( void ){
 
 
 }
-
-char user_move_direction(){
-  //3 LS bits of return value is:
+ //3 LS bits of return value is:
 //   BTN4,BTN3,BTN2
 //bit 7,   6,   5 of port D (7<=> BTN4 etc.)
 //i.e. 0000....00ABCD, A<=> BTN4, B <=> BTN3, C<=>BTN2, D<=>BTN1
@@ -160,7 +158,9 @@ int getbtns(void){
     int value = 0; 
     return (value + (masked_d_value >> 4) + btn1); //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
 }
-  int button_status = getbtns(); //0000...0ABCD
+char user_move_direction(){
+ 
+  int button_status = 2//getbtns(); //0000...0ABCD
   if(button_status != 0){
     bool btn_4_status =  button_status >> 3; //000.0A
     bool btn_3_status =  (button_status >> 2) - (btn_4_status << 1); /// 000AB - 0A<<1 = 000.00B
@@ -210,8 +210,7 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  char user_move_dir = 'U';
-  user_move_direction();
+  char user_move_dir = user_move_direction();
   int y_add = 0;
   int x_add = 0;
   

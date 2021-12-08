@@ -15,6 +15,7 @@
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 /*the array that stores all our pixel data - the way we communicate with the screen*/
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 int square_x_value = 0;

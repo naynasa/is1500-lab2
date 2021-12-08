@@ -146,9 +146,9 @@ void game_main( void ){
 //i.e. 0000....00ABCD, A<=> BTN4, B <=> BTN3, C<=>BTN2, D<=>BTN1
 uint16_t getbtns(void){
     //get BTN4,BTN3,BTN2
-    uint16_t* d_pointer = PORTD;
-    uint16_t d_bits = *d_pointer;//0bXXXXXXXABCXXXXX
-    uint16_t masked_d_value = d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
+    //uint16_t* d_pointer = PORTD;
+    //uint16_t d_bits = *d_pointer;//0bXXXXXXXABCXXXXX
+    uint16_t masked_d_value = 0b0000000011100000;//d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
 
     //uint16_t* f_pointer = PORTF;
     //uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD

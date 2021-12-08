@@ -21,7 +21,8 @@ int square_x_value = 0;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
 #define BASE_SPEED 3 //amount of pixels the snake moves from the start
-
+#define SCREEN_HEIGHT 32
+#define SCREEN_WIDTH 128
 
 /**/
 typedef struct {
@@ -174,6 +175,9 @@ void move_snake(){
       snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
       snake.blocks_pointer[i].y0 += y_add;
 
+      snake.blocks_pointer[i].x0 %= SCREEN_WIDTH;
+      snake.blocks_pointer[i].y0 %= SCREEN_HEIGHT;
+
     }
 
   }else{
@@ -188,6 +192,9 @@ void move_snake(){
       //pointed_block.x0 += x_add;- apparently this dosn't work but the below does
       snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
       snake.blocks_pointer[i].y0 += y_add;
+
+      snake.blocks_pointer[i].x0 %= SCREEN_WIDTH;
+      snake.blocks_pointer[i].y0 %= SCREEN_HEIGHT;
     }
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;

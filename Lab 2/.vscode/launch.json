@@ -5,11 +5,13 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": [],
+      "args": [
+        ""
+      ],
       "stopAtEntry": false,
-      "cwd": "c:\\Users\\axels\\Desktop\\KTH\\IS1500 HT21-1 Datorteknik och komponenter\\is1500-lab2\\Lab 2",
+      "cwd": "c:/Users/axels/Desktop/KTH/IS1500 HT21-1 Datorteknik och komponenter/labbar_git_repo/Lab 2",
       "environment": [],
-      "program": "c:\\Users\\axels\\Desktop\\KTH\\IS1500 HT21-1 Datorteknik och komponenter\\is1500-lab2\\Lab 2\\build\\Debug\\outDebug",
+      "program": "c:/Users/axels/Desktop/KTH/IS1500 HT21-1 Datorteknik och komponenter/labbar_git_repo/Lab 2/build/Debug/outDebug",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",

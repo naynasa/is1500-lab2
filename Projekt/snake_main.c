@@ -174,6 +174,8 @@ void move_snake(){
       Block pointed_block = snake.blocks_pointer[i];
       pointed_block.x0 += x_add;
       pointed_block.y0 += y_add;
+      add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
+
     }
 
   }else{
@@ -209,12 +211,14 @@ void render_frame() {
   move_snake();
   
   
+  /*
   //send the snake to the buffer
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_pointer[i];
     add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
   }
+  */
 
   //send the apple to the buffer
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple

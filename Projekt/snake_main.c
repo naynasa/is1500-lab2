@@ -160,7 +160,7 @@ int getbtns(void){
 }
 char user_move_direction(){
  //D funkar
-  int button_status = 0b0010;//getbtns(); //0000...0ABCD
+  int button_status = 0b0100;//getbtns(); //0000...0ABCD
   if(button_status != 0){
     bool btn_4_status =  button_status >> 3; //000.0A
     bool btn_3_status =  (button_status >> 2) - (btn_4_status << 1); /// 000AB - 0A<<1 = 000.00B

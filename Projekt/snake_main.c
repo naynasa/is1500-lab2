@@ -152,7 +152,7 @@ uint16_t getbtns(void){
 
     //uint16_t* f_pointer = PORTF;
     //uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD
-    uint16_t btn1 = 0b1//f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
+    uint16_t btn1 = 0b1;//f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
     //uint16_t btn1 = (PORTF >> 1) & 1;
     //sum them
     return ((masked_d_value >> 4) | btn1); //0b0000000000000ABC0 | 0b0000000000000000D = 0b000000000000ABCD

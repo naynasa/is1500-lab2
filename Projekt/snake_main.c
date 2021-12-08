@@ -165,17 +165,14 @@ void move_snake(){
   int i;
   if(user_move_dir == 'N'){
     /*no command - just move the snake forward*/
-    int y_add = 0;//x_offset_from_dir(snake.facing_direction);
-    int x_add = BASE_SPEED;//y_offset_from_dir(snake.facing_direction);
+    int y_add = x_offset_from_dir(snake.facing_direction);
+    int x_add = y_offset_from_dir(snake.facing_direction);
     
     //update the block coordinates
     for(i = 0; i<snake.num_blocks; i++){
       //iterates over each block in the snake
       snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
       snake.blocks_pointer[i].y0 += y_add;
-      //pointed_block.x0 += x_add;
-      //pointed_block.y0 += y_add;
-      add_square(snake.blocks_pointer[i].x0, snake.blocks_pointer[i].y0, BLOCK_SIZE);
 
     }
 
@@ -187,9 +184,10 @@ void move_snake(){
     //update the block coordinates
     for(i = 0; i<snake.num_blocks; i++){
       //iterates over each block in the snake
-      Block pointed_block = snake.blocks_pointer[i];
-      pointed_block.x0 += x_add;
-      pointed_block.y0 += y_add;
+      //Block pointed_block = snake.blocks_pointer[i]; 
+      //pointed_block.x0 += x_add;- apparently this dosn't work but the below does
+      snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
+      snake.blocks_pointer[i].y0 += y_add;
     }
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;
@@ -212,14 +210,14 @@ void render_frame() {
   move_snake();
   
   
-  /*
+  
   //send the snake to the buffer
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_pointer[i];
     add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
   }
-  */
+  
 
   //send the apple to the buffer
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple

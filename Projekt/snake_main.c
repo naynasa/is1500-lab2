@@ -148,14 +148,14 @@ uint16_t getbtns(void){
     //get BTN4,BTN3,BTN2
     //uint16_t* d_pointer = PORTD;
     //uint16_t d_bits = *d_pointer;//0bXXXXXXXABCXXXXX
-    uint16_t masked_d_value = 0b0000000011100000;//d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
+    uint16_t btn_4_3_2 = (PORTD >>4) & 0b0000000000001110;//0b0000000011100000;//d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
 
     //uint16_t* f_pointer = PORTF;
     //uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD
-    uint16_t btn1 = 0b1;//f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
-    //uint16_t btn1 = (PORTF >> 1) & 1;
+    //uint16_t btn1 = 0b1;//f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
+    uint16_t btn1 = (PORTF >> 1) & 1;
     //sum them
-    return ((masked_d_value >> 4) | btn1); //0b0000000000000ABC0 | 0b0000000000000000D = 0b000000000000ABCD
+    return btn_4_3_2 + btn1; //0b0000000000000ABC0 | 0b0000000000000000D = 0b000000000000ABCD
 }
 char user_move_direction(){
  //A,D,B,C funkar

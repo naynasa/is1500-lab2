@@ -160,7 +160,7 @@ int getbtns(void){
 }
 char user_move_direction(){
  
-  int button_status = 0b1000;//getbtns(); //0000...0ABCD
+  int button_status = 0b0001;//getbtns(); //0000...0ABCD
   if(button_status != 0){
     bool btn_4_status =  button_status >> 3; //000.0A
     bool btn_3_status =  (button_status >> 2) - (btn_4_status << 1); /// 000AB - 0A<<1 = 000.00B
@@ -215,10 +215,10 @@ void render_frame() {
   int x_add = 0;
   
   if(user_move_dir == 'U'){
-    y_add = 5;
+    y_add = -5;
   }
   if(user_move_dir == 'D'){
-    y_add = -5;
+    y_add = 5;
   }
   if(user_move_dir == 'L'){
     x_add = -5;
@@ -233,7 +233,7 @@ void render_frame() {
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_pointer[i];
-    add_square(pointed_block.x0+x_add,pointed_block.y0+y_add,BLOCK_SIZE);
+    add_square(pointed_block.x0+x_add, pointed_block.y0+y_add, BLOCK_SIZE);
   }
 
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple

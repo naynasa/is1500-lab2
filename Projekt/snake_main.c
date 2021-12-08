@@ -144,23 +144,22 @@ void game_main( void ){
 //   BTN4,BTN3,BTN2
 //bit 7,   6,   5 of port D (7<=> BTN4 etc.)
 //i.e. 0000....00ABCD, A<=> BTN4, B <=> BTN3, C<=>BTN2, D<=>BTN1
-int getbtns(void){
+uint16_t getbtns(void){
     //get BTN4,BTN3,BTN2
     uint16_t* d_pointer = PORTD;
     uint16_t d_bits = *d_pointer;//0bXXXXXXXABCXXXXX
     uint16_t masked_d_value = d_bits & 0b0000000011100000;  //0b00000000ABC00000  = masked_d_value
 
-    //uint16_t* f_pointer = PORTF;
-    //uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD
-    //uint16_t btn1 = f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
-    int btn1 = (PORTF >> 1) & 1;
+    uint16_t* f_pointer = PORTF;
+    uint16_t f_bits = *f_pointer;//0bXXXXXXXXXXXXXXD
+    uint16_t btn1 = f_bits & 0b1;  //0b00000000ABC00000  = masked_d_value
+    //uint16_t btn1 = (PORTF >> 1) & 1;
     //sum them
-    int value = 0; 
-    return (value + (masked_d_value >> 4) + btn1); //0b0000000000000ABC + 0b0000000000000000D = 0b000000000000ABCD
+    return ((masked_d_value >> 4) | btn1); //0b0000000000000ABC0 | 0b0000000000000000D = 0b000000000000ABCD
 }
 char user_move_direction(){
- //D,B,C funkar
-  int button_status = 0b1000;//getbtns(); //0000...0ABCD
+ //A,D,B,C funkar
+  int button_status = getbtns(); //0000...0ABCD
   if(button_status != 0){
     bool btn_4_status =  button_status >> 3; //000.0A
     bool btn_3_status =  (button_status >> 2) - (btn_4_status << 1); /// 000AB - 0A<<1 = 000.00B

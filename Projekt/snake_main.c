@@ -212,7 +212,6 @@ void move_snake(){
     snake.blocks_pointer[i].y0 = old_snake.blocks_pointer[i-1].y0;
   }
   //delete the copy
-  free(old_snake);
   
 
 }

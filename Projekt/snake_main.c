@@ -204,7 +204,7 @@ void move_head(){
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 void move_snake(){
   //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
-  Block *old_blocks_pointer = (Block*) malloc(sizeof(Block)*snake.num_blocks);
+  Block *old_blocks_pointer;
   memcpy(old_blocks_pointer,snake.blocks_pointer, sizeof(Block)*snake.num_blocks);
   
   //move the head

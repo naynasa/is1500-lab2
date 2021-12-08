@@ -215,16 +215,16 @@ void render_frame() {
   int x_add = 0;
   
   if(user_move_dir == 'U'){
-    y_add = 10;
+    y_add = 5;
   }
   if(user_move_dir == 'D'){
-    y_add = -10;
+    y_add = -5;
   }
   if(user_move_dir == 'L'){
-    x_add = -10;
+    x_add = -5;
   }
   if(user_move_dir == 'R'){
-    x_add = 10;
+    x_add = 5;
   }
   //N <=> 0
   

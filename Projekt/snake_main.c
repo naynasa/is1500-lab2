@@ -206,13 +206,13 @@ void move_snake(){
   move_head();
 
   //put all other blocks at position i-1 from the snake at t-1
-  int;
+  int i;
   for (i = 1; i < snake.num_blocks; i++){ //the head is at index 0
-    snake.blocks_pointer[i].x0 = *(old_snake_pointer).blocks_pointer[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
-    snake.blocks_pointer[i].y0 = *(old_snake_pointer).blocks_pointer[i-1].y0;
+    snake.blocks_pointer[i].x0 = (*old_snake_pointer).blocks_pointer[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
+    snake.blocks_pointer[i].y0 = (*old_snake_pointer).blocks_pointer[i-1].y0;
   }
   //delete the copy
-  free(old_snake);
+  free(old_snake_pointer);
   
 
 }

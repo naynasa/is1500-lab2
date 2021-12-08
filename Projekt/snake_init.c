@@ -99,7 +99,7 @@ void init_timer(){
   
   //init Timer 2 - 16 bit timer
   T2CONCLR = T2CON_ENABLE_BIT; //stops the timer?
-  uint32_t target_frequency = 10; //10 Hz / our timer timesout 10 times each second
+  uint32_t target_frequency = 60; //60 Hz / our timer timesout 10 times each second
   uint32_t prescaler = 256; //256 is needed since we need a low frequency 
   uint32_t pb_clock_frequency = 80E6;
   uint16_t period = pb_clock_frequency / (prescaler * target_frequency); //set our max value of the timer = 31250

@@ -198,9 +198,9 @@ void move_head(){
 }
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 void move_snake(){
-  //copy snake blocks at t-1
-  Snake old_snake;
-  old_snake = snake;
+  //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
+  Block *old_blocks_pointer = (Block*) malloc(sizeof(Block)*snake.num_blocks);
+  memcpy(old_blocks_pointer,snake.blocks_pointer, sizeof(Block)*snake.num_blocks);
   
   //move the head
   move_head();
@@ -208,8 +208,8 @@ void move_snake(){
   //put all other blocks at position i-1 from the snake at t-1
   int i;
   for (i = 1; i < snake.num_blocks; i++){ //the head is at index 0
-    snake.blocks_pointer[i].x0 = old_snake.blocks_pointer[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
-    snake.blocks_pointer[i].y0 = old_snake.blocks_pointer[i-1].y0;
+    snake.blocks_pointer[i].x0 = old_blocks_pointer[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
+    snake.blocks_pointer[i].y0 = old_blocks_pointer[i-1].y0;
   }
   //delete the copy
   

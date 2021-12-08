@@ -165,8 +165,8 @@ void move_snake(){
   int i;
   if(user_move_dir == 'N'){
     /*no command - just move the snake forward*/
-    int y_add = x_offset_from_dir(snake.facing_direction);
-    int x_add = y_offset_from_dir(snake.facing_direction);
+    int y_add = 0;//x_offset_from_dir(snake.facing_direction);
+    int x_add = BASE_SPEED;//y_offset_from_dir(snake.facing_direction);
     
     //update the block coordinates
     for(i = 0; i<snake.num_blocks; i++){

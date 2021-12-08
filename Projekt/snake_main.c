@@ -141,25 +141,7 @@ void game_main( void ){
 //calculate_frame();
 
 }
-//makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
-void move_snake(){
-  //copy snake blocks at t-1
-  Snake old_snake;
-  memcpy(old_snake, snake, sizeof(snake));
-  
-  //move the head
-  move_head();
 
-  //put all other blocks at position i-1 from the snake at t-1
-  for (int i = 1; i < snake.num_blocks; i++){ //the head is at index 0
-    snake.blocks_pointer[i].x0 = old_snake.blocks_pointer[i-1]; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
-    snake.blocks_pointer[i].y0 = old_snake.blocks_pointer[i-1];
-  }
-  //delete the copy
-  free(old_snake);
-  
-
-}
 
 //moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
 //called each frame
@@ -211,6 +193,26 @@ void move_head(){
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;
   }
+  
+
+}
+//makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
+void move_snake(){
+  //copy snake blocks at t-1
+  Snake old_snake;
+  memcpy(old_snake, snake, sizeof(snake));
+  
+  //move the head
+  move_head();
+
+  //put all other blocks at position i-1 from the snake at t-1
+  int;
+  for (i = 1; i < snake.num_blocks; i++){ //the head is at index 0
+    snake.blocks_pointer[i].x0 = old_snake.blocks_pointer[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
+    snake.blocks_pointer[i].y0 = old_snake.blocks_pointer[i-1].y0;
+  }
+  //delete the copy
+  free(old_snake);
   
 
 }

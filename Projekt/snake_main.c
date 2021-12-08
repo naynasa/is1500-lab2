@@ -174,7 +174,7 @@ void move_snake(){
       Block pointed_block = snake.blocks_pointer[i];
       pointed_block.x0 += x_add;
       pointed_block.y0 += y_add;
-      add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
+      add_square(pointed_block.x0+x_add, pointed_block.y0+y_add, BLOCK_SIZE);
 
     }
 

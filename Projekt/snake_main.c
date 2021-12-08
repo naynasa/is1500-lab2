@@ -141,10 +141,30 @@ void game_main( void ){
 //calculate_frame();
 
 }
-//moves the snake forward if no command is given or in another direction if the user presses one of the buttons
-//called each frame
-//updates position of the snakes blocks and snake.facing_direction
+//makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 void move_snake(){
+  //copy snake blocks at t-1
+  Snake old_snake;
+  memcpy(old_snake, snake, sizeof(snake));
+  
+  //move the head
+  move_head();
+
+  //put all other blocks at position i-1 from the snake at t-1
+  for (int i = 1; i < snake.num_blocks; i++){ //the head is at index 0
+    snake.blocks_pointer[i].x0 = old_snake.blocks_pointer[i-1]; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
+    snake.blocks_pointer[i].y0 = old_snake.blocks_pointer[i-1];
+  }
+  //delete the copy
+  free(old_snake);
+  
+
+}
+
+//moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
+//called each frame
+//updates position of the snakes head block and snake.facing_direction
+void move_head(){
   /*helper that calculates how much x should be updated depending on the direction*/
   int x_offset_from_dir(Direction dir){
     if(dir == 'L' || dir == 'R'){
@@ -169,33 +189,25 @@ void move_snake(){
     int y_add = x_offset_from_dir(snake.facing_direction);
     int x_add = y_offset_from_dir(snake.facing_direction);
     
-    //update the block coordinates
-    for(i = 0; i<snake.num_blocks; i++){
-      //iterates over each block in the snake
-      snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
-      snake.blocks_pointer[i].y0 += y_add;
+    //update the head coordinates
+    snake.blocks_pointer[0].x0 += x_add;
+    snake.blocks_pointer[0].y0 += y_add;
 
-      snake.blocks_pointer[i].x0 %= SCREEN_WIDTH;
-      snake.blocks_pointer[i].y0 %= SCREEN_HEIGHT;
-
-    }
+    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;
+    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
 
   }else{
     /*command is sent - move the snake in that direction*/
     int x_add = x_offset_from_dir(user_move_dir);
     int y_add = y_offset_from_dir(user_move_dir);
     
-    //update the block coordinates
-    for(i = 0; i<snake.num_blocks; i++){
-      //iterates over each block in the snake
-      //Block pointed_block = snake.blocks_pointer[i]; 
-      //pointed_block.x0 += x_add;- apparently this dosn't work but the below does
-      snake.blocks_pointer[i].x0 += x_add; //*(snake.blocks_pointer + i)
-      snake.blocks_pointer[i].y0 += y_add;
+    //update the head coordinates
+    snake.blocks_pointer[0].x0 += x_add;
+    snake.blocks_pointer[0].y0 += y_add;
 
-      snake.blocks_pointer[i].x0 %= SCREEN_WIDTH;
-      snake.blocks_pointer[i].y0 %= SCREEN_HEIGHT;
-    }
+    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;
+    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;
   }

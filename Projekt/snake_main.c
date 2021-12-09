@@ -205,10 +205,10 @@ void move_head(){
 void move_snake(){
   //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
   Block *old_blocks_pointer;
-  int i;
-  for (i = 0; i < snake.num_blocks; i++)
+  int j;
+  for (j = 0; j < snake.num_blocks; j++)
   {
-   old_blocks_pointer[i] = snake.blocks_pointer[i];
+   old_blocks_pointer[j] = snake.blocks_pointer[j];
   }
   //old_blocks_pointer = snake.blocks_pointer;
   

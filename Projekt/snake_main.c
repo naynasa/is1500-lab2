@@ -76,7 +76,7 @@ int main(void) {
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {100,10};
-  snake.prev_tail = {10,15-2*BLOCK_SIZE};
+  snake.prev_tail = (Block) {10,15-2*BLOCK_SIZE};
 
 
   

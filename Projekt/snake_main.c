@@ -22,7 +22,7 @@
 
 /*the array that stores all our pixel data - the way we communicate with the screen*/
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
-int square_x_value = 0;
+uint16_t rand_seed = 1;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
 #define BASE_SPEED 3 //amount of pixels the snake moves from the start
@@ -43,6 +43,7 @@ typedef struct {
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
   Direction facing_direction; /*the direction the snake is currently facing/moving in (if no user command is given it keeps going in that direction)*/
   Block* blocks_pointer; /*the larger squares that make up the snake - first block is the head (index 0)*/
+  Block prev_tail; /*the tail block of the snake BEFORE MOVING - important since that's where we want to add the new block*/
 }Snake;
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
@@ -71,10 +72,12 @@ int main(void) {
 
   Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
   snake.blocks_pointer = blocks;
-  snake.facing_direction = 'U'; //set the snake to always start going up
+  snake.facing_direction = 'D'; //set the snake to always start going up
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {100,10};
+  snake.prev_tail = {10,15-2*BLOCK_SIZE};
+
 
   
 	start_timer();
@@ -192,8 +195,8 @@ void move_head(){
     snake.blocks_pointer[0].x0 += x_add;
     snake.blocks_pointer[0].y0 += y_add;
 
-    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;
-    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;
+    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
 
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;
@@ -202,15 +205,17 @@ void move_head(){
 
 }
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
+//also assigns snake_tail
 void move_snake(){
   //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
-  Block old_blocks_pointer[snake.num_blocks];// = snake.blocks_pointer;
+  Block old_blocks[snake.num_blocks];// = snake.blocks_pointer;
 
   int j;
   for (j = 0; j < snake.num_blocks; j++)
   {
-   old_blocks_pointer[j] = snake.blocks_pointer[j];
+   old_blocks[j] = snake.blocks_pointer[j];
   }
+  snake.prev_tail = old_blocks[snake.num_blocks-1];
   
   //old_blocks_pointer = snake.blocks_pointer;
   
@@ -221,12 +226,73 @@ void move_snake(){
   //put all other blocks at position i-1 from the snake at t-1
   int i;
   for (i = 1; i < snake.num_blocks; i++){ //the head is at index 0
-    snake.blocks_pointer[i].x0 = old_blocks_pointer[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
-    snake.blocks_pointer[i].y0 = old_blocks_pointer[i-1].y0;
+    snake.blocks_pointer[i].x0 = old_blocks[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
+    snake.blocks_pointer[i].y0 = old_blocks[i-1].y0;
   }
-  //delete the copy
   
 
+}
+void game_over(){
+  while (true)
+  {
+      display_string("game over!");
+
+  }
+  
+}
+
+void check_collision(){
+  //helper that returns whether or not the pixel we are checking is outside the screen
+  bool check_outside_screen(uint16_t x,uint16_t y){
+    return (x>= SCREEN_WIDTH || x<= 0 || y>=SCREEN_HEIGHT || y<=0);
+  }
+  //helper that returns whether or not the pixel we are checking is inside an apple
+  bool pixel_is_apple(uint16_t x,uint16_t y){
+    return (apple.block.x0 <= x && x <= apple.block.x0 + BLOCK_SIZE -1) || (apple.block.y0 <= y && y <= apple.block.y0 + BLOCK_SIZE +1); 
+  }
+  uint16_t x,y;
+  //iterate over each pixel in the snakes head
+  for (x = snake.blocks_pointer[0].x0; x < snake.blocks_pointer[0].x0 + BLOCK_SIZE ; x++){
+    for(y = snake.blocks_pointer[0].y0 - BLOCK_SIZE +1; y <= snake.blocks_pointer[0].y0; y++){
+      bool pixel_is_on = pixel_to_frame_buffer_position(x,y);
+      bool pixel_is_outside_screen = check_outside_screen(x,y);
+      bool pixel_is_apple = pixel_is_apple(x,y);
+      if(pixel_is_on){
+        if(pixel_is_apple){
+          eat_apple();
+        }else{
+          //if we crash into something that isn't an apple we die
+          game_over();
+        }
+      }else if(pixel_is_outside_screen){
+        game_over();
+      }
+    }
+  }
+  
+}
+
+//since we display the apple after the snake moving the apple looks the same as creating a new one
+void eat_apple(){
+  int scaled_rand(int max){
+   int x = rand();
+   int rand_min = 0;
+   int x_zero_to_one = (x-rand_min) / (RAND_MAX - rand_min);
+   
+   return (max * x_zero_to_one);
+  } 
+  //increment apples eaten
+  snake.num_apples_eaten++;
+  //move apple
+  srand(rand_seed); //set seed
+  int apple_new_x = BLOCK_SIZE + scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
+  int apple_new_y = BLOCK_SIZE + scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
+  apple.block.x0 = apple_new_x;
+  apple.block.y0 = apple_new_y;
+
+  //increase snake size
+  snake.num_blocks++;
+  snake.blocks_pointer[snake.num_blocks-1] = snake.prev_tail;
 }
 
 /*Render a new frame - called when timer ticks over*/

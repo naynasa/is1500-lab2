@@ -6,8 +6,8 @@
 //int mytime = 0x5957;
 uint32_t counter = 0; /*number of times timer 2 has been completed*/
 
-char textstring[] = "text, more text, and even more text!";
-
+//char textstring[] = "text, more text, and even more text!";
+char textbuffer[4][16];
 
 /* T2IF (bit)- holds our interupt flag (bit 8 of IFS0 - its is 1 if timer is done else 0) */
 /* T2IE (bit)- set to 1 to enable interrupts on timer 2 (bit 8 of IEC0)*/
@@ -15,7 +15,7 @@ char textstring[] = "text, more text, and even more text!";
 // TRISECLR sätter man en bit i den till 1 sätts motsvarande bit till 0 i TRISE (sätter man en bit till 0 händer inget)
 // TRISESET 1 sätter värdet i TRISET 0 gör inget
 
-/*
+
 const uint8_t const font[] = {
 	0, 0, 0, 0, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 0,
@@ -147,7 +147,7 @@ const uint8_t const font[] = {
 	0, 120, 68, 66, 68, 120, 0, 0,
 };
 
-
+/*
 const uint8_t const icon[] = {
 	255, 255, 255, 255, 255, 255, 127, 187,
 	68, 95, 170, 93, 163, 215, 175, 95,

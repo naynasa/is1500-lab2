@@ -14,6 +14,7 @@
   "C_Cpp_Runner.warningsAsError": false,
   "files.associations": {
     "snake_defines.h": "c",
-    "stdio.h": "c"
+    "stdio.h": "c",
+    "limits": "c"
   }
 }

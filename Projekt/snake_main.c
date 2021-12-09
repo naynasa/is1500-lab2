@@ -282,9 +282,6 @@ void check_collision(){
       if(pixel_is_on){
         if(pixel_is_apple){
           eat_apple();
-        }else{
-          //if we crash into something that isn't an apple we die
-          game_over();
         }
       }else if(pixel_is_outside_screen){
         game_over();

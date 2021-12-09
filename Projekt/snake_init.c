@@ -11,6 +11,7 @@
 #include <pic32mx.h>  /* Declarations of system-specific addresses etc */
 #include "snake_defines.h"  /* Declatations for these labs */
 #include <stdbool.h>
+void *stdin, *stdout, *stderr; /*defined to stop error when compiling with standard library (we do this to access rand function)*/
 
 /*Given to us in the lab*/
 void init_controller(){

@@ -75,3 +75,4 @@ void enable_interrupt(void);
 possible values: 'U'(up),'D'(down),'L'(left),'R'(right) or 'N' for none
 */
 typedef char Direction;
+char textbuffer[4][16];

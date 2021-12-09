@@ -240,6 +240,28 @@ void game_over(){
   }
   
 }
+//since we display the apple after the snake moving the apple looks the same as creating a new one
+void eat_apple(){
+  int scaled_rand(int max){
+   int x = rand();
+   int rand_min = 0;
+   int x_zero_to_one = (x-rand_min) / (RAND_MAX - rand_min);
+   
+   return (max * x_zero_to_one);
+  } 
+  //increment apples eaten
+  snake.num_apples_eaten++;
+  //move apple
+  srand(rand_seed); //set seed
+  int apple_new_x = BLOCK_SIZE + scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
+  int apple_new_y = BLOCK_SIZE + scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
+  apple.block.x0 = apple_new_x;
+  apple.block.y0 = apple_new_y;
+
+  //increase snake size
+  snake.num_blocks++;
+  snake.blocks_pointer[snake.num_blocks-1] = snake.prev_tail;
+}
 
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
@@ -272,28 +294,7 @@ void check_collision(){
   
 }
 
-//since we display the apple after the snake moving the apple looks the same as creating a new one
-void eat_apple(){
-  int scaled_rand(int max){
-   int x = rand();
-   int rand_min = 0;
-   int x_zero_to_one = (x-rand_min) / (RAND_MAX - rand_min);
-   
-   return (max * x_zero_to_one);
-  } 
-  //increment apples eaten
-  snake.num_apples_eaten++;
-  //move apple
-  srand(rand_seed); //set seed
-  int apple_new_x = BLOCK_SIZE + scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
-  int apple_new_y = BLOCK_SIZE + scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
-  apple.block.x0 = apple_new_x;
-  apple.block.y0 = apple_new_y;
 
-  //increase snake size
-  snake.num_blocks++;
-  snake.blocks_pointer[snake.num_blocks-1] = snake.prev_tail;
-}
 
 /*Render a new frame - called when timer ticks over*/
 void render_frame() {
@@ -307,7 +308,7 @@ void render_frame() {
   
 
   move_snake();
-  
+  check_collision();
   
   
   //send the snake to the buffer

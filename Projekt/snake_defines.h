@@ -75,4 +75,7 @@ void enable_interrupt(void);
 possible values: 'U'(up),'D'(down),'L'(left),'R'(right) or 'N' for none
 */
 typedef char Direction;
-char textbuffer[4][16];
+/* Declare text buffer for display output */
+extern char textbuffer[4][16];
+/* Declare bitmap array containing font */
+extern const uint8_t const font[128*8];

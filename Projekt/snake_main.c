@@ -303,9 +303,9 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-
-  move_snake();
   check_collision();
+  move_snake();
+  
   
   
   //send the snake to the buffer

@@ -235,7 +235,7 @@ void move_snake(){
 void game_over(){
   while (true)
   {
-      display_string(3,(char[]) "game over!");
+      display_string(3, "game over!");
 
   }
   
@@ -247,7 +247,7 @@ void check_collision(){
     return (x>= SCREEN_WIDTH || x<= 0 || y>=SCREEN_HEIGHT || y<=0);
   }
   //helper that returns whether or not the pixel we are checking is inside an apple
-  bool pixel_is_apple(uint16_t x,uint16_t y){
+  bool check_pixel_is_apple(uint16_t x,uint16_t y){
     return (apple.block.x0 <= x && x <= apple.block.x0 + BLOCK_SIZE -1) || (apple.block.y0 <= y && y <= apple.block.y0 + BLOCK_SIZE +1); 
   }
   uint16_t x,y;
@@ -256,7 +256,7 @@ void check_collision(){
     for(y = snake.blocks_pointer[0].y0 - BLOCK_SIZE +1; y <= snake.blocks_pointer[0].y0; y++){
       bool pixel_is_on = pixel_to_frame_buffer_position(x,y);
       bool pixel_is_outside_screen = check_outside_screen(x,y);
-      bool pixel_is_apple = pixel_is_apple(x,y);
+      bool pixel_is_apple = check_pixel_is_apple(x,y);
       if(pixel_is_on){
         if(pixel_is_apple){
           eat_apple();

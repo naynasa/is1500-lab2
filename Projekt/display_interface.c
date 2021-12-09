@@ -100,7 +100,7 @@ uint8_t spi_send_recv(uint8_t data) {
 
 
 void display_string(int line, char *s) {
-	int i;
+	int i, j, k;
 	if(line < 0 || line >= 4)
 		return;
 	if(!s)
@@ -115,7 +115,7 @@ void display_string(int line, char *s) {
 
 
   //display the string
-  int i, j, k;
+  
 	int c;
 	for(i = 0; i < 4; i++) {
 		DISPLAY_CHANGE_TO_COMMAND_MODE;

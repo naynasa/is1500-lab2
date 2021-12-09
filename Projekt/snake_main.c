@@ -235,7 +235,7 @@ void move_snake(){
 void game_over(){
   while (true)
   {
-      display_string("game over!");
+      display_string(3,(char[]) "game over!");
 
   }
   

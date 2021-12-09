@@ -42,7 +42,7 @@ typedef struct {
   uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
   Direction facing_direction; /*the direction the snake is currently facing/moving in (if no user command is given it keeps going in that direction)*/
-  Block* blocks_pointer; /*the larger squares that make up the snake - last block is the head*/
+  Block* blocks_pointer; /*the larger squares that make up the snake - first block is the head (index 0)*/
 }Snake;
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
@@ -204,14 +204,14 @@ void move_head(){
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 void move_snake(){
   //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
-  Block *old_blocks_pointer = snake.blocks_pointer;
+  Block old_blocks_pointer[];// = snake.blocks_pointer;
 
-  /*int j;
+  int j;
   for (j = 0; j < snake.num_blocks; j++)
   {
    old_blocks_pointer[j] = snake.blocks_pointer[j];
   }
-  */
+  
   //old_blocks_pointer = snake.blocks_pointer;
   
   

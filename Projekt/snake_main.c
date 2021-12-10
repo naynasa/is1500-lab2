@@ -290,7 +290,7 @@ void eat_apple(){
   snake.num_blocks++;
   snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;
 }
-/*
+
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
   bool check_outside_screen(uint16_t x,uint16_t y){
@@ -320,7 +320,7 @@ void check_collision(){
   }
   
 }
-*/
+
 
 
 
@@ -334,7 +334,7 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  //check_collision();
+  check_collision();
   move_snake();
   
   

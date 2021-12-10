@@ -21,7 +21,7 @@ uint16_t getbtns(void){
     //sum them
     return btn_4_3_2 + btn1; //0b0000000000000ABC0 + 0b0000000000000000D = 0b000000000000ABCD
 }
-Direction user_move_direction(){
+char user_move_direction(){
  //A,D,B,C funkar
   uint16_t button_status = getbtns(); //0000...0ABCD
   if(button_status != 0){

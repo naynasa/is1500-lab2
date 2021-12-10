@@ -309,7 +309,7 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   Direction dir = user_move_direction();
-  display_string(dir);
+  display_string(1,dir);
   //check_collision();
   /*
   move_snake();

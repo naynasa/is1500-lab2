@@ -306,7 +306,7 @@ void render_frame() {
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
   }
     
-  set_all_pixels_black();  
+  //set_all_pixels_black();  
   int i;
   Direction dir = user_move_direction();
   display_string(1,dir);
@@ -334,7 +334,7 @@ void render_frame() {
   add_square(10,15-2*BLOCK_SIZE,BLOCK_SIZE);
   */
 
-  display_buffer();
+  //display_buffer();
 
   reset_isr();
 

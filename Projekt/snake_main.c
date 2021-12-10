@@ -269,6 +269,8 @@ void eat_apple(){
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
   bool check_outside_screen(uint16_t x,uint16_t y){
+    x -= 2*BLOCK_SIZE;
+    y -= 2*BLOCK_SIZE;
     return (x>= SCREEN_WIDTH || x<= 0 || y>=SCREEN_HEIGHT || y<=0);
   }
   //helper that returns whether or not the pixel we are checking is inside an apple

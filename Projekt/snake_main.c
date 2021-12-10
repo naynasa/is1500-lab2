@@ -157,6 +157,7 @@ void game_main( void ){
 
 
 //moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
+//if the user tries to move 180 degrees from current direction or presses multiple buttons the command is ignored
 //called each frame
 //updates position of the snakes head block and snake.facing_direction
 void move_head(){
@@ -176,11 +177,34 @@ void move_head(){
       return 0;
     }
   }
-  
+  /*helper that calculates if the user is trying to turn left when going right or up when going down etc. (180 degrees)*/
+  bool user_turning_180_degrees(char dir){
+    switch (snake.facing_direction){
+    case 'U':
+      return dir == 'D';
+      break;
+    
+    case 'D':
+      return dir == 'U';
+      break;
+    
+    case 'L':
+      return dir == 'R';
+      break;
+    
+    case 'R':
+      return dir == 'L';
+      break;
+    
+    default:
+      return false;
+      break;
+    }
+  }
   char user_move_dir = user_move_direction();
   int i;
-  if(user_move_dir == 'N'){
-    /*no command - just move the snake forward*/
+  if(user_move_dir == 'N' || user_turning_180_degrees(user_move_dir)){
+    /*no command or invalid command - just move the snake forward*/
     int x_add = x_offset_from_dir(snake.facing_direction);
     int y_add = y_offset_from_dir(snake.facing_direction);
     
@@ -192,7 +216,8 @@ void move_head(){
     //snake.blocks_array[0].y0 %= SCREEN_HEIGHT;
 
   }else{
-    /*command is sent - move the snake in that direction*/
+    /*a valid command is sent - move the snake in the direction the user wants*/
+
     int x_add = x_offset_from_dir(user_move_dir);
     int y_add = y_offset_from_dir(user_move_dir);
     

@@ -183,8 +183,8 @@ void move_head(){
     snake.blocks_pointer[0].x0 += x_add;
     snake.blocks_pointer[0].y0 += y_add;
 
-    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH; -uncomment to make the snake move through walls
-    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH; //-uncomment to make the snake move through walls
+    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
 
   }else{
     /*command is sent - move the snake in that direction*/
@@ -195,8 +195,8 @@ void move_head(){
     snake.blocks_pointer[0].x0 += x_add;
     snake.blocks_pointer[0].y0 += y_add;
 
-    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;-uncomment to make the snake move through walls
-    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;-uncomment to make the snake move through walls
+    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
 
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;

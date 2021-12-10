@@ -42,7 +42,7 @@ typedef struct {
 typedef struct {
   uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
-  char facing_direction; /*the direction the snake is currently facing/moving in (if no user command is given it keeps going in that direction)*/
+  Direction facing_direction; /*the direction the snake is currently facing/moving in (if no user command is given it keeps going in that direction)*/
   Block blocks_array[MAX_NUMBER_OF_POSSIBLE_BLOCKS]; /*the larger squares that make up the snake - first block is the head (index 0) - we allocate the entire max size but only num_blocks actually exist in it rest is empty*/
   Block prev_tail; /*the tail block of the snake BEFORE MOVING - important since that's where we want to add the new block*/
 }Snake;
@@ -162,7 +162,7 @@ void game_main( void ){
 //updates position of the snakes head block and snake.facing_direction
 void move_head(){
   /*helper that calculates how much x should be updated depending on the direction*/
-  int x_offset_from_dir(char dir){
+  int x_offset_from_dir(Direction dir){
     if(dir == 'L' || dir == 'R'){
       return (dir == 'L') ? -BASE_SPEED : BASE_SPEED; // L = - and R = +
     }else{
@@ -170,7 +170,7 @@ void move_head(){
     }
   }
   /*helper that calculates how much y should be updated depending on the direction*/
-  int y_offset_from_dir(char dir){
+  int y_offset_from_dir(Direction dir){
     if(dir == 'U' || dir == 'D'){
       return (dir == 'U') ? -BASE_SPEED : BASE_SPEED; // U = - and D = +
     }else{
@@ -178,30 +178,25 @@ void move_head(){
     }
   }
   /*helper that calculates if the user is trying to turn left when going right or up when going down etc. (180 degrees)*/
-  bool user_turning_180_degrees(char dir){
+  bool user_turning_180_degrees(Direction dir){
     switch (snake.facing_direction){
     case 'U':
       return dir == 'D';
-      break;
-    
+      
     case 'D':
       return dir == 'U';
-      break;
-    
+
     case 'L':
       return dir == 'R';
-      break;
-    
+      
     case 'R':
       return dir == 'L';
-      break;
-    
+  
     default:
       return false;
-      break;
     }
   }
-  char user_move_dir = user_move_direction();
+  Direction user_move_dir = user_move_direction();
   int i;
   if(user_move_dir == 'N' || user_turning_180_degrees(user_move_dir)){
     /*no command or invalid command - just move the snake forward*/

@@ -72,7 +72,7 @@ int main(void) {
 
   Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
   snake.blocks_pointer = blocks;
-  snake.facing_direction = 'D'; //set the snake to always start going up
+  snake.facing_direction = 'D'; //set the snake to always start going down
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {100,10};
@@ -265,12 +265,12 @@ void eat_apple(){
   snake.num_blocks++;
   snake.blocks_pointer[snake.num_blocks-1] = snake.prev_tail;
 }
-
+/*
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
   bool check_outside_screen(uint16_t x,uint16_t y){
-    x -= BLOCK_SIZE;
-    y -= BLOCK_SIZE;
+    x -= BLOCK_SIZE; //add some room for error so we don't lose as soon as 1 pixel hits the wall
+    y -= BLOCK_SIZE; //add some room for error so we don't lose as soon as 1 pixel hits the wall
     return (x>= SCREEN_WIDTH || x<= 0 || y>=SCREEN_HEIGHT || y<=0);
   }
   //helper that returns whether or not the pixel we are checking is inside an apple
@@ -295,6 +295,7 @@ void check_collision(){
   }
   
 }
+*/
 
 
 
@@ -308,7 +309,7 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  check_collision();
+  //check_collision();
   move_snake();
   
   

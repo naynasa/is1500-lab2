@@ -268,8 +268,19 @@ void game_over(){
   }
   
 }
-//since we display the apple after the snake moving the apple looks the same as creating a new one
 void eat_apple(){
+  set_all_pixels_black();
+  display_buffer();
+  while (true)
+  {
+      
+      display_string(1, "apple!!!");
+
+  }
+  
+}
+//since we display the apple after the snake moving the apple looks the same as creating a new one
+void eat_apple_2(){
   int scaled_rand(int max){
    int x = rand();
    int rand_min = 0;
@@ -286,7 +297,7 @@ void eat_apple(){
   apple.block.x0 = apple_new_x;
   apple.block.y0 = apple_new_y;
 
-  //increase snake size
+
   snake.num_blocks++;
   snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;
 }
@@ -310,6 +321,8 @@ void check_collision(){
       if(pixel_is_on){
         if(pixel_is_apple){
           eat_apple();
+        }else{
+          game_over();
         }
       }else if(pixel_is_outside_screen){
         game_over();

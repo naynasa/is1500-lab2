@@ -25,7 +25,7 @@ bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 uint16_t rand_seed = 1;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
-#define BASE_SPEED 3 //amount of pixels the snake moves from the start
+#define BASE_SPEED 1 //amount of pixels the snake moves from the start
 #define SCREEN_HEIGHT 32
 #define SCREEN_WIDTH 128
 
@@ -238,7 +238,7 @@ void game_over(){
   while (true)
   {
       
-      display_string(3, "game over!");
+      display_string(1, "game over!");
 
   }
   

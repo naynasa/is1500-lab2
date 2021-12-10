@@ -233,8 +233,11 @@ void move_snake(){
 
 }
 void game_over(){
+  set_all_pixels_black();
+  display_buffer();
   while (true)
   {
+      
       display_string(3, "game over!");
 
   }
@@ -283,7 +286,7 @@ void check_collision(){
         if(pixel_is_apple){
           eat_apple();
         }
-      }else if(pixel_is_outside_screen){
+      }if(pixel_is_outside_screen){
         game_over();
       }
     }

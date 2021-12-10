@@ -314,9 +314,11 @@ void check_collision(){
   uint16_t i,j,x,y;
   //iterate over each pixel in the snakes head
   for (i = 0; i < BLOCK_SIZE ; i++){
-    for(j = 0; < BLOCK_SIZE ; j++){
-      x = snake.blocks_array[0].x0 + i;
-      y = snake.blocks_array[0].y0 -j;
+    for(j = 0; j < BLOCK_SIZE ; j++){
+      x = snake.blocks_array[0].x0 + i; //x value
+      y = snake.blocks_array[0].y0 -j; //y value
+      
+      /*check if the pixel is on, if its outside screen and if its an apple*/
       bool pixel_is_on = *pixel_to_frame_buffer_position(x,y);
       bool pixel_is_outside_screen = check_outside_screen(x,y);
       bool pixel_is_apple = check_pixel_is_apple(x,y);

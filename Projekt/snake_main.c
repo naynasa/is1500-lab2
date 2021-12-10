@@ -181,8 +181,8 @@ void move_head(){
   int i;
   if(user_move_dir == 'N'){
     /*no command - just move the snake forward*/
-    int y_add = x_offset_from_dir(snake.facing_direction);
-    int x_add = y_offset_from_dir(snake.facing_direction);
+    int x_add = x_offset_from_dir(snake.facing_direction);
+    int y_add = y_offset_from_dir(snake.facing_direction);
     
     //update the head coordinates
     snake.blocks_array[0].x0 += x_add;

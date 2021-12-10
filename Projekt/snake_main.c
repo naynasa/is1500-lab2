@@ -183,8 +183,8 @@ void move_head(){
     snake.blocks_pointer[0].x0 += x_add;
     snake.blocks_pointer[0].y0 += y_add;
 
-    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH; //-uncomment to make the snake move through walls
-    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH; //-uncomment to make the snake move through walls
+    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
 
   }else{
     /*command is sent - move the snake in that direction*/
@@ -195,8 +195,8 @@ void move_head(){
     snake.blocks_pointer[0].x0 += x_add;
     snake.blocks_pointer[0].y0 += y_add;
 
-    snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;-uncomment to make the snake move through walls
-    snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;-uncomment to make the snake move through walls
+    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
 
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;
@@ -308,8 +308,10 @@ void render_frame() {
     
   set_all_pixels_black();  
   int i;
-  
+  Direction dir = user_move_direction();
+  display_string(dir);
   //check_collision();
+  /*
   move_snake();
   
   
@@ -325,12 +327,13 @@ void render_frame() {
   //send the apple to the buffer
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
   
- /*
+ 
  //{{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}}
   add_square(10,15,BLOCK_SIZE);
   add_square(10,15-BLOCK_SIZE,BLOCK_SIZE);
   add_square(10,15-2*BLOCK_SIZE,BLOCK_SIZE);
   */
+
   display_buffer();
 
   reset_isr();

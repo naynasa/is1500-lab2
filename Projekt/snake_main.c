@@ -71,8 +71,12 @@ int main(void) {
 
   /*todo make random - so you don't start at the same place each time*/
 
-  Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
-  snake.blocks_array = blocks;
+  snake.blocks_array[0] = (Block) {10,15};
+  snake.blocks_array[1] = (Block) {10,15-BLOCK_SIZE};
+  snake.blocks_array[2] = (Block) {10,15-2*BLOCK_SIZE};
+  
+
+
   snake.facing_direction = 'D'; //set the snake to always start going down
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
@@ -181,11 +185,11 @@ void move_head(){
     int x_add = y_offset_from_dir(snake.facing_direction);
     
     //update the head coordinates
-    snake.blocks_pointer[0].x0 += x_add;
-    snake.blocks_pointer[0].y0 += y_add;
+    snake.blocks_array[0].x0 += x_add;
+    snake.blocks_array[0].y0 += y_add;
 
-    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH; //-uncomment to make the snake move through walls
-    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    //snake.blocks_array[0].x0 %= SCREEN_WIDTH; //-uncomment to make the snake move through walls
+    //snake.blocks_array[0].y0 %= SCREEN_HEIGHT;
 
   }else{
     /*command is sent - move the snake in that direction*/
@@ -193,11 +197,11 @@ void move_head(){
     int y_add = y_offset_from_dir(user_move_dir);
     
     //update the head coordinates
-    snake.blocks_pointer[0].x0 += x_add;
-    snake.blocks_pointer[0].y0 += y_add;
+    snake.blocks_array[0].x0 += x_add;
+    snake.blocks_array[0].y0 += y_add;
 
-    //snake.blocks_pointer[0].x0 %= SCREEN_WIDTH;-uncomment to make the snake move through walls
-    //snake.blocks_pointer[0].y0 %= SCREEN_HEIGHT;
+    //snake.blocks_array[0].x0 %= SCREEN_WIDTH;-uncomment to make the snake move through walls
+    //snake.blocks_array[0].y0 %= SCREEN_HEIGHT;
 
     //update the direction the snake is facing
     snake.facing_direction = user_move_dir;
@@ -209,16 +213,16 @@ void move_head(){
 //also assigns snake_tail
 void move_snake(){
   //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
-  Block old_blocks[snake.num_blocks];// = snake.blocks_pointer;
+  Block old_blocks[snake.num_blocks];// = snake.blocks_array;
 
   int j;
   for (j = 0; j < snake.num_blocks; j++)
   {
-   old_blocks[j] = snake.blocks_pointer[j];
+   old_blocks[j] = snake.blocks_array[j];
   }
   snake.prev_tail = old_blocks[snake.num_blocks-1];
   
-  //old_blocks_pointer = snake.blocks_pointer;
+  //old_blocks_array = snake.blocks_array;
   
   
   //move the head
@@ -227,8 +231,8 @@ void move_snake(){
   //put all other blocks at position i-1 from the snake at t-1
   int i;
   for (i = 1; i < snake.num_blocks; i++){ //the head is at index 0
-    snake.blocks_pointer[i].x0 = old_blocks[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
-    snake.blocks_pointer[i].y0 = old_blocks[i-1].y0;
+    snake.blocks_array[i].x0 = old_blocks[i-1].x0; //block 1 goes to the prev. head pos, block 2 goes to block 1 prev. etc.
+    snake.blocks_array[i].y0 = old_blocks[i-1].y0;
   }
   
 
@@ -264,7 +268,7 @@ void eat_apple(){
 
   //increase snake size
   snake.num_blocks++;
-  snake.blocks_pointer[snake.num_blocks-1] = snake.prev_tail;
+  snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;
 }
 /*
 void check_collision(){
@@ -280,8 +284,8 @@ void check_collision(){
   }
   uint16_t x,y;
   //iterate over each pixel in the snakes head
-  for (x = snake.blocks_pointer[0].x0; x < snake.blocks_pointer[0].x0 + BLOCK_SIZE ; x++){
-    for(y = snake.blocks_pointer[0].y0 - BLOCK_SIZE +1; y <= snake.blocks_pointer[0].y0; y++){
+  for (x = snake.blocks_array[0].x0; x < snake.blocks_array[0].x0 + BLOCK_SIZE ; x++){
+    for(y = snake.blocks_array[0].y0 - BLOCK_SIZE +1; y <= snake.blocks_array[0].y0; y++){
       bool pixel_is_on = pixel_to_frame_buffer_position(x,y);
       bool pixel_is_outside_screen = check_outside_screen(x,y);
       bool pixel_is_apple = check_pixel_is_apple(x,y);
@@ -318,7 +322,7 @@ void render_frame() {
   //send the snake to the buffer
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
-    Block pointed_block = snake.blocks_pointer[i];
+    Block pointed_block = snake.blocks_array[i];
     add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
   }
   

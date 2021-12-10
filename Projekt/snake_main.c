@@ -28,6 +28,7 @@ uint16_t rand_seed = 1;
 #define BASE_SPEED 1 //amount of pixels the snake moves from the start
 #define SCREEN_HEIGHT 32
 #define SCREEN_WIDTH 128
+#define MAX_NUMBER_OF_POSSIBLE_BLOCKS (SCREEN_HEIGHT*SCREEN_WIDTH)/(BLOCK_SIZE*BLOCK_SIZE)
 
 /**/
 typedef struct {
@@ -42,7 +43,7 @@ typedef struct {
   uint16_t num_blocks; /*number of blocks contained at the pointer location / that belong to the snake*/
   int num_apples_eaten; /*could be unsigned but noone is gonna collect over 2 million apples so we should be fine*/
   Direction facing_direction; /*the direction the snake is currently facing/moving in (if no user command is given it keeps going in that direction)*/
-  Block* blocks_pointer; /*the larger squares that make up the snake - first block is the head (index 0)*/
+  Block blocks_array[MAX_NUMBER_OF_POSSIBLE_BLOCKS]; /*the larger squares that make up the snake - first block is the head (index 0)*/
   Block prev_tail; /*the tail block of the snake BEFORE MOVING - important since that's where we want to add the new block*/
 }Snake;
 
@@ -71,7 +72,7 @@ int main(void) {
   /*todo make random - so you don't start at the same place each time*/
 
   Block blocks[] = {{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}};
-  snake.blocks_pointer = blocks;
+  snake.blocks_array = blocks;
   snake.facing_direction = 'D'; //set the snake to always start going down
   snake.num_blocks = 3;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
@@ -306,12 +307,10 @@ void render_frame() {
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
   }
     
-  //set_all_pixels_black();  
+  set_all_pixels_black();  
   int i;
-  char dir = (char) user_move_direction();
-  display_string(1,&dir);
+  
   //check_collision();
-  /*
   move_snake();
   
   
@@ -327,14 +326,13 @@ void render_frame() {
   //send the apple to the buffer
   add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
   
- 
+ /*
  //{{10,15}, {10,15-BLOCK_SIZE}, {10,15-2*BLOCK_SIZE}}
   add_square(10,15,BLOCK_SIZE);
   add_square(10,15-BLOCK_SIZE,BLOCK_SIZE);
   add_square(10,15-2*BLOCK_SIZE,BLOCK_SIZE);
   */
-
-  //display_buffer();
+  display_buffer();
 
   reset_isr();
 

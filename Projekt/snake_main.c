@@ -134,7 +134,6 @@ bool get_pixel_value_at_frame_buffer_position(uint16_t x, uint16_t y){
 
   return frame_buffer[page][byte_index][bit_index];
 }
-}
 
 /*x,y mark starting points of the square (lower left hand corner)*/
 void add_square(int x, int y, int size){

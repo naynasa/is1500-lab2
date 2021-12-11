@@ -293,7 +293,7 @@ void eat_apple(){
   while (true)
   {
       
-      display_string(1, "pixel is filled!!!");
+      display_string(1, "apple eaten!!!");
 
   }
   
@@ -341,12 +341,13 @@ void check_collision(){
       bool pixel_is_on = get_pixel_value_at_frame_buffer_position(x,y);
       bool pixel_is_outside_screen = check_outside_screen(x,y);
       bool pixel_is_apple = check_pixel_is_apple(x,y);
-      if(pixel_is_on){
-        if(pixel_is_apple){
+      if(pixel_is_apple){
           eat_apple();
-        }else{
+        /*
+        }else if(is_enemy_snake || is_obstacle){
           game_over();
         }
+        */
       }else if(pixel_is_outside_screen){
         game_over();
       }

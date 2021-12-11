@@ -79,18 +79,14 @@ int main(void) {
   snake.blocks_array[3] = (Block) {10,15-3*BLOCK_SIZE};
   snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
   */
-  int k,j;
-  int s = 3;
-  j = s;
-  for(k = 0; k<=s;k++){
-    snake.blocks_array[k] = (Block) {10+j*BLOCK_SIZE,15};
-    j--;
-  }
-  
-
+  snake.blocks_array[0] = (Block) {10+0*BLOCK_SIZE,15};
+  snake.blocks_array[1] = (Block) {10+1*BLOCK_SIZE,15};
+  snake.blocks_array[2] = (Block) {10+2*BLOCK_SIZE,15};
+  snake.blocks_array[3] = (Block) {10+3*BLOCK_SIZE,15};
+  snake.blocks_array[4] = (Block) {10+4*BLOCK_SIZE,15};
 
   snake.facing_direction = 'R'; //set the snake to always start going down
-  snake.num_blocks = s+1;//sizeof(blocks) / sizeof(blocks[0]);
+  snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
   snake.prev_tail = (Block) {10,15};

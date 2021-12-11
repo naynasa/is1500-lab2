@@ -115,8 +115,7 @@ int main(void) {
   int i;
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
-    Block pointed_block = snake.blocks_array[i];
-    add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
+    add_square(snake.blocks_array[i].x0, snake.blocks_array[i].y0, BLOCK_SIZE);
   }
   
 

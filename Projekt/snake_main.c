@@ -367,7 +367,7 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  //check_collision();
+  check_collision();
   //move_snake();
  
   

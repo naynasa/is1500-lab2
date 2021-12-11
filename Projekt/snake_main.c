@@ -328,7 +328,7 @@ void check_collision(){
   }
   //helper that returns whether or not the pixel we are checking is inside an apple
   bool check_pixel_is_apple(uint16_t x,uint16_t y){
-    return (apple.block.x0 <= x && x <= apple.block.x0 + BLOCK_SIZE -1) && (apple.block.y0 <= y && y <= apple.block.y0 - BLOCK_SIZE +1); 
+    return (apple.block.x0 <= x && x <= (apple.block.x0 + BLOCK_SIZE -1)) && (apple.block.y0 <= y && y <= (apple.block.y0 - BLOCK_SIZE +1)); 
   }
   uint16_t i,j,x,y;
   //iterate over each pixel in the snakes head

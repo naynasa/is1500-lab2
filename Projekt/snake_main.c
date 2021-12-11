@@ -57,20 +57,7 @@ typedef struct {
 Snake snake;
 Apple apple;
 
-/*x,y mark starting points of the square (lower left hand corner)*/
-void add_square(int x, int y, int size){
-  //max size is 32 (our max y value)
 
-  //set all pixels with x values between x and x+size-1 and y values between y and y-size+1 to 1
-  int i,j;
-  for(i = x; i <= x + size -1; i++){
-    for(j = y-size + 1; j <= y; j++){
-      bool* pixel_pointer = pixel_to_frame_buffer_position(i,j);
-      *pixel_pointer = true;
-
-    }
-  }
-}
 int main(void) {
   
   /*helper that starts timer 2 by setting the enable bits to high*/
@@ -126,7 +113,20 @@ game_over
 display_highscore
 */
 
+/*x,y mark starting points of the square (lower left hand corner)*/
+void add_square(int x, int y, int size){
+  //max size is 32 (our max y value)
 
+  //set all pixels with x values between x and x+size-1 and y values between y and y-size+1 to 1
+  int i,j;
+  for(i = x; i <= x + size -1; i++){
+    for(j = y-size + 1; j <= y; j++){
+      bool* pixel_pointer = pixel_to_frame_buffer_position(i,j);
+      *pixel_pointer = true;
+
+    }
+  }
+}
 
 //each block is 32*128/4 = 4096/4 = 1024 bits
 //we 0 index the blocks: block 0,1,2,3

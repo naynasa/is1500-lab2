@@ -57,11 +57,12 @@ Snake snake;
 Apple apple;
 
 int main(void) {
-  start_game:
+  
   /*helper that starts timer 2 by setting the enable bits to high*/
   void start_timer(){
     T2CONSET = T2CON_ENABLE_BIT;
   }
+  start_game:
 
   /*initializations*/ 
 	init_controller();

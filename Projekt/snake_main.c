@@ -86,7 +86,7 @@ int main(void) {
   snake.blocks_array[3] = (Block) {10+1*BLOCK_SIZE,15};
   snake.blocks_array[4] = (Block) {10+0*BLOCK_SIZE,15};
 
-  snake.facing_direction = 'R'; //set the snake to always start going down
+  snake.facing_direction = 'R'; //set the snake to always start going right
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
@@ -368,7 +368,7 @@ void render_frame() {
   int i;
   
   //check_collision();
-  move_snake();
+  //move_snake();
  
   
   

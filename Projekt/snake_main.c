@@ -80,11 +80,11 @@ int main(void) {
   snake.blocks_array[3] = (Block) {10,15-3*BLOCK_SIZE};
   snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
   */
-  snake.blocks_array[0] = (Block) {10+4*BLOCK_SIZE,15};
-  snake.blocks_array[1] = (Block) {10+3*BLOCK_SIZE,15};
+  snake.blocks_array[0] = (Block) {10+0*BLOCK_SIZE,15};
+  snake.blocks_array[1] = (Block) {10+1*BLOCK_SIZE,15};
   snake.blocks_array[2] = (Block) {10+2*BLOCK_SIZE,15};
-  snake.blocks_array[3] = (Block) {10+1*BLOCK_SIZE,15};
-  snake.blocks_array[4] = (Block) {10+0*BLOCK_SIZE,15};
+  snake.blocks_array[3] = (Block) {10+3*BLOCK_SIZE,15};
+  snake.blocks_array[4] = (Block) {10+4*BLOCK_SIZE,15};
 
   snake.facing_direction = 'R'; //set the snake to always start going down
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);

@@ -98,6 +98,7 @@ int main(void) {
 	//display_image(96, icon);
 
   //send the snake to the buffer
+  int i;
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_array[i];

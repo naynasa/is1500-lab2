@@ -30,6 +30,7 @@ uint16_t rand_seed = 1;
 #define SCREEN_WIDTH 128
 #define MAX_NUMBER_OF_POSSIBLE_BLOCKS (SCREEN_HEIGHT*SCREEN_WIDTH)/(BLOCK_SIZE*BLOCK_SIZE)
 
+
 /**/
 typedef struct {
   uint8_t x0; /*value range: 0-128, lower left hand corner x coordinate*/
@@ -62,7 +63,6 @@ int main(void) {
   void start_timer(){
     T2CONSET = T2CON_ENABLE_BIT;
   }
-  start_game:
 
   /*initializations*/ 
 	init_controller();
@@ -126,6 +126,14 @@ bool* pixel_to_frame_buffer_position(int x, int y){
   int bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
 
   return &frame_buffer[page][byte_index][bit_index];
+}
+bool get_pixel_value_at_frame_buffer_position(uint16_t x, uint16_t y){
+  uint16_t page = y / 8; // since we have 4 blocks of 8 height each
+  uint16_t byte_index = x;
+  uint16_t bit_index = y % 8; //each byte is 8 bits so modulo gives us how "far into" the block we are
+
+  return frame_buffer[page][byte_index][bit_index];
+}
 }
 
 /*x,y mark starting points of the square (lower left hand corner)*/
@@ -276,10 +284,6 @@ void game_over(){
   {
       
       display_string(1, "game over!");
-      display_string(2, "press BTN4 to restart");
-      if(user_move_direction() == 'L'){
-        goto start_game;
-      }
 
   }
   
@@ -335,7 +339,7 @@ void check_collision(){
       y = snake.blocks_array[0].y0 - j; //y value
       
       /*check if the pixel is on, if its outside screen and if its an apple*/
-      bool pixel_is_on = *pixel_to_frame_buffer_position(x,y);
+      bool pixel_is_on = get_pixel_value_at_frame_buffer_position(x,y);
       bool pixel_is_outside_screen = check_outside_screen(x,y);
       bool pixel_is_apple = check_pixel_is_apple(x,y);
       if(pixel_is_on){

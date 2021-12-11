@@ -80,11 +80,11 @@ int main(void) {
   snake.blocks_array[3] = (Block) {10,15-3*BLOCK_SIZE};
   snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
   */
-  snake.blocks_array[0] = (Block) {10+0*BLOCK_SIZE,15};
-  snake.blocks_array[1] = (Block) {10+1*BLOCK_SIZE,15};
+  snake.blocks_array[0] = (Block) {10+4*BLOCK_SIZE,15};
+  snake.blocks_array[1] = (Block) {10+3*BLOCK_SIZE,15};
   snake.blocks_array[2] = (Block) {10+2*BLOCK_SIZE,15};
-  snake.blocks_array[3] = (Block) {10+3*BLOCK_SIZE,15};
-  snake.blocks_array[4] = (Block) {10+4*BLOCK_SIZE,15};
+  snake.blocks_array[3] = (Block) {10+1*BLOCK_SIZE,15};
+  snake.blocks_array[4] = (Block) {10+0*BLOCK_SIZE,15};
 
   snake.facing_direction = 'R'; //set the snake to always start going down
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
@@ -113,20 +113,6 @@ game_over
 display_highscore
 */
 
-/*x,y mark starting points of the square (lower left hand corner)*/
-void add_square(int x, int y, int size){
-  //max size is 32 (our max y value)
-
-  //set all pixels with x values between x and x+size-1 and y values between y and y-size+1 to 1
-  int i,j;
-  for(i = x; i <= x + size -1; i++){
-    for(j = y-size + 1; j <= y; j++){
-      bool* pixel_pointer = pixel_to_frame_buffer_position(i,j);
-      *pixel_pointer = true;
-
-    }
-  }
-}
 
 //each block is 32*128/4 = 4096/4 = 1024 bits
 //we 0 index the blocks: block 0,1,2,3
@@ -146,6 +132,21 @@ bool get_pixel_value_at_frame_buffer_position(uint16_t x, uint16_t y){
 }
 
 
+
+/*x,y mark starting points of the square (lower left hand corner)*/
+void add_square(int x, int y, int size){
+  //max size is 32 (our max y value)
+
+  //set all pixels with x values between x and x+size-1 and y values between y and y-size+1 to 1
+  int i,j;
+  for(i = x; i <= x + size -1; i++){
+    for(j = y-size + 1; j <= y; j++){
+      bool* pixel_pointer = pixel_to_frame_buffer_position(i,j);
+      *pixel_pointer = true;
+
+    }
+  }
+}
 
 /*sets all values in frame_buffer to 0 and updates the screen*/
 void set_all_pixels_black(){

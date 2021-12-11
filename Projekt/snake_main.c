@@ -80,7 +80,7 @@ int main(void) {
   int k;
   int s = 15;
   for(k = 0; k<=s;k++){
-    snake.blocks_array[k] = (Block) {15,10+k*BLOCK_SIZE};
+    snake.blocks_array[k] = (Block) {10+k*BLOCK_SIZE,15};
   }
   
 
@@ -89,7 +89,7 @@ int main(void) {
   snake.num_blocks = s+1;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
-  snake.prev_tail = (Block) {15,10+k*BLOCK_SIZE};
+  snake.prev_tail = (Block) {10+k*BLOCK_SIZE,15};
 
 
   

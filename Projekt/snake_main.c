@@ -109,18 +109,6 @@ int main(void) {
 
   
 	start_timer();
-	//display_image(96, icon);
-
-  //send the snake to the buffer
-  int i;
-  for(i = 0; i<snake.num_blocks; i++){
-    //iterates over each block in the snake
-    add_square(snake.blocks_array[i].x0, snake.blocks_array[i].y0, BLOCK_SIZE);
-  }
-  
-
-  //send the apple to the buffer
-  add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
 
 
 	while( 1 )

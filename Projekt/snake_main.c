@@ -293,7 +293,7 @@ void eat_apple(){
   while (true)
   {
       
-      display_string(1, "apple!!!");
+      display_string(1, "pixel is filled!!!");
 
   }
   
@@ -342,11 +342,7 @@ void check_collision(){
       bool pixel_is_outside_screen = check_outside_screen(x,y);
       bool pixel_is_apple = check_pixel_is_apple(x,y);
       if(pixel_is_on){
-        if(pixel_is_apple){
-          eat_apple();
-        }else{
-          game_over();
-        }
+        eat_apple();
       }else if(pixel_is_outside_screen){
         game_over();
       }

@@ -70,20 +70,21 @@ int main(void) {
   init_buttons_switches();
 
   /*todo make random - so you don't start at the same place each time*/
-
+  /*
   snake.blocks_array[0] = (Block) {10,15};
   snake.blocks_array[1] = (Block) {10,15-BLOCK_SIZE};
   snake.blocks_array[2] = (Block) {10,15-2*BLOCK_SIZE};
   snake.blocks_array[3] = (Block) {10,15-3*BLOCK_SIZE};
   snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
+  */
   int k;
-  for(k = 4; k<=10;k++){
-    snake.blocks_array[k] = (Block) {10,15-k*BLOCK_SIZE};
+  for(k = 0; k<=10;k++){
+    snake.blocks_array[k] = (Block) {15,10+k*BLOCK_SIZE};
   }
   
 
 
-  snake.facing_direction = 'D'; //set the snake to always start going down
+  snake.facing_direction = 'R'; //set the snake to always start going down
   snake.num_blocks = 11;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};

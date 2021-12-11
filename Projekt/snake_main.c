@@ -90,11 +90,23 @@ int main(void) {
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
   snake.prev_tail = (Block) {10,15};
+  display_buffer();
 
 
   
 	start_timer();
 	//display_image(96, icon);
+
+  //send the snake to the buffer
+  for(i = 0; i<snake.num_blocks; i++){
+    //iterates over each block in the snake
+    Block pointed_block = snake.blocks_array[i];
+    add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
+  }
+  
+
+  //send the apple to the buffer
+  add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
 
 
 	while( 1 )

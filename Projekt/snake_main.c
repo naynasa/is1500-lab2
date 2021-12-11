@@ -80,7 +80,7 @@ int main(void) {
   snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
   */
   int k,j;
-  int s = 15;
+  int s = 3;
   j = s;
   for(k = 0; k<=s;k++){
     snake.blocks_array[k] = (Block) {10+j*BLOCK_SIZE,15};

@@ -74,6 +74,8 @@ int main(void) {
   snake.blocks_array[0] = (Block) {10,15};
   snake.blocks_array[1] = (Block) {10,15-BLOCK_SIZE};
   snake.blocks_array[2] = (Block) {10,15-2*BLOCK_SIZE};
+  snake.blocks_array[3] = (Block) {10,15-3*BLOCK_SIZE};
+  snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
   
 
 

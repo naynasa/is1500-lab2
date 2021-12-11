@@ -57,6 +57,7 @@ Snake snake;
 Apple apple;
 
 int main(void) {
+  start_game:
   /*helper that starts timer 2 by setting the enable bits to high*/
   void start_timer(){
     T2CONSET = T2CON_ENABLE_BIT;
@@ -274,6 +275,10 @@ void game_over(){
   {
       
       display_string(1, "game over!");
+      display_string(2, "press BTN4 to restart");
+      if(user_move_direction() == 'L'){
+        goto start_game;
+      }
 
   }
   

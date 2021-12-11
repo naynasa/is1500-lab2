@@ -342,7 +342,11 @@ void check_collision(){
       bool pixel_is_outside_screen = check_outside_screen(x,y);
       bool pixel_is_apple = check_pixel_is_apple(x,y);
       if(pixel_is_on){
-        eat_apple();
+        if(pixel_is_apple){
+          eat_apple();
+        }else{
+          game_over();
+        }
       }else if(pixel_is_outside_screen){
         game_over();
       }
@@ -364,8 +368,9 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  move_snake();
   check_collision();
+  move_snake();
+ 
   
   
   

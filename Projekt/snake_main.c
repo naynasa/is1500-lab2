@@ -294,6 +294,8 @@ void game_over(){
   {
       
       display_string(1, "game over!");
+      display_string(2, "score: %d",snake.num_apples_eaten);
+      display_string(3, "highscore: %d",snake.num_apples_eaten);
 
   }
   

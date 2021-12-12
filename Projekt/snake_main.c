@@ -74,11 +74,11 @@ int main(void) {
 
   /*todo make random - so you don't start at the same place each time*/
   
-  snake.blocks_array[0] = (Block) {10,15};
-  snake.blocks_array[1] = (Block) {10,15-BLOCK_SIZE};
-  snake.blocks_array[2] = (Block) {10,15-2*BLOCK_SIZE};
-  snake.blocks_array[3] = (Block) {10,15-3*BLOCK_SIZE};
-  snake.blocks_array[4] = (Block) {10,15-4*BLOCK_SIZE};
+  snake.blocks_array[0] = (Block) {40,15};
+  snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
+  snake.blocks_array[2] = (Block) {40-2*BLOCK_SIZE,15};
+  snake.blocks_array[3] = (Block) {40-3*BLOCK_SIZE,15};
+  snake.blocks_array[4] = (Block) {40-4*BLOCK_SIZE,15};
   
  /*
   snake.blocks_array[0] = (Block) {10+4*BLOCK_SIZE,15};
@@ -87,12 +87,13 @@ int main(void) {
   snake.blocks_array[3] = (Block) {10+1*BLOCK_SIZE,15};
   snake.blocks_array[4] = (Block) {10+0*BLOCK_SIZE,15};
 */
-  snake.facing_direction = 'D'; //set the snake to always start going right
+  snake.facing_direction = 'R'; //set the snake to always start going right
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
-  snake.prev_tail = (Block) {10,15-4*BLOCK_SIZE};
-  display_buffer();
+  snake.prev_tail = (Block) {40-4*BLOCK_SIZE,15};
+
+
 
 
   
@@ -368,14 +369,14 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  check_collision();
+  //check_collision();
   move_snake();
  
   
   
   
   
-  //send the snake to the buffer
+  //send the snake to the buffer - render snake
   for(i = 0; i<snake.num_blocks; i++){
     //iterates over each block in the snake
     Block pointed_block = snake.blocks_array[i];

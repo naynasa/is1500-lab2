@@ -99,7 +99,7 @@ int main(void) {
   init_buttons_switches();
 
 
-  set_all_pixels_black();
+  
   init_snake();
   
 	start_timer();
@@ -150,11 +150,7 @@ void set_all_pixels_black(){
   }
     display_buffer();
 }
-
-//makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
-//also assigns snake_tail
-void move_snake(){
-  //moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
+//moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
   //if the user tries to move 180 degrees from current direction or presses multiple buttons the command is ignored
   //called each frame
   //updates position of the snakes head block and snake.facing_direction
@@ -221,6 +217,11 @@ void move_snake(){
     
 
   }
+
+//makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
+//also assigns snake_tail
+void move_snake(){
+  
   //copy snake blocks at t-1 - we're not interested in the entire snake just the blocks so copy those
   Block old_blocks[snake.num_blocks];// = snake.blocks_array;
 

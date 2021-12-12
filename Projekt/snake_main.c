@@ -295,16 +295,18 @@ void game_over(){
   */
   set_all_pixels_black();
   display_buffer();
-  char score_string[10]; //10 digits should be plenty for holding the score
-  itoa(snake.num_apples_eaten,score_string,10); 
-  char full_score[18];
-  strcat(full_score,"score: ");
-  strcat(full_score, score_string);
+  //itoa(snake.num_apples_eaten,score_string,10);
+  
+  char score_string[18];
+  
+
+  sprintf(score_string, "score: %d",snake.num_apples_eaten);
+
   while (true)
   {
       
       display_string(1, "game over!");
-      display_string(2, full_score);
+      display_string(2, score_string);
       //display_string(3, "highscore: %d",snake.num_apples_eaten);
 
   }

@@ -75,11 +75,19 @@ int main(void) {
   /*todo make random - so you don't start at the same place each time*/
   
   snake.blocks_array[0] = (Block) {40,15};
-  //snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
-  //snake.blocks_array[2] = (Block) {40-2*BLOCK_SIZE,15};
-  //snake.blocks_array[3] = (Block) {40-3*BLOCK_SIZE,15};
-  //snake.blocks_array[4] = (Block) {40-4*BLOCK_SIZE,15};
+  snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
+  snake.blocks_array[2] = (Block) {40-2*BLOCK_SIZE,15};
+  snake.blocks_array[3] = (Block) {40-3*BLOCK_SIZE,15};
+  snake.blocks_array[4] = (Block) {40-4*BLOCK_SIZE,15};
   
+  snake.blocks_array[5] = (Block) {40-5*BLOCK_SIZE,15};
+  snake.blocks_array[6] = (Block) {40-6*BLOCK_SIZE,15};
+  snake.blocks_array[7] = (Block) {40-7*BLOCK_SIZE,15};
+  snake.blocks_array[8] = (Block) {40-8*BLOCK_SIZE,15};  
+  snake.blocks_array[9] = (Block) {40-9*BLOCK_SIZE,15};
+  snake.blocks_array[10] = (Block) {40-10*BLOCK_SIZE,15};
+  snake.blocks_array[11] = (Block) {40-11*BLOCK_SIZE,15};
+  snake.blocks_array[12] = (Block) {40-12*BLOCK_SIZE,15};
  /*
   snake.blocks_array[0] = (Block) {10+4*BLOCK_SIZE,15};
   snake.blocks_array[1] = (Block) {10+3*BLOCK_SIZE,15};
@@ -88,7 +96,7 @@ int main(void) {
   snake.blocks_array[4] = (Block) {10+0*BLOCK_SIZE,15};
 */
   snake.facing_direction = 'R'; //set the snake to always start going right
-  snake.num_blocks = 1;//sizeof(blocks) / sizeof(blocks[0]);
+  snake.num_blocks = 13;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
   snake.prev_tail = (Block) {40,15};
@@ -316,8 +324,20 @@ void eat_apple(){
 
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
-  bool check_outside_screen(uint16_t x,uint16_t y){
-    return (x>= SCREEN_WIDTH || x<= 0 || y>=SCREEN_HEIGHT || y<=0);
+  bool check_outside_screen(){
+    return (snake.blocks_array[0].x0>= SCREEN_WIDTH || snake.blocks_array[0].x0<= 0 || snake.blocks_array[0].y0>=SCREEN_HEIGHT || snake.blocks_array[0].y0<=0);
+  }
+  /*helper that returns whether or not we collided with our tail*/
+  bool check_tail(uint16_t x, uint16_t y){
+    int i;
+    //iterate through each block and see if x0,y0 are the same as those of the head - in that case we collided
+    for (i = 1; i < snake.num_blocks; i++){
+      if(snake.blocks_array[0].x0 == snake.blocks_array[i].x0 && snake.blocks_array[0].y0 == snake.blocks_array[i].y0){
+        return true;
+      }
+    }
+    return false;
+    
   }
   /*
   //helper that returns whether or not the pixel we are checking is inside an apple
@@ -328,29 +348,15 @@ void check_collision(){
  bool is_apple(){
    return snake.blocks_array[0].x0 == apple.block.x0 && snake.blocks_array[0].y0 == apple.block.y0;
  }
-  uint16_t i,j,x,y;
-  //iterate over each pixel in the snakes head
-  for (i = 0; i < BLOCK_SIZE ; i++){
-    for(j = 0; j < BLOCK_SIZE ; j++){
-      x = snake.blocks_array[0].x0 + i; //x value
-      y = snake.blocks_array[0].y0 - j; //y value
-      
-      /*check if the pixel is on, if its outside screen and if its an apple*/
-      bool pixel_is_on = get_pixel_value_at_frame_buffer_position(x,y);
-      bool pixel_is_outside_screen = check_outside_screen(x,y);
-      bool pixel_is_apple = is_apple();
-      if(pixel_is_apple){
+      bool head_is_outside_screen = check_outside_screen();
+      bool head_is_apple = is_apple();
+      bool head_collided_with_tail = check_tail();
+      if(head_is_apple){
           eat_apple();
-        /*
-        }else if(is_enemy_snake || is_obstacle){
-          game_over();
-        }
-        */
-      }else if(pixel_is_outside_screen){
+      }else if(head_is_outside_screen || head_collided_with_tail){
         game_over();
       }
-    }
-  }
+
   
 }
 

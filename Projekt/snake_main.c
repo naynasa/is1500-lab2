@@ -348,7 +348,7 @@ void check_collision(){
       /*check if the pixel is on, if its outside screen and if its an apple*/
       bool pixel_is_on = get_pixel_value_at_frame_buffer_position(x,y);
       bool pixel_is_outside_screen = check_outside_screen(x,y);
-      bool pixel_is_apple = is_apple(x,y);
+      bool pixel_is_apple = is_apple();
       if(pixel_is_apple){
           eat_apple();
         /*

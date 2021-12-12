@@ -261,8 +261,8 @@ void game_over(){
   while (true)
   {
       
-      display_string(1, "game over!");
-      display_string(2, score_string);
+      //display_string(1, "game over!");
+      //display_string(2, score_string);
       //display_string(3, "highscore: %d",snake.num_apples_eaten);
 
   }

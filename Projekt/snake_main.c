@@ -328,7 +328,7 @@ void check_collision(){
     return (snake.blocks_array[0].x0>= SCREEN_WIDTH || snake.blocks_array[0].x0<= 0 || snake.blocks_array[0].y0>=SCREEN_HEIGHT || snake.blocks_array[0].y0<=0);
   }
   /*helper that returns whether or not we collided with our tail*/
-  bool check_tail(uint16_t x, uint16_t y){
+  bool check_tail(){
     int i;
     //iterate through each block and see if x0,y0 are the same as those of the head - in that case we collided
     for (i = 1; i < snake.num_blocks; i++){

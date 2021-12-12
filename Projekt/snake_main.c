@@ -99,7 +99,7 @@ int main(void) {
   init_buttons_switches();
 
 
-
+  set_all_pixels_black();
   init_snake();
   
 	start_timer();

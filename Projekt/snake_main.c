@@ -288,14 +288,24 @@ void move_snake(){
 
 }
 void game_over(){
+  /*
+  char[] int_to_string(int n){
+    
+  }
+  */
   set_all_pixels_black();
   display_buffer();
+  char score_string[];
+  itoa(snake.num_apples_eaten,score_string,10); 
+  char full_score[];
+  strcat(full_score,"score: ");
+  strcat(full_score, score_string);
   while (true)
   {
       
       display_string(1, "game over!");
-      display_string(2, "score: %d",snake.num_apples_eaten);
-      display_string(3, "highscore: %d",snake.num_apples_eaten);
+      display_string(2, full_score);
+      //display_string(3, "highscore: %d",snake.num_apples_eaten);
 
   }
   

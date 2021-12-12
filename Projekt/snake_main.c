@@ -260,6 +260,7 @@ void move_snake(){
    old_blocks[j] = snake.blocks_array[j];
   }
   snake.prev_tail = old_blocks[snake.num_blocks-1];
+ 
   
   //old_blocks_array = snake.blocks_array;
   
@@ -370,7 +371,7 @@ void render_frame() {
   int i;
   
   //check_collision();
-  move_snake();
+  
  
   
   
@@ -394,6 +395,8 @@ void render_frame() {
   add_square(10,15-2*BLOCK_SIZE,BLOCK_SIZE);
   */
   display_buffer();
+
+  move_snake();
 
   reset_isr();
 

@@ -295,9 +295,9 @@ void game_over(){
   */
   set_all_pixels_black();
   display_buffer();
-  char score_string[];
+  char score_string[10]; //10 digits should be plenty for holding the score
   itoa(snake.num_apples_eaten,score_string,10); 
-  char full_score[];
+  char full_score[18];
   strcat(full_score,"score: ");
   strcat(full_score, score_string);
   while (true)

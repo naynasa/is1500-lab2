@@ -25,7 +25,7 @@ bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 uint16_t rand_seed = 1;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
-#define BASE_SPEED 1 //amount of pixels the snake moves from the start
+#define SPEED 3 //amount of pixels the snake moves from the start
 #define SCREEN_HEIGHT 32
 #define SCREEN_WIDTH 128
 #define MAX_NUMBER_OF_POSSIBLE_BLOCKS (SCREEN_HEIGHT*SCREEN_WIDTH)/(BLOCK_SIZE*BLOCK_SIZE)
@@ -75,7 +75,7 @@ int main(void) {
   /*todo make random - so you don't start at the same place each time*/
   
   snake.blocks_array[0] = (Block) {40,15};
-  //snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
+  snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
   //snake.blocks_array[2] = (Block) {40-2*BLOCK_SIZE,15};
   //snake.blocks_array[3] = (Block) {40-3*BLOCK_SIZE,15};
   //snake.blocks_array[4] = (Block) {40-4*BLOCK_SIZE,15};
@@ -183,7 +183,7 @@ void move_head(){
   /*helper that calculates how much x should be updated depending on the direction*/
   int x_offset_from_dir(Direction dir){
     if(dir == 'L' || dir == 'R'){
-      return (dir == 'L') ? -BASE_SPEED : BASE_SPEED; // L = - and R = +
+      return (dir == 'L') ? -SPEED : SPEED; // L = - and R = +
     }else{
       return 0;
     }
@@ -191,7 +191,7 @@ void move_head(){
   /*helper that calculates how much y should be updated depending on the direction*/
   int y_offset_from_dir(Direction dir){
     if(dir == 'U' || dir == 'D'){
-      return (dir == 'U') ? -BASE_SPEED : BASE_SPEED; // U = - and D = +
+      return (dir == 'U') ? -SPEED : SPEED; // U = - and D = +
     }else{
       return 0;
     }

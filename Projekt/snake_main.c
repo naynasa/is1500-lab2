@@ -75,10 +75,10 @@ int main(void) {
   /*todo make random - so you don't start at the same place each time*/
   
   snake.blocks_array[0] = (Block) {40,15};
-  snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
-  snake.blocks_array[2] = (Block) {40-2*BLOCK_SIZE,15};
-  snake.blocks_array[3] = (Block) {40-3*BLOCK_SIZE,15};
-  snake.blocks_array[4] = (Block) {40-4*BLOCK_SIZE,15};
+  //snake.blocks_array[1] = (Block) {40-1*BLOCK_SIZE,15};
+  //snake.blocks_array[2] = (Block) {40-2*BLOCK_SIZE,15};
+  //snake.blocks_array[3] = (Block) {40-3*BLOCK_SIZE,15};
+  //snake.blocks_array[4] = (Block) {40-4*BLOCK_SIZE,15};
   
  /*
   snake.blocks_array[0] = (Block) {10+4*BLOCK_SIZE,15};
@@ -88,10 +88,10 @@ int main(void) {
   snake.blocks_array[4] = (Block) {10+0*BLOCK_SIZE,15};
 */
   snake.facing_direction = 'R'; //set the snake to always start going right
-  snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
+  snake.num_blocks = 1;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
   apple.block = (Block) {128/2,15};
-  snake.prev_tail = (Block) {40-4*BLOCK_SIZE,15};
+  snake.prev_tail = (Block) {40,15};
 
 
 
@@ -259,6 +259,8 @@ void move_snake(){
   {
    old_blocks[j] = snake.blocks_array[j];
   }
+
+  //update prev_tail
   snake.prev_tail = old_blocks[snake.num_blocks-1];
  
   
@@ -371,7 +373,7 @@ void render_frame() {
   int i;
   
   //check_collision();
-  
+  move_snake();
  
   
   
@@ -396,7 +398,7 @@ void render_frame() {
   */
   display_buffer();
 
-  move_snake();
+
 
   reset_isr();
 

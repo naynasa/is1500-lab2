@@ -28,7 +28,8 @@ bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 #define SCREEN_HEIGHT 32
 #define SCREEN_WIDTH 128
 #define MAX_NUMBER_OF_POSSIBLE_BLOCKS (SCREEN_HEIGHT*SCREEN_WIDTH)/(BLOCK_SIZE*BLOCK_SIZE)
-
+#define SEED_ADDRESS 0b1
+#define HIGH_SCORE_ADDRESS 0b10
 
 /*the basic building block of our game - a square of size BLOCK_SIZE with x0,y0 being the bottom left most pixel in the square*/
 typedef struct {
@@ -64,8 +65,15 @@ int main(void) {
     T2CONSET = T2CON_ENABLE_BIT;
   }
   /*our seed is stored in the EEPROM of the microcotroller - if this is the first time we run the program write to it - otherwise read the previous and increment it by 1*/
-  int get_seed(){
-   
+  int get_and_write_seed(){
+    //read from our seed address
+    uint8_t seed = read_byte_from_eeprom(SEED_ADDRESS);
+    //increment it
+    seed++;
+    //write it back so its not the same next time we run the program
+    write_byte_to_eeprom(stored_seed);
+
+    return seed;
   } 
   
   
@@ -112,18 +120,9 @@ int main(void) {
   init_snake();
   
 	start_timer();
-  //srand(get_random_seed()); //set seed for apple placements
+  srand(get_and_write_seed()); //set seed random number generation used for apple placements
 
-  write_byte_to_eeprom(0b1,24);
-  uint16_t test_val = read_byte_from_eeprom(0b1);
-  char test_string[18]; //holds the score string
-  sprintf(test_string, "memory: %d!",test_val); //format the score string
   
-  while (1)
-  {
-    display_string(1,test_string);
-
-  }
   
   
 
@@ -276,15 +275,31 @@ void game_over(){
   set_all_pixels_black();
   display_buffer();
   
-  char score_string[18]; //holds the score string
-  sprintf(score_string, "score: %d!",snake.num_apples_eaten); //format the score string
+  write_byte_to_eeprom(0b1,24);
+  uint8_t test_val = read_byte_from_eeprom(0b1);
+  char test_string[18]; //holds the score string
+  sprintf(test_string, "memory: %d!",test_val); //format the score string
+  //read highscore
+  uint8_t high_score = read_byte_from_eeprom(HIGH_SCORE_ADDRESS);
   
+
+  char score_string[18]; //holds the score string
+  char high_score_string[18]; //holds the score string
+  sprintf(score_string, "score: %d!",snake.num_apples_eaten); //format the score string
+  sprintf(high_score_string, "High Score: %d!",high_score); //format the score string
+  
+  //if we beat the high score update it
+  if(snake.num_apples_eaten > high_score){
+    write_byte_to_eeprom(HIGH_SCORE_ADDRESS,snake.num_apples_eaten);
+  }
   
   while (true)
   {
       
       display_string(1, "game over!");
       display_string(2, score_string);
+      display_string(3, high_score_string);
+      
     
       
       //display_string(3, "highscore: %d",snake.num_apples_eaten);

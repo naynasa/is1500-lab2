@@ -106,7 +106,7 @@ int main(void) {
 	init_controller();
 	display_init();
   //make sure we don't have any flashing
-  set_all_pixels_black();
+  //set_all_pixels_black();
   /*more initializations*/
   init_timer();
   init_LEDs();

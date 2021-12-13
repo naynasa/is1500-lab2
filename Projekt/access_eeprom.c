@@ -126,7 +126,7 @@ void write_byte_to_eeprom(uint16_t address, uint8_t data){
 	i2c_stop();
 }
 /*this is called "RANDOM READ" in the manual*/
-uint16_t read_byte_from_eeprom(uint16_t address){
+uint8_t read_byte_from_eeprom(uint16_t address){
     uint8_t address_upper_bits = (uint8_t) address >> 8;
     uint8_t address_lower_bits = (uint8_t) address & 0xFF;//8 zeros followed by 8 ones
 

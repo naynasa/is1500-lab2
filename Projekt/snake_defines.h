@@ -60,8 +60,8 @@ void init_timer();
 void init_LEDs();
 void init_buttons_switches();
 void eeprom_init();
-void write_byte_to_eeprom(uint8_t address, uint8_t data);
-uint16_t read_byte_from_eeprom(uint8_t adress);
+void write_byte_to_eeprom(uint16_t address, uint8_t data);
+uint8_t read_byte_from_eeprom(uint8_t adress);
 
 #define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
 #define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)

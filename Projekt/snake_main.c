@@ -103,7 +103,7 @@ int main(void) {
   snake.facing_direction = 'R'; //set the snake to always start going right
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  apple = {128/2,15};
+  apple = (Apple) {128/2,15};
   snake.prev_tail = (Block) {40,15};
   }
 
@@ -328,7 +328,8 @@ void eat_apple(){
   uint8_t apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
   uint8_t apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
-  *apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
+  apple.x0 = apple_new_x;
+  apple.y0 = apple_new_y;
   //apple->block = (Block) {apple_new_x,apple_new_y};
   //apple.*block = (Block) {apple_new_x,apple_new_y};
   //apple.*block.y0 = apple_new_y;

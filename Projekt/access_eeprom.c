@@ -22,7 +22,7 @@
 
 /* Address of the temperature sensor on the I2C bus */
 #define TEMP_SENSOR_ADDR 0x48 //1010000
-#define EEPROM_ADDR 0x50
+#define SPEEDEEPROM_CONTROL_BYTE 0b1010100 //1 0 1 0 A2 A1 A0 R/W
 /* Temperature sensor internal registers */
 typedef enum TempSensorReg TempSensorReg;
 enum TempSensorReg {
@@ -101,7 +101,7 @@ void await_write_request(){
 	acknowledge condition */
 	do {
 		i2c_start();
-	} while(!i2c_send(EEPROM_ADDR << 1));
+	} while(!i2c_send(SPEEDEEPROM_CONTROL_BYTE << 1));
 }
 void await_read_request(){
         /* Send start condition and address of the eeprom memory with
@@ -109,7 +109,7 @@ void await_read_request(){
 	acknowledge condition */
 	do {
 		i2c_start();
-	} while(!i2c_send(EEPROM_ADDR << 1 | 1));
+	} while(!i2c_send(SPEEDEEPROM_CONTROL_BYTE << 1 | 1));
 }
 /*the adress is really 16 bits but we keep to the lower 8 bits - since A we dont need that much space to write and B we want to be able to use i2c_send*/
 void write_byte_to_eeprom(uint8_t address, uint8_t data){

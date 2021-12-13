@@ -341,15 +341,15 @@ void eat_apple(){
 
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
-  bool check_outside_screen(){
-    return (snake.blocks_array[0].x0>= SCREEN_WIDTH || snake.blocks_array[0].x0<= 0 || snake.blocks_array[0].y0>=SCREEN_HEIGHT || snake.blocks_array[0].y0<=0);
+  bool check_outside_screen(uint16_t x, uint16_t y){
+    return (x>= SCREEN_WIDTH || x<= 0 || y>=SCREEN_HEIGHT || y<=0);
   }
   /*helper that returns whether or not we collided with our tail*/
-  bool check_tail(){
+  bool check_tail(uint16_t x, uint16_t y){
     int i;
     //iterate through each block and see if x0,y0 are the same as those of the head - in that case we collided
     for (i = 1; i < snake.num_blocks; i++){
-      if(snake.blocks_array[0].x0 == snake.blocks_array[i].x0 && snake.blocks_array[0].y0 == snake.blocks_array[i].y0){
+      if(x == snake.blocks_array[i].x0 && y == snake.blocks_array[i].y0){
         return true;
       }
     }
@@ -357,16 +357,25 @@ void check_collision(){
     
   }
   /*returns whether or not the head is on an apple*/
-  bool is_apple(){
-    return snake.blocks_array[0].x0 == apple.x0 || snake.blocks_array[0].y0 == apple.y0;
+  bool is_apple(uint16_t x, uint16_t y){
+    return  x == apple.x0 && y == apple.y0;
   }
-      bool head_is_outside_screen = check_outside_screen();
-      bool head_collided_with_tail = check_tail();
-      if(is_apple()){
+  uint16_t i,j,x,y;
+  for(i = 0; i< BLOCK_SIZE; i++){
+    for(j = 0; j<BLOCK_SIZE; j++){
+      x = snake.blocks_array[0].x0 + i;
+      y = snake.blocks_array[0].y0 - j;
+
+      bool head_is_outside_screen = check_outside_screen(x,y);
+      bool head_collided_with_tail = check_tail(x,y);
+      if(is_apple(x,y)){
           eat_apple();
       }else if(head_is_outside_screen || head_collided_with_tail){
         game_over();
       }
+    }
+  }
+      
 
   
 }

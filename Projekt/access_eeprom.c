@@ -122,7 +122,7 @@ void write_byte_to_eeprom(uint8_t address, uint8_t data){
 	/* Send stop condition */
 	i2c_stop();
 }
-uint16_t read_byte_from_eeprom(uint8_t adress){
+uint16_t read_byte_from_eeprom(uint8_t address){
     
     uint16_t temp;
     temp = I2C1RCV; //Clear receive buffer

@@ -9,7 +9,7 @@
 #include <pic32mx.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "snake_defines.h"
+#include "snake_defines.h"  /* Declatations for these labs */
 
 #define DISPLAY_VDD_PORT PORTF
 #define DISPLAY_VDD_MASK 0x40
@@ -128,7 +128,7 @@ void write_byte_to_eeprom(uint8_t address, uint8_t data){
     
     await_write_request();
     /* Send register number we want to access */
-	i2c_send(adress);
+	i2c_send(address);
 	/* Set the config register to 0 */
 	i2c_send(data);
 	/* Send stop condition */

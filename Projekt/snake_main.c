@@ -358,7 +358,7 @@ void check_collision(){
   }
   /*returns whether or not the head is on an apple*/
   bool is_apple(){
-    return snake.blocks_array[0].x0 == apple.x0 && snake.blocks_array[0].y0 == apple.y0;
+    return snake.blocks_array[0].x0 == apple.x0 || snake.blocks_array[0].y0 == apple.y0;
   }
       bool head_is_outside_screen = check_outside_screen();
       bool head_collided_with_tail = check_tail();

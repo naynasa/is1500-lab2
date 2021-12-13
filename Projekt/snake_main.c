@@ -51,7 +51,8 @@ typedef struct {
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
 typedef struct {
-  Block* block; /*the square that symbolizes the apple*/
+  uint8_t x0; /*value range: 0-128, lower left hand corner x coordinate*/
+  uint8_t y0; /*value range: 0-32, lower left hand corner y coordinate*/
 }Apple;
 
 /*declare global data variables - "instances" of our structs*/
@@ -102,7 +103,7 @@ int main(void) {
   snake.facing_direction = 'R'; //set the snake to always start going right
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  (&apple)->(*block) = (Block) {128/2,15};
+  apple = {128/2,15};
   snake.prev_tail = (Block) {40,15};
   }
 
@@ -356,7 +357,7 @@ void check_collision(){
   }
   /*returns whether or not the head is on an apple*/
   bool is_apple(){
-    return snake.blocks_array[0].x0 == apple.block.x0 && snake.blocks_array[0].y0 == apple.block.y0;
+    return snake.blocks_array[0].x0 == apple.x0 && snake.blocks_array[0].y0 == apple.y0;
   }
       bool head_is_outside_screen = check_outside_screen();
       bool head_collided_with_tail = check_tail();
@@ -389,7 +390,7 @@ void render_frame() {
   /*"renders" the snake - sends it to the frame buffer*/
   void render_apple(){
     //send the apple to the buffer
-    add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
+    add_square(apple.x0,apple.y0,BLOCK_SIZE); //write the apple
   }
 
   

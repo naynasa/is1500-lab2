@@ -95,7 +95,7 @@ void i2c_stop() {
 
 /*our code*/
 
-void await_write_request(){
+void send_write_control_byte(){
         /* Send start condition and address of the eeprom memory with
 	write mode (lowest bit = 0) until the eeprom memory sends
 	acknowledge condition */
@@ -103,46 +103,52 @@ void await_write_request(){
 		i2c_start();
 	} while(!i2c_send(SPEEDEEPROM_CONTROL_BYTE << 1));
 }
-void await_read_request(){
+void send_read_control_byte(){
         /* Send start condition and address of the eeprom memory with
-	write mode (lowest bit = 0) until the eeprom memory sends
+	read mode (lowest bit = 1) until the eeprom memory sends
 	acknowledge condition */
 	do {
 		i2c_start();
 	} while(!i2c_send(SPEEDEEPROM_CONTROL_BYTE << 1 | 1));
 }
-/*the adress is really 16 bits but we keep to the lower 8 bits - since A we dont need that much space to write and B we want to be able to use i2c_send*/
-void write_byte_to_eeprom(uint8_t address, uint8_t data){
-    address = (uint16_t) address;
-    await_write_request();
-    /* Send register number we want to access */
-	i2c_send(address);
+/*this is called "BYTE WRITE" in the manual*/
+void write_byte_to_eeprom(uint16_t address, uint8_t data){
+    uint8_t address_upper_bits = (uint8_t) address >> 8;
+    uint8_t address_lower_bits = (uint8_t) address & 0xFF;//8 zeros followed by 8 ones
+    send_write_control_byte();
+    /* Send address high byte*/
+	i2c_send(address_upper_bits);
+    /* Send address low byte*/
+    i2c_send(address_lower_bits);
 	/* send our data */
 	i2c_send(data);
 	/* Send stop condition */
 	i2c_stop();
 }
-uint16_t read_byte_from_eeprom(uint8_t address){
-    address = (uint16_t) address;
-    uint16_t temp;
-    temp = I2C1RCV; //Clear receive buffer
+/*this is called "RANDOM READ" in the manual*/
+uint16_t read_byte_from_eeprom(uint16_t address){
+    uint8_t address_upper_bits = (uint8_t) address >> 8;
+    uint8_t address_lower_bits = (uint8_t) address & 0xFF;//8 zeros followed by 8 ones
 
-    //we first want to "write" the adress we want to read from 
-    await_write_request();
-    i2c_send(address);
+    //uint16_t temp;
+    //temp = I2C1RCV; //Clear receive buffer
+
+    //random read requires us to first send a write command with the adress we want to read from 
+    send_write_control_byte();
+    i2c_send(address_upper_bits);
+    i2c_send(address_lower_bits);
+
+    //now we send our read command
+    send_read_control_byte();
 
 
-    await_read_request();
-
-
-    /* Now we can start receiving data from the sensor data register */
-	temp = i2c_recv() << 8;
-	i2c_ack();
-	temp |= i2c_recv();
+    /* Now the slave sends data to us */
+	uint8_t read_value = i2c_recv();
+	
 		
     /* To stop receiving, send nack and stop */
 	i2c_nack();
 	i2c_stop();
     
-    return temp;
+    return read_value;
 }

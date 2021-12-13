@@ -328,9 +328,10 @@ void eat_apple(){
   int apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
   //apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
-  apple.block = (Block) {apple_new_x,apple_new_y};
+  //apple->block = (Block) {apple_new_x,apple_new_y};
+  apple->block.x0 = apple_new_x;
+  apple->block.y0 = apple_new_y;
   
-
 
   snake.num_blocks++;
   snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;
@@ -358,9 +359,8 @@ void check_collision(){
     return snake.blocks_array[0].x0 == apple.block.x0 && snake.blocks_array[0].y0 == apple.block.y0;
   }
       bool head_is_outside_screen = check_outside_screen();
-      bool head_is_apple = is_apple();
       bool head_collided_with_tail = check_tail();
-      if(head_is_apple){
+      if(is_apple()){
           eat_apple();
       }else if(head_is_outside_screen || head_collided_with_tail){
         game_over();
@@ -396,9 +396,9 @@ void render_frame() {
   set_all_pixels_black();  
   
   
-  
-  check_collision();
   move_snake();
+  check_collision();
+  
  
   render_snake();
   render_apple();

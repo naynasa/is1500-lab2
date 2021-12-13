@@ -276,10 +276,10 @@ void game_over(){
   set_all_pixels_black();
   display_buffer();
   
-  
+  write_byte_to_eeprom(HIGH_SCORE_ADDRESS,0);
   //check if its the first time we run the game is so set high score to 0
   uint8_t first_time_run = read_byte_from_eeprom(FIRST_TIME_LAUNCH_ADDRESS);
-  if(first_time_run != 0xFF){
+  if(first_time_run != 0xFF){*
     //this is the first time we run the program
     write_byte_to_eeprom(FIRST_TIME_LAUNCH_ADDRESS,0xFF);//set first_time_run
     write_byte_to_eeprom(HIGH_SCORE_ADDRESS,0);//set high score

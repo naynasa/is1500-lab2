@@ -334,6 +334,7 @@ void eat_apple(){
   //apple.*block = (Block) {apple_new_x,apple_new_y};
   //apple.*block.y0 = apple_new_y;
   
+  //make sure new apple position isn't on the snakes tail
 
   snake.num_blocks++;
   snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;
@@ -358,7 +359,7 @@ void check_collision(){
   }
   /*returns whether or not the head is on an apple*/
   bool is_apple(uint16_t x, uint16_t y){
-    return  x == apple.x0 && y == apple.y0;
+    return  x >= apple.x0 &&  x< (apple.x0+BLOCK_SIZE) && y >= apple.y0 && y < (apple.y0 + BLOCK_SIZE);
   }
   uint16_t i,j,x,y;
   for(i = 0; i< BLOCK_SIZE; i++){

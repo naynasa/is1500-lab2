@@ -56,27 +56,18 @@ typedef struct {
 Snake snake;
 Apple apple;
 
-  /*calculates a somewhat random value based on the current timer value*/
-  int get_random_value(){
-    int getRandomSign()
-{
-  if (TMR2 % 10 < 5)
-  {
-    return -1;
-  }
-  return 1;
-}
-    int randomNumber = TMR2 % 5;
-    randomNumber /= 10;
-    randomNumber += 0.5;
-    randomNumber *= getRandomSign();
-    return randomNumber;
-  }
+
 int main(void) {
   
   /*helper that starts timer 2 by setting the enable bits to high*/
   void start_timer(){
     T2CONSET = T2CON_ENABLE_BIT;
+  }
+  /*get a random seed for our "random" number generator by reading from analog port A0 via PORT B bit 2*/
+  int get_random_seed(){
+    /*the pinout table tells us that we want to read PORT B bit 2 to get the chipkit pin 14 (A0) */
+    int a0 = PORTB & 0b10;
+    return a0;
   }
 
 
@@ -119,7 +110,7 @@ int main(void) {
   init_snake();
   
 	start_timer();
-  //srand(get_random_seed()); //set seed for apple placements
+  srand(get_random_seed()); //set seed for apple placements
 
 	while( 1 )
 	{
@@ -301,8 +292,8 @@ void eat_apple(){
   snake.num_apples_eaten++;
   //move apple
   
-  uint64_t apple_new_x = BLOCK_SIZE + TMR2 % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
-  uint64_t apple_new_y = BLOCK_SIZE + TMR2 % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
+  uint64_t apple_new_x = BLOCK_SIZE + scaled_rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
+  uint64_t apple_new_y = BLOCK_SIZE + scaled_rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
   //apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
   apple.block.x0 = apple_new_x;

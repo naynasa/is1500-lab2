@@ -56,15 +56,8 @@ typedef struct {
 Snake snake;
 Apple apple;
 
-
-int main(void) {
-  
-  /*helper that starts timer 2 by setting the enable bits to high*/
-  void start_timer(){
-    T2CONSET = T2CON_ENABLE_BIT;
-  }
   /*calculates a somewhat random value based on the current timer value*/
-  int get_random_seed(){
+  int get_random_value(){
     int getRandomSign()
 {
   if (TMR2 % 10 < 5)
@@ -79,6 +72,13 @@ int main(void) {
     randomNumber *= getRandomSign();
     return randomNumber;
   }
+int main(void) {
+  
+  /*helper that starts timer 2 by setting the enable bits to high*/
+  void start_timer(){
+    T2CONSET = T2CON_ENABLE_BIT;
+  }
+
 
   void init_snake(){
     /*todo make random? - so you don't start at the same place each time*/
@@ -297,8 +297,8 @@ void eat_apple(){
   snake.num_apples_eaten++;
   //move apple
   
-  int apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
-  int apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
+  int apple_new_x = BLOCK_SIZE + get_random_value() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
+  int apple_new_y = BLOCK_SIZE + get_random_value() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
   //apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
   apple.block.x0 = apple_new_x;

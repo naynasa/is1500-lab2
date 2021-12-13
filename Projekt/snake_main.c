@@ -324,13 +324,13 @@ void eat_apple(){
   snake.num_apples_eaten++;
   //move apple
   
-  int apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
-  int apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
+  uint8_t apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
+  uint8_t apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
   //apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
   //apple->block = (Block) {apple_new_x,apple_new_y};
-  (*apple).block.x0 = apple_new_x;
-  (*apple).block.y0 = apple_new_y;
+  apple.*block = (Block) {apple_new_x,apple_new_y};
+  //apple.*block.y0 = apple_new_y;
   
 
   snake.num_blocks++;

@@ -22,7 +22,7 @@
 
 /* Address of the temperature sensor on the I2C bus */
 #define TEMP_SENSOR_ADDR 0x48 //1010000
-#define SPEEDEEPROM_CONTROL_BYTE 0b1010010 //1 0 1 0 A2 A1 A0 R/W - here A2 = 1 A1=0,A0=0
+#define SPEEDEEPROM_CONTROL_BYTE 0b1010001 //1 0 1 0 A2 A1 A0 R/W - here A2 = 1 A1=0,A0=0
 /* Temperature sensor internal registers */
 typedef enum TempSensorReg TempSensorReg;
 enum TempSensorReg {

@@ -55,6 +55,13 @@ void time2string( char *, int );
 int getsw(void);
 void enable_interrupt(void);
 
+void init_controller();
+void init_timer();
+void init_LEDs();
+void init_buttons_switches();
+void eeprom_init();
+void write_byte_to_eeprom(uint8_t address, uint8_t data);
+uint16_t read_byte_from_eeprom(uint8_t adress);
 
 #define DISPLAY_CHANGE_TO_COMMAND_MODE (PORTFCLR = 0x10)
 #define DISPLAY_CHANGE_TO_DATA_MODE (PORTFSET = 0x10)
@@ -81,7 +88,5 @@ extern char textbuffer[4][16];
 extern const uint8_t const font[128*8];
 
 /*
-void eeprom_init();
-void write_byte_to_eeprom(uint8_t address, uint8_t data);
-uint16_t read_byte_from_eeprom(uint8_t adress);
+
 */

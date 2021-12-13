@@ -18,6 +18,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include <EEPROM.h>
 
 
 /*the array that stores all our pixel data - the way we communicate with the screen*/
@@ -63,12 +64,12 @@ int main(void) {
   void start_timer(){
     T2CONSET = T2CON_ENABLE_BIT;
   }
-  /*get a random seed for our "random" number generator by reading from analog port A0 via PORT B bit 2*/
-  int get_random_seed(){
-    /*the pinout table tells us that we want to read PORT B bit 2 to get the chipkit pin 14 (A0) */
-    int a0 = PORTB & 0b10;
-    return a0;
-  }
+  /*our seed is stored in the EEPROM of the microcotroller - if this is the first time we run the program write to it - otherwise read the previous and increment it by 1*/
+  int get_seed(){
+   
+  } 
+  
+  
 
 
   void init_snake(){

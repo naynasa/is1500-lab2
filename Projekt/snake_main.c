@@ -329,7 +329,7 @@ void eat_apple(){
   
   //apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
   //apple->block = (Block) {apple_new_x,apple_new_y};
-  (*apple)block.x0 = apple_new_x;
+  (*apple).block.x0 = apple_new_x;
   (*apple).block.y0 = apple_new_y;
   
 

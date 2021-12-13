@@ -1,5 +1,3 @@
-#ifndef _snake_defines_h
-#define _snake_defines_h
 /* mipslab.h
    Header file for all labs.
    This file written 2015 by F Lundevall
@@ -92,4 +90,3 @@ extern const uint8_t const font[128*8];
 /*
 
 */
-#endif

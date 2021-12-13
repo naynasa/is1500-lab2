@@ -119,7 +119,7 @@ int main(void) {
   init_snake();
   
 	start_timer();
-  srand(get_random_seed()); //set seed for apple placements
+  //srand(get_random_seed()); //set seed for apple placements
 
 	while( 1 )
 	{

@@ -112,7 +112,7 @@ int main(void) {
   init_snake();
   
 	start_timer();
-  srand(get_random_seed()); //set seed for apple placements
+  //srand(get_random_seed()); //set seed for apple placements
 
   write_byte_to_eeprom(0x2,12);
   uint16_t test_val = read_byte_from_eeprom(0x2);

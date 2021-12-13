@@ -30,6 +30,7 @@ bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
 #define MAX_NUMBER_OF_POSSIBLE_BLOCKS (SCREEN_HEIGHT*SCREEN_WIDTH)/(BLOCK_SIZE*BLOCK_SIZE)
 #define SEED_ADDRESS 0b1
 #define HIGH_SCORE_ADDRESS 0b10
+#define FIRST_TIME_LAUNCH_ADDRESS 0b11
 
 /*the basic building block of our game - a square of size BLOCK_SIZE with x0,y0 being the bottom left most pixel in the square*/
 typedef struct {
@@ -276,19 +277,26 @@ void game_over(){
   display_buffer();
   
   
-  
+  //check if its the first time we run the game is so set high score to 0
+  uint8_t first_time_run = read_byte_from_eeprom(FIRST_TIME_LAUNCH_ADDRESS);
+  if(first_time_run != 0xFF){
+    //this is the first time we run the program
+    write_byte_to_eeprom(FIRST_TIME_LAUNCH_ADDRESS,0xFF);//set first_time_run
+    write_byte_to_eeprom(HIGH_SCORE_ADDRESS,0);//set high score
+  }
   //read highscore
   uint8_t high_score = read_byte_from_eeprom(HIGH_SCORE_ADDRESS);
   
 
   char score_string[18]; //holds the score string
   char high_score_string[18]; //holds the score string
-  sprintf(score_string, "score: %d!",snake.num_apples_eaten); //format the score string
+  sprintf(score_string, "Score: %d!",snake.num_apples_eaten); //format the score string
   sprintf(high_score_string, "High Score: %d!",high_score); //format the score string
-  
+  bool new_high_score = false;
   //if we beat the high score update it
   if(snake.num_apples_eaten > high_score){
     write_byte_to_eeprom(HIGH_SCORE_ADDRESS,snake.num_apples_eaten);
+    new_high_score = true;
   }
   
   while (true)
@@ -297,6 +305,9 @@ void game_over(){
       display_string(1, "game over!");
       display_string(2, score_string);
       display_string(3, high_score_string);
+      if(new_high_score){
+        display_string(4,"yay, new high score!");
+      }
       
     
       

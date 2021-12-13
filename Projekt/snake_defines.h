@@ -79,3 +79,5 @@ typedef char Direction;
 extern char textbuffer[4][16];
 /* Declare bitmap array containing font */
 extern const uint8_t const font[128*8];
+
+void eeprom_init();

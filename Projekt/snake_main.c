@@ -18,7 +18,6 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
-#include <EEPROM.h>
 
 
 /*the array that stores all our pixel data - the way we communicate with the screen*/
@@ -100,7 +99,8 @@ int main(void) {
 
   /*initializations*/ 
 	init_controller();
-	display_init();
+	eeprom_init();
+  display_init();
   
   init_timer();
   init_LEDs();
@@ -108,10 +108,23 @@ int main(void) {
 
 
 
+
   init_snake();
   
 	start_timer();
   srand(get_random_seed()); //set seed for apple placements
+
+  uint16_t test_val = write_byte_to_eeprom(0x2,12);
+  char test_string[18]; //holds the score string
+  sprintf(score_string, "memory: %d!",test_val); //format the score string
+  
+  while (1)
+  {
+    display_string(1,test_string);
+
+  }
+  
+  
 
 	while( 1 )
 	{
@@ -263,7 +276,6 @@ void game_over(){
   display_buffer();
   
   char score_string[18]; //holds the score string
-  char tmr2_string[22]; //holds the score string
   sprintf(score_string, "score: %d!",snake.num_apples_eaten); //format the score string
   
   

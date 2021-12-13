@@ -284,8 +284,10 @@ void eat_apple(){
   
   int apple_new_x = BLOCK_SIZE + scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
   int apple_new_y = BLOCK_SIZE + scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
-  apple.block.x0 = apple_new_x;
-  apple.block.y0 = apple_new_y;
+  
+  apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
+  //apple.block.x0 = apple_new_x;
+  //apple.block.y0 = apple_new_y;
 
 
   snake.num_blocks++;
@@ -332,7 +334,22 @@ void render_frame() {
   void reset_isr(){
     IFS(0) = IFS(0) ^ 0b0000000100000000; //set bit 8 to 0
   }
-    
+  /*"renders" the snake - sends it to the frame buffer*/
+  void render_snake(){
+    //send the snake to the buffer - render snake
+    for(i = 0; i<snake.num_blocks; i++){
+      //iterates over each block in the snake
+      Block pointed_block = snake.blocks_array[i];
+      add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
+    }
+  }
+  /*"renders" the snake - sends it to the frame buffer*/
+  void render_apple(){
+    //send the apple to the buffer
+    add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
+  }
+
+
   set_all_pixels_black();  
   int i;
   
@@ -340,17 +357,11 @@ void render_frame() {
   check_collision();
   
  
-  
-  //send the snake to the buffer - render snake
-  for(i = 0; i<snake.num_blocks; i++){
-    //iterates over each block in the snake
-    Block pointed_block = snake.blocks_array[i];
-    add_square(pointed_block.x0, pointed_block.y0, BLOCK_SIZE);
-  }
+  render_snake();
+  render_apple();
   
 
-  //send the apple to the buffer
-  add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
+  
   
   display_buffer();
   reset_isr();

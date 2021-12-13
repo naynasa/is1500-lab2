@@ -114,8 +114,8 @@ int main(void) {
 	start_timer();
   //srand(get_random_seed()); //set seed for apple placements
 
-  write_byte_to_eeprom(0b1111100,12);
-  uint16_t test_val = read_byte_from_eeprom(0b1111100);
+  write_byte_to_eeprom(0b1,12);
+  uint16_t test_val = read_byte_from_eeprom(0b1);
   char test_string[18]; //holds the score string
   sprintf(test_string, "memory: %d!",test_val); //format the score string
   

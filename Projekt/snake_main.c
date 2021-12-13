@@ -71,7 +71,7 @@ int main(void) {
     //increment it
     seed++;
     //write it back so its not the same next time we run the program
-    write_byte_to_eeprom(stored_seed);
+    write_byte_to_eeprom(seed);
 
     return seed;
   } 
@@ -275,9 +275,7 @@ void game_over(){
   set_all_pixels_black();
   display_buffer();
   
-  write_byte_to_eeprom(0b1,24);
-  uint8_t test_val = read_byte_from_eeprom(0b1);
-  char test_string[18]; //holds the score string
+  
   sprintf(test_string, "memory: %d!",test_val); //format the score string
   //read highscore
   uint8_t high_score = read_byte_from_eeprom(HIGH_SCORE_ADDRESS);

@@ -117,7 +117,7 @@ void write_byte_to_eeprom(uint8_t address, uint8_t data){
     await_write_request();
     /* Send register number we want to access */
 	i2c_send(address);
-	/* Set the config register to 0 */
+	/* send our data */
 	i2c_send(data);
 	/* Send stop condition */
 	i2c_stop();
@@ -127,10 +127,13 @@ uint16_t read_byte_from_eeprom(uint8_t adress){
     uint16_t temp;
     temp = I2C1RCV; //Clear receive buffer
 
+    //we first want to "write" the adress we want to read from 
+    await_write_request();
+    i2c_send(address);
+
 
     await_read_request();
 
-    i2c_send(adress);//might not work
 
     /* Now we can start receiving data from the sensor data register */
 	temp = i2c_recv() << 8;

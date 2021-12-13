@@ -33,12 +33,6 @@ enum TempSensorReg {
 };
 
 
-void delay(int cyc) {
-	int i;
-	for(i = cyc; i > 0; i--);
-}
-
-
 
 /* Wait for I2C bus to become idle */
 void i2c_idle() {

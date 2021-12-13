@@ -271,13 +271,17 @@ void game_over(){
   display_buffer();
   
   char score_string[18]; //holds the score string
+  char tmr2_string[22]; //holds the score string
   sprintf(score_string, "score: %d!",snake.num_apples_eaten); //format the score string
-
+  sprintf(tmr2_string, "TMR2: %d!",TMR2); //format the score string
+  
   while (true)
   {
       
       display_string(1, "game over!");
       display_string(2, score_string);
+      display_string(2, tmr2_string);
+      
       //display_string(3, "highscore: %d",snake.num_apples_eaten);
 
   }

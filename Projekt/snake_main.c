@@ -150,73 +150,7 @@ void set_all_pixels_black(){
   }
     display_buffer();
 }
-//moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
-  //if the user tries to move 180 degrees from current direction or presses multiple buttons the command is ignored
-  //called each frame
-  //updates position of the snakes head block and snake.facing_direction
-  void move_head(){
-    /*helper that calculates how much x should be updated depending on the direction*/
-    int x_offset_from_dir(Direction dir){
-      if(dir == 'L' || dir == 'R'){
-        return (dir == 'L') ? -SPEED : SPEED; // L = - and R = +
-      }else{
-        return 0;
-      }
-    }
-    /*helper that calculates how much y should be updated depending on the direction*/
-    int y_offset_from_dir(Direction dir){
-      if(dir == 'U' || dir == 'D'){
-        return (dir == 'U') ? -SPEED : SPEED; // U = - and D = +
-      }else{
-        return 0;
-      }
-    }
-    /*helper that calculates if the user is trying to turn left when going right or up when going down etc. (180 degrees)*/
-    bool user_turning_180_degrees(Direction dir){
-      switch (snake.facing_direction){
-      case 'U':
-        return dir == 'D';
-        
-      case 'D':
-        return dir == 'U';
 
-      case 'L':
-        return dir == 'R';
-        
-      case 'R':
-        return dir == 'L';
-    
-      default:
-        return false;
-      }
-    }
-    Direction user_move_dir = user_move_direction();
-    int i;
-    if(user_move_dir == 'N' || user_turning_180_degrees(user_move_dir)){
-      /*no command or invalid command - just move the snake forward*/
-      int x_add = x_offset_from_dir(snake.facing_direction);
-      int y_add = y_offset_from_dir(snake.facing_direction);
-      
-      //update the head coordinates
-      snake.blocks_array[0].x0 += x_add;
-      snake.blocks_array[0].y0 += y_add;
-
-    }else{
-      /*a valid command is sent - move the snake in the direction the user wants*/
-
-      int x_add = x_offset_from_dir(user_move_dir);
-      int y_add = y_offset_from_dir(user_move_dir);
-      
-      //update the head coordinates
-      snake.blocks_array[0].x0 += x_add;
-      snake.blocks_array[0].y0 += y_add;
-
-      //update the direction the snake is facing
-      snake.facing_direction = user_move_dir;
-    }
-    
-
-  }
 
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 //also assigns snake_tail
@@ -261,8 +195,8 @@ void game_over(){
   while (true)
   {
       
-      //display_string(1, "game over!");
-      //display_string(2, score_string);
+      display_string(1, "game over!");
+      display_string(2, score_string);
       //display_string(3, "highscore: %d",snake.num_apples_eaten);
 
   }
@@ -336,9 +270,8 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  move_snake();
   check_collision();
-  
+  move_snake();
  
   
   //send the snake to the buffer - render snake

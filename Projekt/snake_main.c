@@ -51,7 +51,7 @@ typedef struct {
 
 /*since only one apple is active at the time we update the block values each time instead of creating a new apple*/
 typedef struct {
-  Block block; /*the square that symbolizes the apple*/
+  Block* block; /*the square that symbolizes the apple*/
 }Apple;
 
 /*declare global data variables - "instances" of our structs*/
@@ -102,7 +102,7 @@ int main(void) {
   snake.facing_direction = 'R'; //set the snake to always start going right
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  apple.block = (Block) {128/2,15};
+  &apple->block = (Block) {128/2,15};
   snake.prev_tail = (Block) {40,15};
   }
 

@@ -22,7 +22,6 @@
 
 /*the array that stores all our pixel data - the way we communicate with the screen*/
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
-uint16_t rand_seed = 17;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
 #define SPEED BLOCK_SIZE //amount of pixels the snake moves from the start - needs to be the same as BLOCK_SIZE for the snake to move smoothly
@@ -64,6 +63,12 @@ int main(void) {
   void start_timer(){
     T2CONSET = T2CON_ENABLE_BIT;
   }
+  /*calculates a somewhat random value based on the current timer value*/
+  int get_random_seed(){
+    int rand_val = TMR2 % 63;
+    rand_val += 2;
+    return rand_val;
+  }
 
   void init_snake(){
     /*todo make random? - so you don't start at the same place each time*/
@@ -104,7 +109,7 @@ int main(void) {
   init_snake();
   
 	start_timer();
-  srand(rand_seed); //set seed for apple placements
+  srand(get_random_seed()); //set seed for apple placements
 
 	while( 1 )
 	{

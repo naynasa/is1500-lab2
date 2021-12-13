@@ -38,12 +38,6 @@ void delay(int cyc) {
 	for(i = cyc; i > 0; i--);
 }
 
-uint8_t spi_send_recv(uint8_t data) {
-	while(!(SPI2STAT & 0x08));
-	SPI2BUF = data;
-	while(!(SPI2STAT & 0x01));
-	return SPI2BUF;
-}
 
 
 /* Wait for I2C bus to become idle */

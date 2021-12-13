@@ -102,7 +102,7 @@ int main(void) {
   snake.facing_direction = 'R'; //set the snake to always start going right
   snake.num_blocks = 5;//sizeof(blocks) / sizeof(blocks[0]);
   snake.num_apples_eaten = 0;
-  &apple->block = (Block) {128/2,15};
+  (&apple)->block = (Block) {128/2,15};
   snake.prev_tail = (Block) {40,15};
   }
 

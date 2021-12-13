@@ -336,6 +336,7 @@ void render_frame() {
   }
   /*"renders" the snake - sends it to the frame buffer*/
   void render_snake(){
+    int i;
     //send the snake to the buffer - render snake
     for(i = 0; i<snake.num_blocks; i++){
       //iterates over each block in the snake
@@ -351,7 +352,7 @@ void render_frame() {
 
 
   set_all_pixels_black();  
-  int i;
+  
   
   move_snake();
   check_collision();

@@ -22,7 +22,7 @@
 
 /*the array that stores all our pixel data - the way we communicate with the screen*/
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
-uint16_t rand_seed = 1;
+uint16_t rand_seed = 17;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
 #define SPEED BLOCK_SIZE //amount of pixels the snake moves from the start - needs to be the same as BLOCK_SIZE for the snake to move smoothly
@@ -285,9 +285,9 @@ void eat_apple(){
   int apple_new_x = BLOCK_SIZE + scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
   int apple_new_y = BLOCK_SIZE + scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
-  apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
-  //apple.block.x0 = apple_new_x;
-  //apple.block.y0 = apple_new_y;
+  //apple = (Apple) {(Block) {apple_new_x,apple_new_y}};
+  apple.block.x0 = apple_new_x;
+  apple.block.y0 = apple_new_y;
 
 
   snake.num_blocks++;

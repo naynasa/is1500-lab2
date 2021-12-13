@@ -81,3 +81,5 @@ extern char textbuffer[4][16];
 extern const uint8_t const font[128*8];
 
 void eeprom_init();
+void write_byte_to_eeprom(uint8_t address, uint8_t data);
+uint16_t read_byte_from_eeprom(uint8_t adress);

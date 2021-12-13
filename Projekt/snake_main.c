@@ -116,7 +116,7 @@ int main(void) {
 
   uint16_t test_val = write_byte_to_eeprom(0x2,12);
   char test_string[18]; //holds the score string
-  sprintf(score_string, "memory: %d!",test_val); //format the score string
+  sprintf(test_string, "memory: %d!",test_val); //format the score string
   
   while (1)
   {

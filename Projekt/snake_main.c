@@ -319,13 +319,7 @@ void game_over(){
 
 //since we display the apple after the snake moving the apple looks the same as creating a new one
 void eat_apple(){
-  int scaled_rand(int max){
-   int x = rand();
-   int rand_min = 0;
-   int x_zero_to_one = (x-rand_min) / (RAND_MAX - rand_min);
-   
-   return (max * x_zero_to_one);
-  } 
+
   //increment apples eaten
   snake.num_apples_eaten++;
   //move apple
@@ -402,9 +396,9 @@ void render_frame() {
   set_all_pixels_black();  
   
   
-  move_snake();
-  check_collision();
   
+  check_collision();
+  move_snake();
  
   render_snake();
   render_apple();

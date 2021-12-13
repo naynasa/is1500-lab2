@@ -57,18 +57,7 @@ typedef struct {
 Snake snake;
 Apple apple;
 
-/*sets all values in frame_buffer to 0 and updates the screen*/
-void set_all_pixels_black(){
-  int i,j,k;
-  for(i = 0; i < 4; i++){
-    for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 0;
-      }
-    }
-  }
-    display_buffer();
-}
+
 int main(void) {
   
   /*helper that starts timer 2 by setting the enable bits to high*/
@@ -105,9 +94,7 @@ int main(void) {
   /*initializations*/ 
 	init_controller();
 	display_init();
-  //make sure we don't have any flashing
-  //set_all_pixels_black();
-  /*more initializations*/
+  
   init_timer();
   init_LEDs();
   init_buttons_switches();
@@ -152,7 +139,18 @@ void add_square(int x, int y, int size){
   }
 }
 
-
+/*sets all values in frame_buffer to 0 and updates the screen*/
+void set_all_pixels_black(){
+  int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer[i][j][k] = 0;
+      }
+    }
+  }
+    display_buffer();
+}
 
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 //also assigns snake_tail
@@ -338,8 +336,9 @@ void render_frame() {
   set_all_pixels_black();  
   int i;
   
-  check_collision();
   move_snake();
+  check_collision();
+  
  
   
   //send the snake to the buffer - render snake

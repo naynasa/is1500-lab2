@@ -387,7 +387,7 @@ void render_frame() {
     add_square(apple.block.x0,apple.block.y0,BLOCK_SIZE); //write the apple
   }
 
-  /*
+  
   set_all_pixels_black();  
   
   
@@ -402,7 +402,7 @@ void render_frame() {
   
   
   display_buffer();
-  */
+  
   reset_isr();
 
 }

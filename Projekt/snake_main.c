@@ -22,7 +22,7 @@
 
 /*the array that stores all our pixel data - the way we communicate with the screen*/
 bool frame_buffer[4][128][8]; //4*128 = 512 bytes (8 bit each)
-//uint16_t rand_seed = 17;
+uint16_t rand_seed = 17;
 
 #define BLOCK_SIZE 3 //varies size of all squares in the game (snake,apples,obstacles)
 #define SPEED BLOCK_SIZE //amount of pixels the snake moves from the start - needs to be the same as BLOCK_SIZE for the snake to move smoothly
@@ -104,7 +104,7 @@ int main(void) {
   init_snake();
   
 	start_timer();
-  //srand(rand_seed); //set seed for apple placements
+  srand(rand_seed); //set seed for apple placements
 
 	while( 1 )
 	{

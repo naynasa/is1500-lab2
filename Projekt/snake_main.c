@@ -57,7 +57,18 @@ typedef struct {
 Snake snake;
 Apple apple;
 
-
+/*sets all values in frame_buffer to 0 and updates the screen*/
+void set_all_pixels_black(){
+  int i,j,k;
+  for(i = 0; i < 4; i++){
+    for(j = 0 ; j<128 ;j++){
+      for(k = 0; k<8; k++ ){
+        frame_buffer[i][j][k] = 0;
+      }
+    }
+  }
+    display_buffer();
+}
 int main(void) {
   
   /*helper that starts timer 2 by setting the enable bits to high*/
@@ -94,16 +105,19 @@ int main(void) {
   /*initializations*/ 
 	init_controller();
 	display_init();
+  //make sure we don't have any flashing
+  set_all_pixels_black();
+  /*more initializations*/
   init_timer();
   init_LEDs();
   init_buttons_switches();
 
 
-  
+
   init_snake();
   
 	start_timer();
-
+  srand(rand_seed); //set seed for apple placements
 
 	while( 1 )
 	{
@@ -138,18 +152,7 @@ void add_square(int x, int y, int size){
   }
 }
 
-/*sets all values in frame_buffer to 0 and updates the screen*/
-void set_all_pixels_black(){
-  int i,j,k;
-  for(i = 0; i < 4; i++){
-    for(j = 0 ; j<128 ;j++){
-      for(k = 0; k<8; k++ ){
-        frame_buffer[i][j][k] = 0;
-      }
-    }
-  }
-    display_buffer();
-}
+
 
 //makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
 //also assigns snake_tail
@@ -280,7 +283,7 @@ void eat_apple(){
   //increment apples eaten
   snake.num_apples_eaten++;
   //move apple
-  srand(rand_seed); //set seed
+  
   int apple_new_x = BLOCK_SIZE + scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
   int apple_new_y = BLOCK_SIZE + scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   apple.block.x0 = apple_new_x;

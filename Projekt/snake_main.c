@@ -65,9 +65,19 @@ int main(void) {
   }
   /*calculates a somewhat random value based on the current timer value*/
   int get_random_seed(){
-    int rand_val = TMR2 % 63;
-    rand_val += 2;
-    return rand_val;
+    int getRandomSign()
+{
+  if (TMR2 % 10 < 5)
+  {
+    return -1;
+  }
+  return 1;
+}
+    randomNumber = TMR2 % 5;
+    randomNumber /= 10;
+    randomNumber += 0.5;
+    randomNumber *= getRandomSign();
+    return randomNumber;
   }
 
   void init_snake(){

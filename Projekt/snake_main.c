@@ -73,7 +73,7 @@ int main(void) {
   }
   return 1;
 }
-    randomNumber = TMR2 % 5;
+    int randomNumber = TMR2 % 5;
     randomNumber /= 10;
     randomNumber += 0.5;
     randomNumber *= getRandomSign();

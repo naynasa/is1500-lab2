@@ -293,7 +293,7 @@ void game_over(){
   char score_string[18]; //holds the score string
   char high_score_string[18]; //holds the score string
   sprintf(score_string, "Score: %d!",snake.num_apples_eaten); //format the score string
-  sprintf(high_score_string, "High Score: %d!",high_score); //format the score string
+  sprintf(high_score_string, "High Score: %d!",snake.num_apples_eaten > high_score ? snake.num_apples_eaten : high_score); //format the score string
   bool new_high_score = false;
   //if we beat the high score update it
   if(snake.num_apples_eaten > high_score){
@@ -304,11 +304,11 @@ void game_over(){
   while (true)
   {
       
-      display_string(1, "game over!");
-      display_string(2, score_string);
-      display_string(3, high_score_string);
+      display_string(0, "game over!");
+      display_string(1, score_string);
+      display_string(2, high_score_string);
       if(new_high_score){
-        display_string(4,"yay, new high score!");
+        display_string(3,"yay, new high score!");
       }
       
     

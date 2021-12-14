@@ -117,7 +117,7 @@ int main(void) {
   init_buttons_switches();
 
 
-  
+  write_byte_to_eeprom(HIGH_SCORE_ADDRESS,0);
 
   init_snake();
   
@@ -339,7 +339,7 @@ void eat_apple(){
       //loop through the pixels of the new apple and check if they are activated
       x = apple_new_x + i;
       y = apple_new_y - j;
-      if(*pixel_to_frame_buffer_position(x,y)){
+      if(*pixel_to_frame_buffer_position(x,y)){ //Checks all pixels in apple 
         goto generate_random;
       }
     }

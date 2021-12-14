@@ -83,7 +83,7 @@ void send_write_control_byte(){
 	acknowledge condition */
 	do {
 		i2c_start();
-	} while(!i2c_send(SPEEDEEPROM_CONTROL_BYTE << 1));
+	} while(!i2c_send(SPEEDEEPROM_CONTROL_BYTE << 1)); //control byte + 0
 }
 void send_read_control_byte(){
         /* Send start condition and address of the eeprom memory with
@@ -125,7 +125,7 @@ uint8_t read_byte_from_eeprom(uint16_t address){
 
 
     /* Now the slave sends data to us */
-	uint8_t read_value = i2c_recv();
+	uint8_t read_value = i2c_recv(); //rec a byte from the bus 
 	
 		
     /* To stop receiving, send nack and stop */

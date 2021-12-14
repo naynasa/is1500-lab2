@@ -381,8 +381,8 @@ void check_collision(){
     return  x >= apple.x0 &&  x< (apple.x0+BLOCK_SIZE) && y >= apple.y0 && y < (apple.y0 + BLOCK_SIZE);
   }
   uint16_t i,j,x,y;
-  for(i = 0; i< BLOCK_SIZE+1; i++){
-    for(j = 0; j<BLOCK_SIZE-1; j++){
+  for(i = 0; i< BLOCK_SIZE+2; i++){
+    for(j = 0; j<BLOCK_SIZE-2; j++){
       x = snake.blocks_array[0].x0 + i;
       y = snake.blocks_array[0].y0 - j;
 

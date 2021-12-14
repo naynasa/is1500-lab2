@@ -97,7 +97,7 @@ void send_read_control_byte(){
 void write_byte_to_eeprom(uint16_t address, uint8_t data){
     uint8_t address_upper_bits = (uint8_t) address >> 8;
     uint8_t address_lower_bits = (uint8_t) address & 0xFF;//8 zeros followed by 8 ones
-    send_write_control_byte();
+    send_write_control_byte(); //send a control byte 
     /* Send address high byte*/
 	i2c_send(address_upper_bits);
     /* Send address low byte*/

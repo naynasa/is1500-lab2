@@ -380,7 +380,7 @@ void check_collision(){
   bool is_apple(uint16_t x, uint16_t y){
     return  x >= apple.x0 &&  x< (apple.x0+BLOCK_SIZE) && y >= apple.y0 && y < (apple.y0 + BLOCK_SIZE);
   }
-  uint16_t i,j,x,y;
+  uint16_t i,j,x,y,k,m;
   for(i = 0; i< BLOCK_SIZE+1; i++){
     for(j = 0; j<BLOCK_SIZE+1; j++){
       x = snake.blocks_array[0].x0 + i;
@@ -390,7 +390,18 @@ void check_collision(){
       bool head_collided_with_tail = check_tail(x,y);
       if(is_apple(x,y)){
           eat_apple();
-      }else if(head_is_outside_screen || head_collided_with_tail){
+          return();
+      }
+    }
+  }
+    for(k = 0; k< BLOCK_SIZE; k++){
+    for(m = 0; m<BLOCK_SIZE; m++){
+      x = snake.blocks_array[0].x0 + k;
+      y = snake.blocks_array[0].y0 - m;
+
+      bool head_is_outside_screen = check_outside_screen(x,y);
+      bool head_collided_with_tail = check_tail(x,y);
+      if(head_is_outside_screen || head_collided_with_tail){
         game_over();
       }
     }

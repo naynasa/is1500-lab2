@@ -325,23 +325,27 @@ void eat_apple(){
   //increment apples eaten
   snake.num_apples_eaten++;
   //move apple
-  generate_random:
-  uint8_t apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
-  uint8_t apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
-  
-  //make sure new apple position isn't on something
-  size_t i,j;
-  uint8_t x,y;
-  for (i = 0; i < BLOCK_SIZE; i++){
-    for (j = 0; j < BLOCK_SIZE; j++){
-      //loop through the pixels of the new apple and check if they are activated
-      x = apple_new_x + i;
-      y = apple_new_y - j;
-      if(*pixel_to_frame_buffer_position(x) || *pixel_to_frame_buffer_position(y)){
-        goto generate_random;
-      }
-    }
+  uint8_t apple_new_x,apple_new_y;
+      size_t i,j;
+    uint8_t x,y;
+  //apple check
+  while(true){
+    apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
+    apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
     
+    //make sure new apple position isn't on something
+
+    for (i = 0; i < BLOCK_SIZE; i++){
+      for (j = 0; j < BLOCK_SIZE; j++){
+        //loop through the pixels of the new apple and check if they are activated
+        x = apple_new_x + i;
+        y = apple_new_y - j;
+        if(!*pixel_to_frame_buffer_position(x) && !*pixel_to_frame_buffer_position(y)){
+          break;
+        }
+      }
+      
+    }
   }
   
 

@@ -340,7 +340,7 @@ void eat_apple(){
         //loop through the pixels of the new apple and check if they are activated
         x = apple_new_x + i;
         y = apple_new_y - j;
-        if(!*pixel_to_frame_buffer_position(x) && !*pixel_to_frame_buffer_position(y)){
+        if(!*pixel_to_frame_buffer_position(x,y)){
           break;
         }
       }

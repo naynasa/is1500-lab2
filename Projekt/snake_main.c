@@ -117,7 +117,7 @@ int main(void) {
   init_buttons_switches();
 
 
-  write_byte_to_eeprom(HIGH_SCORE_ADDRESS,0);
+  
 
   init_snake();
   

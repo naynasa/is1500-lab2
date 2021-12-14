@@ -378,7 +378,7 @@ void check_collision(){
   }
   /*returns whether or not the head is on an apple*/
   bool is_apple(uint16_t x, uint16_t y){
-    return  (x+2) >= apple.x0 &&  (x+2)< (apple.x0+BLOCK_SIZE) && (y-2) >= apple.y0 && (y-2) < (apple.y0 + BLOCK_SIZE);
+    return  x >= apple.x0 &&  x< (apple.x0+BLOCK_SIZE) && y >= apple.y0 && y < (apple.y0 + BLOCK_SIZE);
   }
   uint16_t i,j,x,y;
   for(i = 0; i< BLOCK_SIZE; i++){

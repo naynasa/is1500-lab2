@@ -390,7 +390,7 @@ void check_collision(){
       bool head_collided_with_tail = check_tail(x,y);
       if(is_apple(x,y)){
           eat_apple();
-          return();
+          return;
       }
     }
   }

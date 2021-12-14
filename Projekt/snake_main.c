@@ -308,7 +308,7 @@ void game_over(){
       display_string(1, score_string);
       display_string(2, high_score_string);
       if(new_high_score){
-        display_string(3,"yay, new high score!");
+        display_string(3,"yay new record!");
       }
       
     
@@ -325,17 +325,33 @@ void eat_apple(){
   //increment apples eaten
   snake.num_apples_eaten++;
   //move apple
-  
+  generate_random:
   uint8_t apple_new_x = BLOCK_SIZE + rand() % (SCREEN_WIDTH-BLOCK_SIZE); //scaled_rand(SCREEN_WIDTH-BLOCK_SIZE);
   uint8_t apple_new_y = BLOCK_SIZE + rand() % (SCREEN_HEIGHT-BLOCK_SIZE);//scaled_rand(SCREEN_HEIGHT-BLOCK_SIZE);
   
+  //make sure new apple position isn't on something
+  size_t i,j;
+  uint8_t x,y;
+  for (i = 0; i < BLOCK_SIZE; i++){
+    for (j = 0; j < BLOCK_SIZE; j++){
+      //loop through the pixels of the new apple and check if they are activated
+      x = apple_new_x + i;
+      y = apple_new_y - j;
+      if(*pixel_to_frame_buffer_position(x) || *pixel_to_frame_buffer_position(y)){
+        goto generate_random;
+      }
+    }
+    
+  }
+  
+
   apple.x0 = apple_new_x;
   apple.y0 = apple_new_y;
   //apple->block = (Block) {apple_new_x,apple_new_y};
   //apple.*block = (Block) {apple_new_x,apple_new_y};
   //apple.*block.y0 = apple_new_y;
   
-  //make sure new apple position isn't on the snakes tail
+  
 
   snake.num_blocks++;
   snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;

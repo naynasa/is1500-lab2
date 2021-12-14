@@ -11,28 +11,10 @@
 #include <stdbool.h>
 #include "snake_defines.h"  /* Declatations for these labs */
 
-#define DISPLAY_VDD_PORT PORTF
-#define DISPLAY_VDD_MASK 0x40
-#define DISPLAY_VBATT_PORT PORTF
-#define DISPLAY_VBATT_MASK 0x20
-#define DISPLAY_COMMAND_DATA_PORT PORTF
-#define DISPLAY_COMMAND_DATA_MASK 0x10
-#define DISPLAY_RESET_PORT PORTG
-#define DISPLAY_RESET_MASK 0x200
-
-/* Address of the temperature sensor on the I2C bus */
-#define TEMP_SENSOR_ADDR 0x48 //1010000
+/* Address of the EEPROM on the I2C bus */
 #define SPEEDEEPROM_CONTROL_BYTE 0b1010000 //1 0 1 0 A2 A1 A0 R/W - here A2 = 1 A1=0,A0=0
-/* Temperature sensor internal registers */
-typedef enum TempSensorReg TempSensorReg;
-enum TempSensorReg {
-	TEMP_SENSOR_REG_TEMP, //0
-	TEMP_SENSOR_REG_CONF, //1
-	TEMP_SENSOR_REG_HYST, //2
-	TEMP_SENSOR_REG_LIMIT, //3
-};
 
-
+//all the i2c functions were given to us in "hello temperature"
 
 /* Wait for I2C bus to become idle */
 void i2c_idle() {

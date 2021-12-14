@@ -138,6 +138,7 @@ int main(void) {
 
 //each block is 32*128/4 = 4096/4 = 1024 bits
 //we 0 index the blocks: block 0,1,2,3
+/*returns a pointer of type bool to our x,y coordinate in the frame_buffer*/
 bool* pixel_to_frame_buffer_position(int x, int y){
   int page = y / 8; // since we have 4 blocks of 8 height each
   int byte_index = x;
@@ -174,8 +175,8 @@ void set_all_pixels_black(){
     display_buffer();
 }
 
-//makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
-//also assigns snake_tail
+/*makes the snake "slither" by first moving the head then moving each block into the position the following block was in before
+also assigns snake_tail*/
 void move_snake(){
   //moves the snakes head forward if no command is given or in another direction if the user presses one of the buttons
   //if the user tries to move 180 degrees from current direction or presses multiple buttons the command is ignored
@@ -272,7 +273,7 @@ void move_snake(){
   
 
 }
-/*called when the player loses the game - just infinitly prints game over and the score*/
+/*called when the player loses the game - just infinitly prints game over, the score and the high score*/
 void game_over(){
   set_all_pixels_black();
   display_buffer();
@@ -317,8 +318,8 @@ void game_over(){
   }
   
 }
-
-//since we display the apple after the snake moving the apple looks the same as creating a new one
+/*function that "eats" the apple - moving the apple looks the same as creating a new one
+also makes snake longer and increments snake.num_apples_eaten*/
 void eat_apple(){
 
   //increment apples eaten
@@ -339,7 +340,7 @@ void eat_apple(){
   snake.num_blocks++;
   snake.blocks_array[snake.num_blocks-1] = snake.prev_tail;
 }
-
+/*checks if the head of the snake has collided with anything, such as an apple, the wall or its own tail*/
 void check_collision(){
   //helper that returns whether or not the pixel we are checking is outside the screen
   bool check_outside_screen(uint16_t x, uint16_t y){

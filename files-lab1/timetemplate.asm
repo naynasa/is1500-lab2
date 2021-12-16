@@ -24,7 +24,7 @@ main:
 	syscall
 	nop
 	# wait a little
-	li	$a0,2
+	li	$a0,-1
 	jal	delay
 	nop
 	# call tick
@@ -41,10 +41,11 @@ main:
 	li	$a0,10
 	li	$v0,11
 	syscall
-	nop
+	nop 
 	# go back and do it all again
 	j	main
 	nop
+	
 # tick: update time pointed to by $a0
 tick:	lw	$t0,0($a0)	# get time
 	addiu	$t0,$t0,1	# increase
@@ -74,7 +75,7 @@ tiend:	sw	$t0,0($a0)	# save updated result
 
   # you can write your code for subroutine "hexasc" below this line
   #returns in the format 0000.0[ZZZZZZZZ]
- hexasc:
+ hexasc:   
 	andi	$a0,$a0,0x0000000f #XXXX...X[YYYY] AND 0000..0[1111] = 0000.0[YYYY], 0x0000000f =15
 	li	$t0,9
 	ble    	$a0,$t0,hexasc_if#$a0<10
@@ -96,15 +97,15 @@ tiend:	sw	$t0,0($a0)	# save updated result
 #outer loop takes 1 ms per iteration and inner loop is to make the outer loop take 1 ms
 .global
 delay:
-	bne	$a0,$zero,delay_while
+	ble	$a0,$zero,delay_while_end #a0 != 0 goto while
 	nop #branch delay slot
-	j	delay_while_end #if a==0 jump to the end
+	j	delay_while #if a==0 jump to the end
 	nop #branch delay slot
 	delay_while:
-		addi	$a0,$a0,-1 #if $a0 is -1 it becomes more and more neg. until the program crashes / undefined behavior
+		addi	$a0,$a0,-1 #if $a0 is -1 from start it becomes more and more neg. until the program crashes / undefined behavior
 		
 		li	$t0,0 #i=0
-		li	$t1,4711# number to check i against - number of iterations that fit in around 1ms
+		li	$t1,60000# number to check i against - number of iterations that fit in around 1ms
 		addi	$t1,$t1,-1 # i<4711 <=> i<=4710 
 		
 		ble	$t0,$t1,delay_for #initial check if we should go into the loop
@@ -117,13 +118,20 @@ delay:
 			nop # <=> /* Do nothing. */
 			ble	$t0,$t1,delay_for #check if we should continue looping each iteration
 			nop #branch delay slot
-		delay_for_end:
+		delay_for_end:	
+			bne	$a0,$zero,delay_while
+			nop #branch delay slot
+
+	delay_while_end:
+	jr	$ra
+	nop #branch delay slot
+
 #		void delay( int ms ) /* Wait a number of milliseconds, specified by the parameter value. */
 #{
 #int i;
 #while( ms > 0 )
 #{
-#ms = ms â€“ 1;
+#ms = ms – 1;
 #/* Executing the following for loop should take 1 ms */
 #for( int i = 0; i < 4711; i = i + 1 ) /* The constant 4711 must be easy to change! */
 #{
@@ -131,17 +139,11 @@ delay:
 #}
 #}
 #}
-		
-		
-		bne	$a0,$zero,delay_while
-		nop #branch delay slot
 
-	delay_while_end:
-	jr	$ra
-	nop #branch delay slot
+
 #$a0 the adress to where we write the ascii time - value stored in $a0 format: mm:ssNULLBYTE
 #$a0 needs 6*8 bits of space to store the string (ascii char. are 8 bit)
-#$a1 time of the format mmss in a 32 bit value representation - 4 bytes per value - only 16 least sig. bytes used
+#$a1 time of the format mmss in a 32 bit value representation - 4 bit per value - only 16 least sig. bit used
 time2string:
 	
 	#s registers are callee saved save the ones we want to use
@@ -162,13 +164,17 @@ time2string:
 	#minute * 10
 	#andi	$a0,$s1,0x0000f000 #a0 = 4th nibble of a1
 	srl	$a0,$s1,12 #make the 4rth nibble the 4 LS bits in a0 - [XXXX...YYYY XXXX XXXX XXXX] -> [00000...XXXX...YYYY]
-	jal	hexasc #v0 -  8 LS bits ascii representation of $a0
+	jal	hexasc  #v0 -  8 LS bits ascii representation of $a0
 	nop #branch delay slot
 	sb	$v0,0($s0)#write v0 to memory #v0 contains the correct byte of 4th nibble of a1
+	#s0 = 0xfba22184
 	#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD EEEEEEEE 00000000]
 	#^s0
 	#minute * 1
 	#andi	$a0,$s1,0x00000f00 #a0 = 3rd nibble of a1
+	#s0=0xABCD
+	#a0=0x00AB
+	#hexasc(0xAB) <=> hexasc(0xB)
 	srl	$a0,$s1,8 #make the 3rd nibble the 4 LS bits in a0
 	jal	hexasc #v0 -  8 LSB ascii representation of $a0
 	nop #branch delay slot
@@ -188,8 +194,8 @@ time2string:
 	#second * 1
 	andi	$a0,$s1,0x0000000f #a0 = 1st nibble of a1, sista 4 bitarna 
 	
-	li	$t0,8 
-	ble    	$a0,$t0, second_if # $a0 <= 8
+	li	$t0,2 
+	bne    	$a0,$t0, second_if # $a0 != 2
 	nop #branch delay slot
 	j	second_else #else
 	nop #branch delay slot
@@ -197,7 +203,7 @@ time2string:
 
 		jal	hexasc #v0 -  8 LSbits ascii representation of $a0
 		nop #branch delay slot
-		sb	$v0,4($s0) #lÃ¤gger in vÃ¤rdet i index 4 (= 5te elementet)
+		sb	$v0,4($s0) #lägger in värdet i index 4 (= 5te elementet)
 		
 		li	$v0,0
 		sb	$v0,5($s0)#write v0 to memory #v0 contains the correct byte of the colon
@@ -208,16 +214,23 @@ time2string:
 
 	second_else:
  
-		li $a0, 0x454e494e #NINE
-		sw $a0, 4($s0) #lÃ¤gger in vÃ¤rdet i s0, offset 4, bÃ¶rja lÃ¤gga in pÃ¥ slutet
-		#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD NNNNNNNN IIIIIIII NNNNNNNN EEEEEEEE]
+		li $a0, 0x004F5754 #TWO
+		sw $a0, 4($s0) #lägger in värdet i s0, offset 4, börja lägga in på slutet
+		#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD TTTTTTTT WWWWWWWW OOOOOOO EEEEEEEE]
 		#^s0
-		li	$v0,0x0000
-		sb	$v0,8($s0)# 8($s0), dÃ¤r den 8onde biten slutar. 0 byten signalerar att det Ã¤r slut pÃ¥ text strÃ¤ngen 
+		#li	$v0,0x0000
+		#sb	$v0,8($s0)# 8($s0), där den 8onde biten slutar. 0 byten signalerar att det är slut på text strängen 
 		#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD NNNNNNNN IIIIIIII NNNNNNNN EEEEEEEE 00000000]
 		#^s0
 		
 	second_continue:	
+	
+	#it's possible these shouldn't be here but i think they should
+
+	POP	$ra #to be able to return since we call hexasc
+	POP	$s1 #callee saved and used for storing a1
+	POP	$s0 #callee saved and used for storing a0
+	
 	
 	jr $ra
 	nop #branch delay slot

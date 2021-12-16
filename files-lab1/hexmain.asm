@@ -4,7 +4,7 @@
 
 	.text
 main:
-	li	$a0,0x11		# change this to test different values
+	li	$a0,17		# change this to test different values
 	jal	hexasc		# call hexasc - same as hexasc(a0)
 	nop			# delay slot filler (just in case)	
 
@@ -24,17 +24,18 @@ stop:	j	stop		# stop after one run
 
 #parameter $a0 - 4 least significant bits are turned into ascii hex representation all others are ignored
 #return $v0 - 7 significant bits ascii representation of $a0
-	.text
+.text
 hexasc:
-	andi	$a0,$a0,15#XXXX...X[YYYY] AND 0000..0[1111] = 0000.0[YYYY]
+	andi	$a0,$a0,0xF#XXXX...X[YYYY] AND 0000..0[1111] = 0000.0[YYYY]
 	li	$t0,9 # store 9 for the comparison in ble in an arbitrary register
 	ble    	$a0,$t0,hexasc_if#$a0<10
 	nop
 	j	hexasc_else #else
 	hexasc_if:
-		#we know that $a0<10
-		addi	$a0,$a0,48 #0 <=> ASCII 48, 1 <=> ASCII 49 etc.
+		#we know that $a0<10 (<10 is the same as <= 9)
+		addi	$a0,$a0,48 #'0' in ASCII <=> 48, '1' in ASCII <=> 49 etc.
 		j hexasc_contine
+		nop
 	hexasc_else:
 		addi	$a0,$a0,55 #65-10 since A <=> ASCII 65, A in hex is 10 in base 10
 	hexasc_contine:	
@@ -42,3 +43,5 @@ hexasc:
 	add	$v0,$a0,$v0
 	jr	$ra
 	nop
+
+

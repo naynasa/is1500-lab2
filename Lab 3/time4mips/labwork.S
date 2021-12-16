@@ -35,50 +35,100 @@ return:
 	jr	$ra
 	nop
 		
-time2string: 	
+time2string:
+	
+	#s registers are callee saved save the ones we want to use
+	PUSH	$s0 #callee saved and used for storing a0
+	PUSH	$s1 #callee saved and used for storing a1
+	PUSH	$ra #to be able to return since we call hexasc
+	
+	#used but not saved registers: a0,a1,v0
+
+	
+	addi	$s0,$a0,0 #save a0 in s0 since hexasc will write over a0
+	addi	$s1,$a1,0 #save a1 in s1 since hexasc could write over a1
+	
+
+	#v0 stores the current byte we are working on before writing it to memory
+	
+	
+	#minute * 10
+	#andi	$a0,$s1,0x0000f000 #a0 = 4th nibble of a1
+	srl	$a0,$s1,12 #make the 4rth nibble the 4 LS bits in a0 - [XXXX...YYYY XXXX XXXX XXXX] -> [00000...XXXX...YYYY]
+	jal	hexasc  #v0 -  8 LS bits ascii representation of $a0
+	nop #branch delay slot
+	sb	$v0,0($s0)#write v0 to memory #v0 contains the correct byte of 4th nibble of a1
+	#s0 = 0xfba22184
+	#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD EEEEEEEE 00000000]
+	#^s0
+	#minute * 1
+	#andi	$a0,$s1,0x00000f00 #a0 = 3rd nibble of a1
+	#s0=0xABCD
+	#a0=0x00AB
+	#hexasc(0xAB) <=> hexasc(0xB)
+	srl	$a0,$s1,8 #make the 3rd nibble the 4 LS bits in a0
+	jal	hexasc #v0 -  8 LSB ascii representation of $a0
+	nop #branch delay slot
+	sb	$v0,1($s0)#write v0 to memory #v0 contains the correct byte of 3rd nibble of a1
+	
+	#colon
+	li	$v0,0x3A
+	sb	$v0,2($s0)#write v0 to memory #v0 contains the correct byte of the colon
+	
+	#second * 10
+	#andi	$a0,$s1,0x000000ff #a0 = 2nd nibble of a1
+	srl	$a0,$s1,4 #make the 2nd nibble the 4 LS bits in a0 #this handles the 5
+	jal	hexasc #v0 -  8 LSB ascii representation of $a0
+	nop #branch delay slot
+	sb	$v0,3($s0)#write v0 to memory #v0 contains the correct byte of 3rd nibble of a1
+	
+	#second * 1
+	andi	$a0,$s1,0x0000000f #a0 = 1st nibble of a1, sista 4 bitarna 
+	
+	li	$t0,2 
+	bne    	$a0,$t0, second_if # $a0 != 2
+	nop #branch delay slot
+	j	second_else #else
+	nop #branch delay slot
+	second_if:
+
+		jal	hexasc #v0 -  8 LSbits ascii representation of $a0
+		nop #branch delay slot
+		sb	$v0,4($s0) #l�gger in v�rdet i index 4 (= 5te elementet)
+		
+		li	$v0,0
+		sb	$v0,5($s0)#write v0 to memory #v0 contains the correct byte of the colon
+		
+		j 	second_continue
+		
+		nop
+
+	second_else:
+ 
+		li $a0, 0x004F5754 #TWO
+		sw $a0, 4($s0) #l�gger in v�rdet i s0, offset 4, b�rja l�gga in p� slutet
+		#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD TTTTTTTT WWWWWWWW OOOOOOO EEEEEEEE]
+		#^s0
+		#li	$v0,0x0000
+		#sb	$v0,8($s0)# 8($s0), d�r den 8onde biten slutar. 0 byten signalerar att det �r slut p� text str�ngen 
+		#[AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD NNNNNNNN IIIIIIII NNNNNNNN EEEEEEEE 00000000]
+		#^s0
+		
+	second_continue:	
+	
+	#it's possible these shouldn't be here but i think they should
+
+	POP	$ra #to be able to return since we call hexasc
+	POP	$s1 #callee saved and used for storing a1
+	POP	$s0 #callee saved and used for storing a0
+	
+	
+	jr $ra
+	nop #branch delay slot
+		
+		
 		
 	
-	PUSH	$ra		
-	la	$t3, ($a0)
-	addi	$t7, $0, 0x3a		# ':'-ascii kod, storlek 1 byte -> t7	
-	sb	$t7, 2($t3)		# ':'-byte sparas
-	sb	$0, 5($t3)		# null-byte sparas
-	
-
-	
-	andi	$t4, $a1, 0xffff
-
-	andi	$a0, $t4, 0xf
-	jal 	hexasc
-	nop
-	sb	$v0, 4($t3)
-	
-	srl	$t4, $t4, 4
-	andi	$a0, $t4, 0xf
-	jal 	hexasc
-	nop
-	sb	$v0, 3($t3)
-	
-	srl	$t4, $t4, 4
-	andi	$a0, $t4, 0xf
-	jal 	hexasc
-	nop
-	sb	$v0, 1($t3)
-	
-	srl	$t4, $t4, 4
-	andi	$a0, $t4, 0xf
-	jal 	hexasc
-	nop
-	sb	$v0, ($t3)
-	
-	la	$a0, ($t3)
-	
-	
-	POP	$ra
-	nop
-	jr	$ra
-	nop
- 	
 
 delay:
 	PUSH	$ra

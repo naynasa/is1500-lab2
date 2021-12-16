@@ -8,8 +8,14 @@ B eller !B så vå får både A AND B och A AND !B respektive A OR B och A OR !B
 Addition sker bara genom att man skickar in talen i addern(carry in är 0)
 
 Subtraktion fungerar genom "2's complement" där:
-A + (-A) = 2^N
-där N är antalet bitar i talet
+vi vet: A-B = A + (-B)
+så vi räknar ut (-B)
+(-B) = !B + 1 (enl. twos complement is ones compliment [bitwise not] of the number +1)
+
+
+alltså:
+A-B = A + !B + 1
+
 
 >How did you implement the logic for the Zero output port? Did you consider any 
 >alternatives? Be prepared to explain your design choices.
@@ -36,6 +42,8 @@ The purpose of the ALU is to perform logical and arithmetic operations. The func
 >Explain if the read operation or the write operation, or both operations are clocked (updated at the clock edge). Why is it >implement this way?
 
 The value of the register is only updated on rising edge (when clock goes from 0 to 1). This means input is clocked. The register always has an output without any delay of the value in the register, i.e. ouput isn't clocked. 
+
+Read operation is also clocked (rising edge).
 
 We use a clock since the registers consist of flip flops. In order to make sure the flips flops get the new configuration before outputting something we use a clock. This makes sure that the value we read isn't the old value in case the flip flops take different time or for some reason don't assume the right value before the read operation.
 
